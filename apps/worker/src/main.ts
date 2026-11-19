@@ -15,6 +15,8 @@ import { Queue } from "bullmq";
 import { createStorage } from "@ledgerline/storage";
 import type { WorkerDeps } from "./deps.js";
 import { createStageWorker } from "./stage-worker.js";
+import { observeQueues } from "./telemetry.js";
+import { traceLogMixin } from "@ledgerline/observability";
 import { createExtractProcessor } from "./processors/extract.js";
 import { createClassifyProcessor } from "./processors/classify.js";
 import { createValidateProcessor } from "./processors/validate.js";
@@ -23,7 +25,11 @@ import { startOutboxPublisher } from "./outbox.js";
 import { reconcile } from "./reconciler.js";
 
 const env = loadEnv();
-const log = pino({ level: env.LOG_LEVEL, base: { service: "ledgerline-worker" } });
+const log = pino({
+  level: env.LOG_LEVEL,
+  base: { service: "ledgerline-worker" },
+  mixin: traceLogMixin,
+});
 const redis = createRedis(env.REDIS_URL);
 redis.on("error", (err) => log.warn({ err: err.message }, "redis connection error"));
 const dbHandle = createDb(env.DATABASE_URL);
@@ -69,6 +75,7 @@ const maintenanceWorker = new Worker(
   { connection: redis, concurrency: 1 },
 );
 const stopOutbox = startOutboxPublisher(deps);
+observeQueues(deps.queues, deps.dlqs);
 
 log.info({ stages: workers.map((w) => w.name) }, "worker started");
 
@@ -94,6 +101,9 @@ const shutdown = async (signal: string) => {
     timeout,
   ]);
   await Promise.allSettled([maintenance.close(), dbHandle.close()]);
+  await (
+    globalThis as { __ledgerlineOtelShutdown?: () => Promise<void> }
+  ).__ledgerlineOtelShutdown?.();
   redis.disconnect();
   process.exit(0);
 };

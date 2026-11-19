@@ -15,6 +15,7 @@ export interface FakeOptions {
   badJson?: number;
   badSchema?: number;
   seed?: number;
+  port?: number;
 }
 
 export function validExtraction(n: number) {
@@ -106,6 +107,6 @@ export async function startFakeAnthropic(opts: FakeOptions = {}) {
     return message(body.model, text, counter);
   });
 
-  const url = await app.listen({ host: "127.0.0.1", port: 0 });
+  const url = await app.listen({ host: "127.0.0.1", port: opts.port ?? 0 });
   return { url, hardFail, stats, close: () => app.close() };
 }

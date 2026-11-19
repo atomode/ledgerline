@@ -4,6 +4,7 @@ import { z } from "zod";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { costMicros, type TokenUsage } from "./pricing.js";
 import { firstPages } from "./pages.js";
+import { genAiCall } from "./telemetry.js";
 
 export const DocumentKind = z.enum(["invoice", "credit_note", "statement", "not_invoice"]);
 export type DocumentKind = z.infer<typeof DocumentKind>;
@@ -45,30 +46,41 @@ export async function classifyDocument(
   opts: { model: string },
 ): Promise<ClassifyResult> {
   const page = await firstPages(pdf, 1);
-  const msg = await client.beta.messages.create({
-    model: opts.model,
-    max_tokens: 64,
-    system: [{ type: "text", text: CLASSIFY_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: page.pdf.toString("base64"),
-            },
-          },
-          { type: "text", text: "Classify this document." },
-        ],
-      },
-    ],
-    output_config: {
-      format: { type: "json_schema", schema: betaZodOutputFormat(ClassifierOutput).schema },
+  const msg = await genAiCall(
+    {
+      model: opts.model,
+      maxTokens: 64,
+      promptVersion: CLASSIFY_PROMPT_VERSION,
+      purpose: "classify",
     },
-  });
+    () =>
+      client.beta.messages.create({
+        model: opts.model,
+        max_tokens: 64,
+        system: [
+          { type: "text", text: CLASSIFY_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
+        ],
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "document",
+                source: {
+                  type: "base64",
+                  media_type: "application/pdf",
+                  data: page.pdf.toString("base64"),
+                },
+              },
+              { type: "text", text: "Classify this document." },
+            ],
+          },
+        ],
+        output_config: {
+          format: { type: "json_schema", schema: betaZodOutputFormat(ClassifierOutput).schema },
+        },
+      }),
+  );
   const usage: TokenUsage = {
     inputTokens: msg.usage.input_tokens,
     outputTokens: msg.usage.output_tokens,

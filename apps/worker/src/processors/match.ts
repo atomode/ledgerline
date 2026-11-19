@@ -6,6 +6,7 @@ import { decideApproval, threeWayMatch, type MatchInput } from "@ledgerline/matc
 import type { StageJobData } from "@ledgerline/queues";
 import type { WorkerDeps } from "../deps.js";
 import { announce } from "./shared.js";
+import { workerMetrics } from "../telemetry.js";
 
 /**
  * Stage 4 (final): 3-way match against the PO and goods receipts, then the auto-approve gate.
@@ -58,13 +59,13 @@ export const createMatchProcessor = (deps: WorkerDeps) => async (job: Job<StageJ
     vendorResolved: inv.vendorId !== null,
   });
 
-  await deps.db.transaction(async (tx) => {
+  const committed = await deps.db.transaction(async (tx) => {
     const updated = await tx
       .update(i)
       .set({ status: decision, version: sql`${i.version} + 1` })
       .where(and(eq(i.id, invoiceId), eq(i.status, "extracted")))
       .returning({ id: i.id });
-    if (updated.length === 0) return;
+    if (updated.length === 0) return false;
     await tx
       .insert(schema.matchResults)
       .values({
@@ -82,7 +83,15 @@ export const createMatchProcessor = (deps: WorkerDeps) => async (job: Job<StageJ
         },
       });
     await announce(tx, tenantId, invoiceId, decision, { match: match.outcome });
+    return true;
   });
+  if (committed) {
+    workerMetrics().decisions.add(1, {
+      decision,
+      reason: decision === "approved" ? "gate_passed" : match.outcome,
+    });
+    workerMetrics().e2e.record((Date.now() - inv.receivedAt.getTime()) / 1000, { decision });
+  }
   return { decision, match: match.outcome };
 };
 

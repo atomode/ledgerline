@@ -12,6 +12,7 @@ import {
 import { stageJobId, type StageJobData } from "@ledgerline/queues";
 import { TOKENS_PER_PAGE_ESTIMATE, estimatePdfPages } from "../pdf.js";
 import type { WorkerDeps } from "../deps.js";
+import { workerMetrics } from "../telemetry.js";
 
 export type ExtractOutcome =
   | { outcome: "extracted"; repaired: boolean; costMicros: number }
@@ -76,6 +77,11 @@ export const createExtractProcessor =
 
     try {
       const result = await extractInvoice(deps.anthropic, pdf, { model: deps.extractionModel });
+      workerMetrics().cost.add(result.costMicros, {
+        tenant: tenantId,
+        stage: "extract",
+        model: result.model,
+      });
       const committed = await deps.db.transaction(async (tx) => {
         const updated = await tx
           .update(schema.invoices)
@@ -126,6 +132,15 @@ export const createExtractProcessor =
       return { outcome: "extracted", repaired: result.repaired, costMicros: result.costMicros };
     } catch (err) {
       if (!(err instanceof ExtractionContentError)) throw err;
+      workerMetrics().cost.add(costMicros(err.model, err.usage), {
+        tenant: tenantId,
+        stage: "extract",
+        model: err.model,
+      });
+      workerMetrics().decisions.add(1, {
+        decision: "needs_review",
+        reason: `extraction_${err.reason}`,
+      });
       // Content problem: human review, recorded with its cost, announced via the outbox.
       await deps.db.transaction(async (tx) => {
         const updated = await tx

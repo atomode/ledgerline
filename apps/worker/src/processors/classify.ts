@@ -6,6 +6,7 @@ import { stageJobId, type StageJobData } from "@ledgerline/queues";
 import type { WorkerDeps } from "../deps.js";
 import { addCost } from "./extract.js";
 import { announce } from "./shared.js";
+import { workerMetrics } from "../telemetry.js";
 
 /**
  * Stage 1: Haiku decides whether the document is worth a Sonnet extraction at all.
@@ -25,6 +26,7 @@ export const createClassifyProcessor = (deps: WorkerDeps) => async (job: Job<Sta
     const pdf = await deps.storage.getObject(row.storageKey);
     const c = await classifyDocument(deps.anthropic, pdf, { model: deps.classifyModel });
     const proceed = c.kind === "invoice" || c.kind === "credit_note";
+    workerMetrics().cost.add(c.costMicros, { tenant: tenantId, stage: "classify", model: c.model });
     await deps.db.transaction(async (tx) => {
       const updated = await tx
         .update(schema.invoices)
@@ -46,7 +48,13 @@ export const createClassifyProcessor = (deps: WorkerDeps) => async (job: Job<Sta
         });
       }
     });
-    if (!proceed) return { kind: c.kind, next: null };
+    if (!proceed) {
+      workerMetrics().decisions.add(1, {
+        decision: "needs_review",
+        reason: `classified_as_${c.kind}`,
+      });
+      return { kind: c.kind, next: null };
+    }
   } else if (row.status !== "classified") {
     return { skipped: row.status };
   }

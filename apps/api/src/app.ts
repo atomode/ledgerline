@@ -8,6 +8,7 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { WebhookEvent } from "@ledgerline/contracts";
+import { traceLogMixin } from "@ledgerline/observability";
 import type { ApiDeps } from "./deps.js";
 import { registerAuth } from "./auth.js";
 import { registerIdempotency } from "./idempotency.js";
@@ -21,7 +22,7 @@ export type { ApiDeps } from "./deps.js";
 
 export async function buildApp(deps: ApiDeps): Promise<FastifyInstance> {
   const app = Fastify({
-    logger: { level: deps.logLevel ?? "info" },
+    logger: { level: deps.logLevel ?? "info", mixin: traceLogMixin },
     genReqId: () => crypto.randomUUID(),
   }).withTypeProvider<ZodTypeProvider>();
 

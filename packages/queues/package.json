@@ -14,8 +14,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@ledgerline/observability": "workspace:*",
     "bullmq": "^5.63.0",
     "ioredis": "^5.8.0"
-  },
-  "devDependencies": {}
+  }
 }

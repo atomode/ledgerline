@@ -13,6 +13,8 @@ export const MAINTENANCE_QUEUE = "ll-maintenance";
 export interface StageJobData {
   invoiceId: string;
   tenantId: string;
+  /** W3C trace context of the enqueueing span (traceparent, tracestate). Set by StageQueue. */
+  _trace?: Record<string, string>;
 }
 
 /**

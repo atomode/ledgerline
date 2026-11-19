@@ -6,9 +6,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
-    "start": "node dist/main.js",
-    "chaos": "tsx --env-file-if-exists=../../.env scripts/chaos-extract.ts"
+    "dev": "OTEL_SERVICE_NAME=ledgerline-worker tsx watch --env-file-if-exists=../../.env --import @ledgerline/observability/register src/main.ts",
+    "start": "OTEL_SERVICE_NAME=ledgerline-worker node --import @ledgerline/observability/register dist/main.js",
+    "chaos": "tsx --env-file-if-exists=../../.env scripts/chaos-extract.ts",
+    "fake-anthropic": "tsx scripts/fake-anthropic-server.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
@@ -17,6 +18,7 @@
     "@ledgerline/db": "workspace:*",
     "@ledgerline/extraction": "workspace:*",
     "@ledgerline/matching": "workspace:*",
+    "@ledgerline/observability": "workspace:*",
     "@ledgerline/queues": "workspace:*",
     "@ledgerline/storage": "workspace:*",
     "bullmq": "^5.63.0",
@@ -27,6 +29,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@opentelemetry/sdk-trace": "3.1.1",
     "@types/pg": "^8.23.1",
     "fastify": "^5.12.8"
   }

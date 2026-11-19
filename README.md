@@ -10,7 +10,7 @@ decides what gets paid.
 ```bash
 cp .env.example .env
 pnpm install
-pnpm infra:up        # Postgres, Redis, SeaweedFS (S3), OTel Collector, Jaeger
+pnpm infra:up        # Postgres, Redis, SeaweedFS (S3), OTel Collector, Jaeger, Prometheus, Grafana
 pnpm build
 pnpm dev             # API on :3000, worker
 curl localhost:3000/readyz
@@ -52,3 +52,23 @@ a layer.
 | `nightly-eval.yml` | 03:00 UTC                | full golden set; uploads the report; opens or updates one `eval-regression` issue on failure                                                                                                                                                                          |
 
 Third-party actions are pinned to full commit SHAs, with the version in a trailing comment.
+
+## Observability
+
+API and worker start with `--import @ledgerline/observability/register`, which loads OpenTelemetry
+before anything else (set `OTEL_SDK_DISABLED=true` to turn it off). One upload is one trace: the
+`POST .../complete` request span, a `ll-<stage> publish` producer span per enqueue (trace context
+rides in the job's `_trace` field), a `ll-<stage> process` consumer span per stage, and a
+`chat <model>` span per Claude call with `gen_ai.*` token counts, cache tokens and cost. No document
+text or PII goes into span attributes or logs; logs carry `trace_id` and `span_id`.
+
+- Jaeger: http://localhost:16686, service `ledgerline-api`, or `http://localhost:16686/trace/<traceId>`
+  with the `trace_id` from an API log line.
+- Prometheus: http://localhost:9090 (scrapes the collector). Alerts in `infra/prometheus/alerts.yml`:
+  stale extract backlog (> 15 min), DLQ growth (> 10 in 10 min), auto-approve ratio collapse.
+- Grafana: http://localhost:3001, dashboard "Ledgerline pipeline": queue depth and oldest age, DLQ size,
+  stage p95 latency, retries by error class, model p95 latency, cost per tenant, decisions and
+  auto-approve rate, end-to-end pipeline time.
+
+`apps/worker/test/integration/tracing.test.ts` asserts the trace stays connected across the queue
+hops and that no span attribute carries document text.

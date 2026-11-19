@@ -10,6 +10,8 @@
 # Runtime stage: distroless Node 22, non-root, no shell, no package manager.
 
 ARG NODE_VERSION=22.20.0
+# Stamped into the OTel resource as service.version (release.yml passes the commit sha).
+ARG SERVICE_VERSION=dev
 
 FROM node:${NODE_VERSION}-slim AS build
 ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH CI=true
@@ -34,7 +36,8 @@ RUN --mount=type=secret,id=extra_ca,required=false \
  && find /out \( -name '*.map' -o -name '*.d.ts' -o -name '*.d.ts.map' \) -delete
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot AS runtime
-ENV NODE_ENV=production
+ARG SERVICE_VERSION
+ENV NODE_ENV=production SERVICE_VERSION=${SERVICE_VERSION}
 WORKDIR /app
 
 FROM runtime AS api
@@ -42,13 +45,16 @@ COPY --from=build --chown=nonroot:nonroot /out/api /app
 EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=3s --start-period=10s --retries=3 \
   CMD ["/nodejs/bin/node", "-e", "fetch('http://127.0.0.1:'+(process.env.API_PORT||3000)+'/healthz').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
-CMD ["dist/main.js"]
+ENV OTEL_SERVICE_NAME=ledgerline-api
+# --import loads the OpenTelemetry SDK before the app's first import (required for ESM patching).
+CMD ["--import", "@ledgerline/observability/register", "dist/main.js"]
 
 FROM runtime AS worker
 COPY --from=build --chown=nonroot:nonroot /out/worker /app
 HEALTHCHECK --interval=15s --timeout=3s --start-period=30s --retries=3 \
   CMD ["/nodejs/bin/node", "dist/healthcheck.js"]
-CMD ["dist/main.js"]
+ENV OTEL_SERVICE_NAME=ledgerline-worker
+CMD ["--import", "@ledgerline/observability/register", "dist/main.js"]
 
 FROM runtime AS migrate
 COPY --from=build --chown=nonroot:nonroot /out/migrate /app

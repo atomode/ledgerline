@@ -49,7 +49,7 @@ rest to human review.
 
 ## Queues and workers
 
-- Stage queues `ll-<stage>` (classify, extract, validate, match, notify), DLQs `ll-<stage>-dlq`.
+- Stage queues `ll-<stage>` (classify, extract, validate, match), DLQs `ll-<stage>-dlq`. Webhooks go out through the outbox, not a queue stage.
 - Job ids are deterministic: `<invoiceId>__<stage>` (BullMQ forbids ":" in custom ids). Completed
   jobs are removed so the reconciler can enqueue the same id again.
 - Processors check invoice status first and update with a status guard (`WHERE status = ...`), so

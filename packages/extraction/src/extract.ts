@@ -4,6 +4,7 @@ import { InvoiceExtraction } from "@ledgerline/contracts";
 import { ModelInvoice } from "./model-schema.js";
 import { EXTRACTION_SYSTEM_PROMPT, PROMPT_VERSION } from "./prompt.js";
 import { addUsage, costMicros, emptyUsage, type TokenUsage } from "./pricing.js";
+import { genAiCall } from "./telemetry.js";
 
 /**
  * The document itself is the problem (refused, truncated, or still invalid after one repair).
@@ -117,20 +118,31 @@ export async function extractInvoice(
   let servedModel = opts.model;
 
   for (let attempt = 0; attempt < 2; attempt++) {
-    const msg = await client.beta.messages.create({
-      model: opts.model,
-      max_tokens: opts.maxTokens ?? 16_000,
-      // System prompt + schema are identical on every call: cache them.
-      system: [
-        { type: "text", text: EXTRACTION_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
-      ],
-      messages,
-      output_config: { effort: "low", format: OUTPUT_FORMAT },
-      // Server-side fallback: if the primary model declines, the API retries on a model chosen
-      // for the refusal category instead of failing the extraction.
-      betas: [FALLBACK_BETA],
-      fallbacks: "default",
-    });
+    const maxTokens = opts.maxTokens ?? 16_000;
+    const msg = await genAiCall(
+      {
+        model: opts.model,
+        maxTokens,
+        promptVersion: PROMPT_VERSION,
+        attempt,
+        purpose: "extract",
+      },
+      () =>
+        client.beta.messages.create({
+          model: opts.model,
+          max_tokens: maxTokens,
+          // System prompt + schema are identical on every call: cache them.
+          system: [
+            { type: "text", text: EXTRACTION_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
+          ],
+          messages,
+          output_config: { effort: "low", format: OUTPUT_FORMAT },
+          // Server-side fallback: if the primary model declines, the API retries on a model chosen
+          // for the refusal category instead of failing the extraction.
+          betas: [FALLBACK_BETA],
+          fallbacks: "default",
+        }),
+    );
     usage = addUsage(usage, usageOf(msg));
     servedModel = msg.model;
 

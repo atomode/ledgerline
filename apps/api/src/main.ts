@@ -52,6 +52,9 @@ const shutdown = async (signal: string) => {
   app.log.info({ signal }, "shutting down");
   await app.close();
   await Promise.allSettled([db.close(), ...Object.values(queues).map((q) => q.close())]);
+  await (
+    globalThis as { __ledgerlineOtelShutdown?: () => Promise<void> }
+  ).__ledgerlineOtelShutdown?.();
   redis.disconnect();
   process.exit(0);
 };

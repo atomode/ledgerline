@@ -1,0 +1,30 @@
+groups:
+  - name: ledgerline
+    rules:
+      - alert: ExtractBacklogStale
+        # Same threshold the API uses to start refusing uploads (admission control): if this fires,
+        # clients are already being told to back off.
+        expr: max by (queue) (ledgerline_queue_oldest_age_seconds{queue="ll-extract"}) > 900
+        for: 2m
+        labels: { severity: page }
+        annotations:
+          summary: Oldest extract job has waited more than 15 minutes
+          runbook: Check Anthropic 429/529 rates (gen_ai_client_operation_duration_seconds_count by error_type), worker replicas, and the ITPM budget.
+
+      - alert: DeadLetterGrowth
+        expr: sum(max by (queue) (delta(ledgerline_dlq_size[10m]))) > 10
+        labels: { severity: page }
+        annotations:
+          summary: More than 10 jobs dead-lettered in 10 minutes
+          runbook: GET /v1/admin/dlq for error chains; replay after fixing the cause.
+
+      - alert: AutoApproveRatioCollapsed
+        # A sudden drop usually means extraction quality changed (model, prompt or document mix).
+        expr: |
+          sum(rate(ledgerline_invoice_decisions_total{decision="approved"}[1h]))
+            / clamp_min(sum(rate(ledgerline_invoice_decisions_total[1h])), 1e-9) < 0.3
+          and sum(rate(ledgerline_invoice_decisions_total[1h])) > 0.01
+        for: 30m
+        labels: { severity: ticket }
+        annotations:
+          summary: Auto-approve ratio below 30% for 30 minutes

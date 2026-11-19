@@ -53,8 +53,11 @@ services:
       timeout: 5s
       retries: 40
 
+  # One-shot bucket creation, run by `pnpm infra:up` after the services are healthy. Kept out of
+  # the default profile because `up --wait` treats an exited container as a failure.
   s3-init:
     image: chrislusf/seaweedfs:4.00
+    profiles: [init]
     depends_on:
       s3: { condition: service_healthy }
     entrypoint:
@@ -72,6 +75,25 @@ services:
     environment:
       COLLECTOR_OTLP_ENABLED: "true"
     ports: ["16686:16686"]
+
+  prometheus:
+    image: prom/prometheus:v3.7.3
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports: ["9090:9090"]
+    depends_on: [otel-collector]
+
+  grafana:
+    image: grafana/grafana:12.2.1
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3001:3000"]
+    depends_on: [prometheus]
 
 volumes:
   pgdata:

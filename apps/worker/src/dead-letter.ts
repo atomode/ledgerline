@@ -4,6 +4,7 @@ import { schema } from "@ledgerline/db";
 import { queueName, stageJobId, type Stage, type StageJobData } from "@ledgerline/queues";
 import { errorChain } from "./errors.js";
 import type { WorkerDeps } from "./deps.js";
+import { workerMetrics } from "./telemetry.js";
 
 /**
  * Called once a job has exhausted its attempts (or failed unrecoverably).
@@ -49,6 +50,7 @@ export async function deadLetter(
       );
   });
   await deps.dlqs[stage].add("dead", { ...job.data, errorChain: chain }, { jobId });
+  workerMetrics().decisions.add(1, { decision: "failed", reason: stage });
   deps.log.error(
     { stage, jobId, attemptsMade: job.attemptsMade, error: chain[0] },
     "job dead-lettered",

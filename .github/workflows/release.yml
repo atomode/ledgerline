@@ -60,7 +60,11 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ matrix.target }}
           sbom: true
           provenance: mode=max
-      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+      # GitHub artifact attestations are unavailable on user-owned private repos. The BuildKit
+      # SBOM and provenance above still ship with the image; this adds the signed GitHub one
+      # once the repo is public or owned by an org with the feature.
+      - if: ${{ !github.event.repository.private }}
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-name: ghcr.io/${{ github.repository }}/${{ matrix.target }}
           subject-digest: ${{ steps.build.outputs.digest }}

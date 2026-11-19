@@ -16,3 +16,4 @@ export function createDb(databaseUrl: string, opts: { max?: number } = {}): DbHa
   const db = drizzle(pool, { schema });
   return { db, pool, close: () => pool.end() };
 }
+export { MIGRATIONS_FOLDER, runMigrations } from "./migrate.js";

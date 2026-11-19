@@ -41,7 +41,8 @@ export async function freshRedis(): Promise<Redis> {
   const url = new URL(inject("redisUrl"));
   // vitest runs files in separate workers; mix in the worker id so DB numbers don't collide.
   const worker = Number(process.env.VITEST_POOL_ID ?? "1");
-  url.pathname = `/${((worker - 1) * 3 + nextDb++) % 16}`;
+  // Never DB 0: that is where a developer's local stack keeps its queues.
+  url.pathname = `/${1 + (((worker - 1) * 3 + nextDb++) % 15)}`;
   const r = new Redis(url.toString(), { maxRetriesPerRequest: null });
   await r.flushdb();
   return r;

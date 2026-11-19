@@ -1,0 +1,209 @@
+# CI for every pull request and every push to main.
+#
+# Cache strategy (three layers, each keyed so a hit is always safe):
+# 1. pnpm store: actions/setup-node `cache: pnpm`, keyed on pnpm-lock.yaml. A lockfile change is
+#    the only thing that invalidates it, and `pnpm install --frozen-lockfile` then links offline.
+# 2. Turborepo local cache (.turbo/cache): key = lockfile hash + commit sha, restore-keys fall back
+#    to the newest cache for the same lockfile. Turbo hashes task inputs itself, so a stale restore
+#    can only cause a miss, never a wrong build. Per-job keys stop jobs overwriting each other.
+# 3. Eval responses (evals/.cache): keyed on the golden set, prompts and extraction code. The
+#    harness keys entries by prompt version too, so a prompt edit re-runs exactly the affected
+#    calls; an unchanged PR costs $0 in API calls.
+# Docker layer caching lives in release.yml (type=gha, one scope per image target).
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  lint-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm format:check
+      # OpenAPI spec and typed client must match the live routes.
+      - run: pnpm contracts:check
+      - name: actionlint
+        uses: docker://rhysd/actionlint@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667 # 1.7.12
+        with:
+          args: -color
+
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test
+
+  integration:
+    # Unit + integration together, with coverage gates (70% overall, 85% matching/contracts).
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ledgerline
+          POSTGRES_PASSWORD: ledgerline
+          POSTGRES_DB: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ledgerline" --health-interval 5s --health-timeout 5s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      # test/global-setup.ts reuses these instead of starting Testcontainers.
+      LEDGERLINE_IT_PG_URL: postgres://ledgerline:ledgerline@localhost:5432/postgres
+      LEDGERLINE_IT_REDIS_URL: redis://localhost:6379
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: turbo-${{ github.job }}-${{ hashFiles('pnpm-lock.yaml') }}-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test:coverage
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 14
+
+  migrations-check:
+    # Migrations apply cleanly to an empty database, and the Drizzle schema has no drift from the
+    # committed SQL (a schema edit without `pnpm db:generate` fails here).
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ledgerline
+          POSTGRES_PASSWORD: ledgerline
+          POSTGRES_DB: ledgerline
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ledgerline" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgres://ledgerline:ledgerline@localhost:5432/ledgerline
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @ledgerline/config --filter @ledgerline/contracts --filter @ledgerline/db build
+      - run: cp .env.example .env
+      - run: pnpm db:migrate
+      - name: Re-running is a no-op
+        run: pnpm db:migrate
+      - run: pnpm --filter @ledgerline/db exec drizzle-kit check
+      - name: No schema drift
+        run: |
+          pnpm --filter @ledgerline/db exec drizzle-kit generate --name drift_check
+          if [ -n "$(git status --porcelain packages/db/drizzle)" ]; then
+            echo "::error::packages/db/src/schema.ts differs from the committed migrations. Run pnpm db:generate and commit the SQL."
+            git status --porcelain packages/db/drizzle
+            exit 1
+          fi
+
+  eval-subset:
+    # Stratified 30% of the golden set through the real model. Skips cleanly when the secret is
+    # absent (fork PRs never receive secrets).
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - name: Skip without API key
+        if: env.HAS_KEY != 'true'
+        run: echo "::notice::ANTHROPIC_API_KEY not available (fork PR or unset); eval skipped."
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.HAS_KEY == 'true'
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        if: env.HAS_KEY == 'true'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: env.HAS_KEY == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        if: env.HAS_KEY == 'true'
+        with:
+          path: evals/.cache
+          key: eval-${{ hashFiles('evals/golden/**', 'packages/extraction/src/**') }}
+          restore-keys: eval-
+      - if: env.HAS_KEY == 'true'
+        run: pnpm install --frozen-lockfile && pnpm build
+      - name: Run eval (30% stratified subset)
+        id: eval
+        if: env.HAS_KEY == 'true'
+        continue-on-error: true
+        run: pnpm eval --subset 0.3 --out reports/pr
+      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        if: env.HAS_KEY == 'true' && always()
+        with:
+          header: ledgerline-eval
+          path: evals/reports/pr.md
+      - name: Fail on threshold violation
+        if: env.HAS_KEY == 'true' && steps.eval.outcome == 'failure'
+        run: |
+          echo "::error::Eval gates failed; see the PR comment for the report."
+          exit 1

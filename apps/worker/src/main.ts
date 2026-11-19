@@ -1,3 +1,4 @@
+import { writeFile } from "node:fs/promises";
 import Anthropic from "@anthropic-ai/sdk";
 import { Worker } from "bullmq";
 import { pino } from "pino";
@@ -70,6 +71,17 @@ const maintenanceWorker = new Worker(
 const stopOutbox = startOutboxPublisher(deps);
 
 log.info({ stages: workers.map((w) => w.name) }, "worker started");
+
+// Liveness for the container HEALTHCHECK: the worker has no HTTP port, so it touches a file while
+// its Redis connection is usable. A hung event loop or a dead connection lets the file go stale.
+const HEARTBEAT_FILE = process.env.WORKER_HEARTBEAT_FILE ?? "/tmp/ledgerline-worker-heartbeat";
+const heartbeat = setInterval(() => {
+  redis
+    .ping()
+    .then(() => writeFile(HEARTBEAT_FILE, String(Date.now())))
+    .catch((err: unknown) => log.warn({ err: (err as Error).message }, "heartbeat failed"));
+}, 10_000);
+heartbeat.unref();
 
 let shuttingDown = false;
 const shutdown = async (signal: string) => {

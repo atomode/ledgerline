@@ -39,6 +39,8 @@ import {
 import { simulate } from "./simulate.js";
 
 const { values: args } = parseArgs({
+  // pnpm may forward a literal "--" when called through the root script.
+  args: process.argv.slice(2).filter((a) => a !== "--"),
   options: {
     subset: { type: "string", default: "1" },
     model: { type: "string", default: process.env.EXTRACTION_MODEL ?? "claude-sonnet-5-5" },

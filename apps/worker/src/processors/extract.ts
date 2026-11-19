@@ -25,6 +25,7 @@ function invoiceColumns(d: InvoiceExtraction) {
   return {
     documentType: d.documentType,
     vendorNameRaw: d.vendor.name,
+    vendorTaxIdRaw: d.vendor.taxId,
     invoiceNumber: d.invoiceNumber,
     invoiceDate: d.invoiceDate,
     dueDate: d.dueDate,
@@ -42,6 +43,13 @@ function invoiceColumns(d: InvoiceExtraction) {
     missingFields: [] as string[],
   };
 }
+
+/** SQL increments so every stage's model spend adds up on the invoice row. */
+export const addCost = (inputTokens: number, outputTokens: number, micros: number) => ({
+  inputTokens: sql<number>`coalesce(${schema.invoices.inputTokens}, 0) + ${inputTokens}`,
+  outputTokens: sql<number>`coalesce(${schema.invoices.outputTokens}, 0) + ${outputTokens}`,
+  costMicros: sql<number>`coalesce(${schema.invoices.costMicros}, 0) + ${micros}`,
+});
 
 export const createExtractProcessor =
   (deps: WorkerDeps) =>
@@ -77,12 +85,15 @@ export const createExtractProcessor =
             extractionSchemaVersion: EXTRACTION_SCHEMA_VERSION,
             promptVersion: result.promptVersion,
             model: result.model,
-            inputTokens:
+            reviewFlags: result.warnings,
+            // Cumulative across stages: classify already recorded its (small) share.
+            ...addCost(
               result.usage.inputTokens +
-              result.usage.cacheReadTokens +
-              result.usage.cacheWriteTokens,
-            outputTokens: result.usage.outputTokens,
-            costMicros: result.costMicros,
+                result.usage.cacheReadTokens +
+                result.usage.cacheWriteTokens,
+              result.usage.outputTokens,
+              result.costMicros,
+            ),
             extractedAt: new Date(),
             version: sql`${schema.invoices.version} + 1`,
           })
@@ -125,10 +136,12 @@ export const createExtractProcessor =
             extractionSchemaVersion: EXTRACTION_SCHEMA_VERSION,
             promptVersion: PROMPT_VERSION,
             model: err.model,
-            inputTokens:
+            reviewFlags: [`extraction_${err.reason}`],
+            ...addCost(
               err.usage.inputTokens + err.usage.cacheReadTokens + err.usage.cacheWriteTokens,
-            outputTokens: err.usage.outputTokens,
-            costMicros: costMicros(err.model, err.usage),
+              err.usage.outputTokens,
+              costMicros(err.model, err.usage),
+            ),
             version: sql`${schema.invoices.version} + 1`,
           })
           .where(and(eq(schema.invoices.id, invoiceId), eq(schema.invoices.status, "classified")))

@@ -20,6 +20,7 @@ export interface WorkerDeps {
   tokenBucket: TokenBucket;
   log: Logger;
   extractionModel: string;
+  classifyModel: string;
   webhookSecret: string;
   fetch?: typeof fetch;
 }

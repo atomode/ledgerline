@@ -132,7 +132,7 @@ for (const invoiceId of invoiceIds) {
   );
 }
 
-const terminal = ["extracted", "needs_review", "failed"] as const;
+const terminal = ["approved", "needs_review", "rejected", "failed"] as const;
 const counts = async () => {
   const rows = await db
     .select({ status: schema.invoices.status, n: sql<number>`count(*)::int` })
@@ -195,11 +195,11 @@ if (target) {
       .from(schema.invoices)
       .where(and(eq(schema.invoices.id, replayed)));
     status = row?.status ?? "";
-    if (status === "extracted" || status === "needs_review") break;
+    if (status === "approved" || status === "needs_review") break;
     await sleep(1_000);
   }
   log("replayed invoice final status", { invoiceId: replayed, status });
-  if (status !== "extracted" && status !== "needs_review")
+  if (status !== "approved" && status !== "needs_review")
     failures.push(`replayed invoice ended as ${status}`);
 }
 

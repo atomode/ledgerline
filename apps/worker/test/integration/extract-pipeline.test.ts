@@ -73,6 +73,7 @@ beforeAll(async () => {
     tokenBucket: createTokenBucket(redis, "ll:itpm:test", 10_000_000),
     log: pino({ level: "silent" }),
     extractionModel: "claude-sonnet-5-5",
+    classifyModel: "claude-haiku-5-5",
     webhookSecret: "whsec_test",
   };
   worker = createStageWorker("extract", createExtractProcessor(deps), deps, { concurrency: 4 });

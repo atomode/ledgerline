@@ -16,7 +16,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
     "@ledgerline/contracts": "workspace:*",
+    "pdf-lib": "^1.17.1",
     "zod": "^4.1.12"
-  },
-  "devDependencies": {}
+  }
 }

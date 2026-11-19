@@ -231,6 +231,8 @@ export const invoices = pgTable(
     documentType: documentType("document_type"),
     vendorId: uuid("vendor_id").references(() => vendors.id),
     vendorNameRaw: text("vendor_name_raw"),
+    /** Supplier tax id as extracted; the strongest key for vendor resolution. */
+    vendorTaxIdRaw: text("vendor_tax_id_raw"),
     invoiceNumber: text("invoice_number"),
     invoiceDate: date("invoice_date"),
     dueDate: date("due_date"),
@@ -248,6 +250,14 @@ export const invoices = pgTable(
     discountMinor: bigint("discount_minor", { mode: "number" }),
     totalMinor: bigint("total_minor", { mode: "number" }),
     missingFields: text("missing_fields")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
+    /**
+     * Conditions that force human review even when every check passes, e.g.
+     * classified_as_statement, multiple_documents_in_file. Codes, never document text.
+     */
+    reviewFlags: text("review_flags")
       .array()
       .notNull()
       .default(sql`'{}'::text[]`),

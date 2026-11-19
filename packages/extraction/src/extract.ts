@@ -29,7 +29,11 @@ export interface ExtractResult {
   usage: TokenUsage;
   costMicros: number;
   repaired: boolean;
+  /** Conditions code must route to a human even if every check passes. */
+  warnings: ExtractionWarning[];
 }
+
+export type ExtractionWarning = "multiple_documents_in_file";
 
 export interface ExtractOptions {
   model: string;
@@ -62,7 +66,9 @@ function textOf(msg: Anthropic.Beta.BetaMessage): string {
 /** Parse + strict-validate. Returns the issues instead of throwing so the caller can repair. */
 export function validateModelOutput(
   text: string,
-): { ok: true; data: InvoiceExtraction } | { ok: false; issues: string[] } {
+):
+  | { ok: true; data: InvoiceExtraction; warnings: ExtractionWarning[] }
+  | { ok: false; issues: string[] } {
   let json: unknown;
   try {
     json = JSON.parse(text);
@@ -70,7 +76,14 @@ export function validateModelOutput(
     return { ok: false, issues: [`response is not valid JSON: ${(err as Error).message}`] };
   }
   const parsed = InvoiceExtraction.safeParse(json);
-  if (parsed.success) return { ok: true, data: parsed.data };
+  if (parsed.success) {
+    const multi = (json as { otherDocumentsInFile?: unknown }).otherDocumentsInFile === true;
+    return {
+      ok: true,
+      data: parsed.data,
+      warnings: multi ? ["multiple_documents_in_file"] : [],
+    };
+  }
   return {
     ok: false,
     issues: parsed.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`),
@@ -150,6 +163,7 @@ export async function extractInvoice(
         usage,
         costMicros: costMicros(servedModel, usage),
         repaired: attempt > 0,
+        warnings: result.warnings,
       };
     }
     if (attempt === 1) {

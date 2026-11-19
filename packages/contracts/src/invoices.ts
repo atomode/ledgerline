@@ -77,6 +77,10 @@ export const InvoiceDetail = InvoiceSummary.extend({
   validations: z.array(ValidationResult),
   match: MatchResult.nullable(),
   missingFields: z.array(z.string()),
+  reviewFlags: z.array(z.string()).meta({
+    description:
+      "Why a human must look regardless of checks, e.g. classified_as_statement, multiple_documents_in_file",
+  }),
   extraction: ExtractionMetadata.nullable(),
 }).meta({ id: "InvoiceDetail" });
 

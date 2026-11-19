@@ -36,6 +36,22 @@ export function validExtraction(n: number) {
   };
 }
 
+const message = (model: string, text: string, n: number) => ({
+  id: `msg_fake_${n}`,
+  type: "message",
+  role: "assistant",
+  model,
+  content: [{ type: "text", text }],
+  stop_reason: "end_turn",
+  stop_sequence: null,
+  usage: {
+    input_tokens: model.includes("haiku") ? 1500 : 4200,
+    output_tokens: model.includes("haiku") ? 8 : 650,
+    cache_read_input_tokens: 0,
+    cache_creation_input_tokens: 0,
+  },
+});
+
 export async function startFakeAnthropic(opts: FakeOptions = {}) {
   const rate429 = opts.rate429 ?? 0.3;
   const badJson = opts.badJson ?? 0.05;
@@ -71,6 +87,11 @@ export async function startFakeAnthropic(opts: FakeOptions = {}) {
         .header("retry-after", "1")
         .send({ type: "error", error: { type: "rate_limit_error", message: "Rate limited" } });
     }
+    if (body.model.includes("haiku")) {
+      // Classification call: always an invoice in the chaos run.
+      stats.ok++;
+      return message(body.model, JSON.stringify({ kind: "invoice" }), ++counter);
+    }
     let text = JSON.stringify(validExtraction(++counter));
     const r = rand();
     if (!isRepair && r < badJson) {
@@ -82,21 +103,7 @@ export async function startFakeAnthropic(opts: FakeOptions = {}) {
     } else {
       stats.ok++;
     }
-    return {
-      id: `msg_fake_${counter}`,
-      type: "message",
-      role: "assistant",
-      model: body.model,
-      content: [{ type: "text", text }],
-      stop_reason: "end_turn",
-      stop_sequence: null,
-      usage: {
-        input_tokens: 4200,
-        output_tokens: 650,
-        cache_read_input_tokens: 0,
-        cache_creation_input_tokens: 0,
-      },
-    };
+    return message(body.model, text, counter);
   });
 
   const url = await app.listen({ host: "127.0.0.1", port: 0 });

@@ -136,6 +136,7 @@ export function createInvoiceService(deps: { db: Db; cursorSecret: string }) {
           }
         : null,
       missingFields: inv.missingFields,
+      reviewFlags: inv.reviewFlags,
       extraction:
         inv.model && inv.promptVersion && inv.extractionSchemaVersion !== null
           ? {

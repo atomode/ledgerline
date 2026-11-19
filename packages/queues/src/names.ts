@@ -1,5 +1,9 @@
-/** Pipeline stages in order. Each has its own queue so a slow stage can't starve the others. */
-export const STAGES = ["classify", "extract", "validate", "match", "notify"] as const;
+/**
+ * Pipeline stages in order. Each has its own queue so a slow stage can't starve the others.
+ * There is no notify stage: notifications leave through the transactional outbox, which is
+ * written in the same transaction as the decision, so a queue hop would only add a failure mode.
+ */
+export const STAGES = ["classify", "extract", "validate", "match"] as const;
 export type Stage = (typeof STAGES)[number];
 
 export const queueName = (stage: Stage) => `ll-${stage}`;

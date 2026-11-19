@@ -317,6 +317,8 @@ export interface components {
       validations: components["schemas"]["ValidationResultInput"][];
       match: components["schemas"]["MatchResultInput"] | null;
       missingFields: string[];
+      /** @description Why a human must look regardless of checks, e.g. classified_as_statement, multiple_documents_in_file */
+      reviewFlags: string[];
       extraction: components["schemas"]["ExtractionMetadataInput"] | null;
     };
     ReviewRequestInput:
@@ -585,6 +587,8 @@ export interface components {
       validations: components["schemas"]["ValidationResult"][];
       match: components["schemas"]["MatchResult"] | null;
       missingFields: string[];
+      /** @description Why a human must look regardless of checks, e.g. classified_as_statement, multiple_documents_in_file */
+      reviewFlags: string[];
       extraction: components["schemas"]["ExtractionMetadata"] | null;
     };
     ReviewRequest:

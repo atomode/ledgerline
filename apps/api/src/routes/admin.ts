@@ -10,9 +10,11 @@ import type { ApiDeps } from "../deps.js";
 import { problemResponses } from "./responses.js";
 
 /** The status an invoice must be in for a stage to pick it up again after a replay. */
-const ENTRY_STATUS: Partial<Record<Stage, "received" | "classified">> = {
+const ENTRY_STATUS: Record<Stage, "received" | "classified" | "extracted"> = {
   classify: "received",
   extract: "classified",
+  validate: "extracted",
+  match: "extracted",
 };
 
 const stageOfQueue = (q: string) => STAGES.find((s) => queueName(s) === q);
@@ -110,15 +112,12 @@ export const adminRoutes =
         const newJobId = `${failure.jobId}__replay_${Date.now()}`;
 
         await deps.db.transaction(async (tx) => {
-          const entry = ENTRY_STATUS[stage];
-          if (entry) {
-            await tx
-              .update(schema.invoices)
-              .set({ status: entry, version: sql`${schema.invoices.version} + 1` })
-              .where(
-                and(eq(schema.invoices.id, data.invoiceId), eq(schema.invoices.status, "failed")),
-              );
-          }
+          await tx
+            .update(schema.invoices)
+            .set({ status: ENTRY_STATUS[stage], version: sql`${schema.invoices.version} + 1` })
+            .where(
+              and(eq(schema.invoices.id, data.invoiceId), eq(schema.invoices.status, "failed")),
+            );
           await tx.update(f).set({ replayedAt: new Date() }).where(eq(f.id, failure.id));
         });
         await deps.queues[stage].add(

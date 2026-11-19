@@ -48,4 +48,7 @@ export const ModelInvoice = z.object({
       }),
     )
     .describe("Every billable line, in document order"),
+  otherDocumentsInFile: z
+    .boolean()
+    .describe("true if the file contains more than one invoice or credit note"),
 });

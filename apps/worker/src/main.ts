@@ -15,12 +15,9 @@ import { createStorage } from "@ledgerline/storage";
 import type { WorkerDeps } from "./deps.js";
 import { createStageWorker } from "./stage-worker.js";
 import { createExtractProcessor } from "./processors/extract.js";
-import {
-  createClassifyProcessor,
-  createMatchProcessor,
-  createNotifyProcessor,
-  createValidateProcessor,
-} from "./processors/stubs.js";
+import { createClassifyProcessor } from "./processors/classify.js";
+import { createValidateProcessor } from "./processors/validate.js";
+import { createMatchProcessor } from "./processors/match.js";
 import { startOutboxPublisher } from "./outbox.js";
 import { reconcile } from "./reconciler.js";
 
@@ -52,6 +49,7 @@ const deps: WorkerDeps = {
   tokenBucket: createTokenBucket(redis, "ll:itpm", env.ANTHROPIC_ITPM_BUDGET),
   log,
   extractionModel: env.EXTRACTION_MODEL,
+  classifyModel: env.CLASSIFY_MODEL,
   webhookSecret: env.WEBHOOK_SIGNING_SECRET,
 };
 
@@ -60,7 +58,6 @@ const workers = [
   createStageWorker("extract", createExtractProcessor(deps), deps, { concurrency: 8 }),
   createStageWorker("validate", createValidateProcessor(deps), deps),
   createStageWorker("match", createMatchProcessor(deps), deps),
-  createStageWorker("notify", createNotifyProcessor(), deps),
 ];
 
 const maintenance = new Queue(MAINTENANCE_QUEUE, { connection: redis });

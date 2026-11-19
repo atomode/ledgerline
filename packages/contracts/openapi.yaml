@@ -448,6 +448,12 @@ components:
           type: array
           items:
             type: string
+        reviewFlags:
+          type: array
+          items:
+            type: string
+          description: Why a human must look regardless of checks, e.g.
+            classified_as_statement, multiple_documents_in_file
         extraction:
           anyOf:
             - $ref: "#/components/schemas/ExtractionMetadataInput"
@@ -472,6 +478,7 @@ components:
         - validations
         - match
         - missingFields
+        - reviewFlags
         - extraction
     ReviewRequestInput:
       oneOf:
@@ -1278,6 +1285,12 @@ components:
           type: array
           items:
             type: string
+        reviewFlags:
+          type: array
+          items:
+            type: string
+          description: Why a human must look regardless of checks, e.g.
+            classified_as_statement, multiple_documents_in_file
         extraction:
           anyOf:
             - $ref: "#/components/schemas/ExtractionMetadata"
@@ -1302,6 +1315,7 @@ components:
         - validations
         - match
         - missingFields
+        - reviewFlags
         - extraction
       additionalProperties: false
     ReviewRequest:

@@ -4,10 +4,12 @@ import { stageJobId, type Stage } from "@ledgerline/queues";
 import type { WorkerDeps } from "./deps.js";
 
 /** Which stage picks up an invoice sitting in each non-terminal status. */
-const NEXT_STAGE = { received: "classify", classified: "extract" } as const satisfies Record<
-  string,
-  Stage
->;
+// "extracted" restarts at validate: validate is idempotent and always enqueues match after it.
+const NEXT_STAGE = {
+  received: "classify",
+  classified: "extract",
+  extracted: "validate",
+} as const satisfies Record<string, Stage>;
 export const STUCK_AFTER_MS = 10 * 60_000;
 
 /**

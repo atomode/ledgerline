@@ -1,0 +1,8 @@
+extends:
+  - recommended
+rules:
+  # fastify-type-provider-zod emits both Input and Output variants of every registered schema;
+  # only one side is referenced per schema, so unused-component warnings are generator noise.
+  no-unused-components: off
+  # Only the unauthenticated health probes lack 4xx responses; keep it visible as a warning.
+  operation-4xx-response: warn

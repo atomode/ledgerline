@@ -7,6 +7,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "default": "./dist/client/index.js"
     }
   },
   "scripts": {
@@ -14,7 +18,11 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "openapi-fetch": "^0.17.0",
     "zod": "^4.1.12"
   },
-  "devDependencies": {}
+  "files": [
+    "dist",
+    "openapi.yaml"
+  ]
 }

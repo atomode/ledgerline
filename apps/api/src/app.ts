@@ -1,26 +1,92 @@
 import Fastify, { type FastifyInstance } from "fastify";
-import { runReadiness, type Check } from "./readiness.js";
+import fastifySwagger from "@fastify/swagger";
+import {
+  jsonSchemaTransform,
+  jsonSchemaTransformObject,
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from "fastify-type-provider-zod";
+import { WebhookEvent } from "@ledgerline/contracts";
+import type { Check } from "./readiness.js";
+import { registerProblemHandlers } from "./problem.js";
+import { healthRoutes } from "./routes/health.js";
+import { uploadRoutes } from "./routes/uploads.js";
+import { invoiceRoutes } from "./routes/invoices.js";
+import { adminRoutes } from "./routes/admin.js";
 
 export interface AppDeps {
   readinessChecks: Record<string, Check>;
   logLevel?: string;
 }
 
-export function buildApp(deps: AppDeps): FastifyInstance {
+export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   const app = Fastify({
     logger: { level: deps.logLevel ?? "info" },
     genReqId: () => crypto.randomUUID(),
-  });
+  }).withTypeProvider<ZodTypeProvider>();
 
-  // Liveness: the process is up. Never touches dependencies, so a DB outage
-  // doesn't make the orchestrator restart healthy pods.
-  app.get("/healthz", async () => ({ status: "ok" as const }));
+  app.setValidatorCompiler(validatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
+  registerProblemHandlers(app);
 
-  // Readiness: can this instance serve traffic right now?
-  app.get("/readyz", async (_req, reply) => {
-    const result = await runReadiness(deps.readinessChecks);
-    return reply.code(result.status === "ok" ? 200 : 503).send(result);
+  await app.register(fastifySwagger, {
+    openapi: {
+      openapi: "3.1.0",
+      info: {
+        title: "Ledgerline API",
+        version: "0.1.0",
+        license: { name: "MIT", identifier: "MIT" },
+        description:
+          "Accounts-payable invoice ingestion, extraction and 3-way matching. " +
+          "Errors are RFC 9457 problem+json. Lists use opaque keyset cursors.",
+      },
+      servers: [{ url: "http://localhost:3000", description: "Local development" }],
+      components: {
+        securitySchemes: {
+          apiKey: {
+            type: "http",
+            scheme: "bearer",
+            description: "Per-tenant API key. Every request is scoped to the key's tenant.",
+          },
+        },
+      },
+      security: [{ apiKey: [] }],
+      tags: [
+        { name: "uploads", description: "Bulk invoice upload via presigned URLs" },
+        { name: "invoices", description: "Extracted invoices and the human review queue" },
+        { name: "admin", description: "Dead-letter inspection and replay" },
+        { name: "ops", description: "Health probes (unauthenticated)" },
+      ],
+      webhooks: {
+        invoiceEvent: {
+          post: {
+            operationId: "invoiceEvent",
+            summary: "Invoice lifecycle event",
+            security: [],
+            description:
+              "Signed with the `ledgerline-signature` header: `t=<unix>,v1=<hex HMAC-SHA256 of " +
+              '"<t>.<raw body>">`. Reject if older than 300s. Dedupe on `id`.',
+            requestBody: {
+              content: {
+                "application/json": { schema: { $ref: "#/components/schemas/WebhookEvent" } },
+              },
+            },
+            responses: { "2XX": { description: "Acknowledged" } },
+          },
+        },
+      },
+    },
+    transform: jsonSchemaTransform,
+    transformObject: jsonSchemaTransformObject,
   });
+  // Make sure webhook-only schemas are in the registry even though no route references them.
+  void WebhookEvent;
+
+  await app.register(healthRoutes(deps.readinessChecks));
+  await app.register(uploadRoutes);
+  await app.register(invoiceRoutes);
+  await app.register(adminRoutes);
 
   return app;
 }

@@ -7,7 +7,7 @@ const env = loadEnv();
 const db = createDb(env.DATABASE_URL);
 const redis = new Redis(env.REDIS_URL, { maxRetriesPerRequest: 1, lazyConnect: false });
 
-const app = buildApp({
+const app = await buildApp({
   logLevel: env.LOG_LEVEL,
   readinessChecks: {
     postgres: async () => {

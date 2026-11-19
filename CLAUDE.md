@@ -42,7 +42,18 @@ rest to human review.
 - Models: `claude-sonnet-5-5` for extraction, `claude-haiku-5-5` for classification. Use only exact
   model IDs.
 
+## Contracts
+
+- Zod schemas in `packages/contracts/src` are the source of truth. Routes in `apps/api` use them via
+  `fastify-type-provider-zod`; `openapi.yaml` is generated from the live routes, and the typed client
+  (`@ledgerline/contracts/client`, openapi-fetch) from `openapi.yaml`.
+- After changing a schema or route: `pnpm contracts:generate` and commit. CI runs `pnpm contracts:check`.
+- Money in the API is `{ amountMinor, currency }`. Money from the model is a decimal string; converting
+  to minor units is code's job because it depends on the currency's exponent.
+- No GraphQL: the API is job submission + list/detail reads; REST + OpenAPI covers it. Revisit only if
+  a UI needs flexible nested reads.
+
 ## Commands
 
 `pnpm infra:up`, `pnpm build`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:integration`,
-`pnpm db:generate`, `pnpm db:migrate`, `pnpm db:seed`, `pnpm eval`, `pnpm dev`.
+`pnpm contracts:generate`, `pnpm contracts:check`, `pnpm db:generate`, `pnpm db:migrate`, `pnpm db:seed`, `pnpm eval`, `pnpm dev`.

@@ -9,6 +9,7 @@ const valid = {
   S3_ACCESS_KEY_ID: "ledgerline",
   S3_SECRET_ACCESS_KEY: "local-secret",
   WEBHOOK_SIGNING_SECRET: "0123456789abcdef",
+  CURSOR_SIGNING_SECRET: "fedcba9876543210",
 };
 
 describe("loadEnv", () => {

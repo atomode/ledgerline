@@ -1,24 +1,91 @@
-import { loadEnv } from "@ledgerline/config";
-import { Redis } from "ioredis";
+import Anthropic from "@anthropic-ai/sdk";
+import { Worker } from "bullmq";
 import { pino } from "pino";
+import { loadEnv } from "@ledgerline/config";
+import { createDb } from "@ledgerline/db";
+import {
+  MAINTENANCE_QUEUE,
+  createDlqQueues,
+  createRedis,
+  createStageQueues,
+  createTokenBucket,
+} from "@ledgerline/queues";
+import { Queue } from "bullmq";
+import { createStorage } from "@ledgerline/storage";
+import type { WorkerDeps } from "./deps.js";
+import { createStageWorker } from "./stage-worker.js";
+import { createExtractProcessor } from "./processors/extract.js";
+import {
+  createClassifyProcessor,
+  createMatchProcessor,
+  createNotifyProcessor,
+  createValidateProcessor,
+} from "./processors/stubs.js";
+import { startOutboxPublisher } from "./outbox.js";
+import { reconcile } from "./reconciler.js";
 
-/**
- * Worker entrypoint. Queues and processors (classify, extract, validate, match, notify)
- * are added in step 4. For now it proves config + Redis connectivity and shuts down cleanly.
- */
 const env = loadEnv();
 const log = pino({ level: env.LOG_LEVEL, base: { service: "ledgerline-worker" } });
-// BullMQ requires maxRetriesPerRequest: null on worker connections.
-const connection = new Redis(env.REDIS_URL, { maxRetriesPerRequest: null });
-// ioredis reconnects on its own; log instead of crashing on "Unhandled error event".
-connection.on("error", (err) => log.warn({ err: err.message }, "redis connection error"));
+const redis = createRedis(env.REDIS_URL);
+redis.on("error", (err) => log.warn({ err: err.message }, "redis connection error"));
+const dbHandle = createDb(env.DATABASE_URL);
 
-await connection.ping();
-log.info("worker started; no processors registered yet");
+const deps: WorkerDeps = {
+  db: dbHandle.db,
+  pool: dbHandle.pool,
+  redis,
+  storage: createStorage({
+    endpoint: env.S3_ENDPOINT,
+    region: env.S3_REGION,
+    bucket: env.S3_BUCKET,
+    accessKeyId: env.S3_ACCESS_KEY_ID,
+    secretAccessKey: env.S3_SECRET_ACCESS_KEY,
+  }),
+  // maxRetries: 0 because BullMQ owns retries; two retry layers would multiply attempts.
+  anthropic: new Anthropic({
+    apiKey: env.ANTHROPIC_API_KEY ?? "missing",
+    maxRetries: 0,
+    timeout: 120_000,
+  }),
+  queues: createStageQueues(redis),
+  dlqs: createDlqQueues(redis),
+  tokenBucket: createTokenBucket(redis, "ll:itpm", env.ANTHROPIC_ITPM_BUDGET),
+  log,
+  extractionModel: env.EXTRACTION_MODEL,
+  webhookSecret: env.WEBHOOK_SIGNING_SECRET,
+};
 
+const workers = [
+  createStageWorker("classify", createClassifyProcessor(deps), deps),
+  createStageWorker("extract", createExtractProcessor(deps), deps, { concurrency: 8 }),
+  createStageWorker("validate", createValidateProcessor(deps), deps),
+  createStageWorker("match", createMatchProcessor(deps), deps),
+  createStageWorker("notify", createNotifyProcessor(), deps),
+];
+
+const maintenance = new Queue(MAINTENANCE_QUEUE, { connection: redis });
+await maintenance.upsertJobScheduler("reconcile", { every: 60_000 }, { name: "reconcile" });
+const maintenanceWorker = new Worker(
+  MAINTENANCE_QUEUE,
+  async (job) => (job.name === "reconcile" ? reconcile(deps) : undefined),
+  { connection: redis, concurrency: 1 },
+);
+const stopOutbox = startOutboxPublisher(deps);
+
+log.info({ stages: workers.map((w) => w.name) }, "worker started");
+
+let shuttingDown = false;
 const shutdown = async (signal: string) => {
-  log.info({ signal }, "shutting down");
-  await connection.quit();
+  if (shuttingDown) return;
+  shuttingDown = true;
+  log.info({ signal }, "shutting down: no new jobs, waiting up to 30s for in-flight work");
+  const timeout = new Promise((r) => setTimeout(r, 30_000));
+  await Promise.race([
+    Promise.all([...workers, maintenanceWorker].map((w) => w.close()).concat(stopOutbox())),
+    timeout,
+  ]);
+  await Promise.allSettled([maintenance.close(), dbHandle.close()]);
+  redis.disconnect();
   process.exit(0);
 };
 process.once("SIGTERM", () => void shutdown("SIGTERM"));

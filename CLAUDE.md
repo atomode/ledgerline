@@ -42,6 +42,17 @@ rest to human review.
 - Models: `claude-sonnet-5-5` for extraction, `claude-haiku-5-5` for classification. Use only exact
   model IDs.
 
+## Queues and workers
+
+- Stage queues `ll-<stage>` (classify, extract, validate, match, notify), DLQs `ll-<stage>-dlq`.
+- Job ids are deterministic: `<invoiceId>__<stage>` (BullMQ forbids ":" in custom ids). Completed
+  jobs are removed so the reconciler can enqueue the same id again.
+- Processors check invoice status first and update with a status guard (`WHERE status = ...`), so
+  duplicate or replayed jobs are no-ops. Enqueue the next stage only after the DB commit.
+- Retry policy: `fullJitterBackoff` (base 2s, cap 60s, honors Retry-After), 5 attempts.
+  `classifyError` decides retryable vs `UnrecoverableError`.
+- Chaos test: `pnpm --filter @ledgerline/worker chaos` (needs infra up, migrations, seed, build).
+
 ## Contracts
 
 - Zod schemas in `packages/contracts/src` are the source of truth. Routes in `apps/api` use them via

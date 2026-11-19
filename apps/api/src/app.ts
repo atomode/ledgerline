@@ -8,19 +8,17 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { WebhookEvent } from "@ledgerline/contracts";
-import type { Check } from "./readiness.js";
+import type { ApiDeps } from "./deps.js";
+import { registerAuth } from "./auth.js";
 import { registerProblemHandlers } from "./problem.js";
 import { healthRoutes } from "./routes/health.js";
 import { uploadRoutes } from "./routes/uploads.js";
 import { invoiceRoutes } from "./routes/invoices.js";
 import { adminRoutes } from "./routes/admin.js";
 
-export interface AppDeps {
-  readinessChecks: Record<string, Check>;
-  logLevel?: string;
-}
+export type { ApiDeps } from "./deps.js";
 
-export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
+export async function buildApp(deps: ApiDeps): Promise<FastifyInstance> {
   const app = Fastify({
     logger: { level: deps.logLevel ?? "info" },
     genReqId: () => crypto.randomUUID(),
@@ -29,6 +27,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
   registerProblemHandlers(app);
+  registerAuth(app, deps.authenticate);
 
   await app.register(fastifySwagger, {
     openapi: {
@@ -84,9 +83,9 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   void WebhookEvent;
 
   await app.register(healthRoutes(deps.readinessChecks));
-  await app.register(uploadRoutes);
+  await app.register(uploadRoutes(deps));
   await app.register(invoiceRoutes);
-  await app.register(adminRoutes);
+  await app.register(adminRoutes(deps));
 
   return app;
 }

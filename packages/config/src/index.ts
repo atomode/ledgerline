@@ -21,6 +21,8 @@ export const EnvSchema = z.object({
   API_HOST: z.string().default("0.0.0.0"),
   API_PORT: z.coerce.number().int().min(1).max(65535).default(3000),
   WEBHOOK_SIGNING_SECRET: z.string().min(16),
+  /** HMAC key for pagination cursors so clients can't forge or edit them. */
+  CURSOR_SIGNING_SECRET: z.string().min(16),
   OTEL_EXPORTER_OTLP_ENDPOINT: z.url().optional(),
 });
 

@@ -136,7 +136,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** List dead-lettered jobs */
+    /** List dead-lettered jobs for your tenant, newest first */
     get: operations["listDeadLetters"];
     put?: never;
     post?: never;

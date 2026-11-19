@@ -2088,7 +2088,7 @@ paths:
   /v1/admin/dlq:
     get:
       operationId: listDeadLetters
-      summary: List dead-lettered jobs
+      summary: List dead-lettered jobs for your tenant, newest first
       tags:
         - admin
       parameters:

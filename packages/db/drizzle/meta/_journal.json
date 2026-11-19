@@ -22,6 +22,13 @@
       "when": 1795048981537,
       "tag": "0002_money_minor_units_expand",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795049298957,
+      "tag": "0003_tenant_webhook_url",
+      "breakpoints": true
     }
   ]
 }

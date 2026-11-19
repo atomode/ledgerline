@@ -74,6 +74,8 @@ export const reviewActionType = pgEnum("review_action_type", ["approve", "reject
 export const tenants = pgTable("tenants", {
   id: id(),
   name: text("name").notNull(),
+  /** Where invoice lifecycle events are POSTed. Null = events are recorded but not delivered. */
+  webhookUrl: text("webhook_url"),
   ...timestamps,
 });
 

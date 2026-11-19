@@ -1,0 +1,56 @@
+{
+  "id": "seed-003",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Cruickshank - Lind Ltd",
+      "taxId": "4ZEEE8UFRO",
+      "address": null
+    },
+    "invoiceNumber": "INV-866564",
+    "invoiceDate": "2026-09-27",
+    "dueDate": "2026-10-27",
+    "currency": "USD",
+    "poNumber": "PO-10229",
+    "subtotal": "68164.49",
+    "tax": "3408.22",
+    "discount": null,
+    "total": "71572.71",
+    "lineItems": [
+      {
+        "description": "Office chair",
+        "sku": "SKU-2A80IP",
+        "quantity": "31",
+        "unitPrice": "212.76",
+        "amount": "6595.56"
+      },
+      {
+        "description": "Label printer ribbon",
+        "sku": "SKU-2EDF2M",
+        "quantity": "46",
+        "unitPrice": "813.65",
+        "amount": "37427.90"
+      },
+      {
+        "description": "Pallet wrap 500mm",
+        "sku": "SKU-758U2J",
+        "quantity": "25",
+        "unitPrice": "142.83",
+        "amount": "3570.75"
+      },
+      {
+        "description": "Laptop stand",
+        "sku": "SKU-4FFEBT",
+        "quantity": "23",
+        "unitPrice": "894.36",
+        "amount": "20570.28"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "lineCount": 4
+  }
+}

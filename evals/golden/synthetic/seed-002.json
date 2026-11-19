@@ -1,0 +1,49 @@
+{
+  "id": "seed-002",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Feeney - Armstrong Inc.",
+      "taxId": null,
+      "address": null
+    },
+    "invoiceNumber": "INV-398763",
+    "invoiceDate": "2026-07-17",
+    "dueDate": "2026-08-16",
+    "currency": "USD",
+    "poNumber": "PO-10151",
+    "subtotal": "43555.25",
+    "tax": "3484.42",
+    "discount": null,
+    "total": "47039.67",
+    "lineItems": [
+      {
+        "description": "Label printer ribbon",
+        "sku": "SKU-YEMS3F",
+        "quantity": "15",
+        "unitPrice": "367.36",
+        "amount": "5510.40"
+      },
+      {
+        "description": "Office chair",
+        "sku": "SKU-I9IWHJ",
+        "quantity": "5",
+        "unitPrice": "620.10",
+        "amount": "3100.50"
+      },
+      {
+        "description": "Cloud hosting (monthly)",
+        "sku": "SKU-6HRZ81",
+        "quantity": "49",
+        "unitPrice": "713.15",
+        "amount": "34944.35"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "lineCount": 3
+  }
+}

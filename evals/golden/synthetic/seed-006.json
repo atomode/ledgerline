@@ -1,0 +1,49 @@
+{
+  "id": "seed-006",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Jacobs, Bosco and Terry Co.",
+      "taxId": "ZLA50J6SOZ",
+      "address": null
+    },
+    "invoiceNumber": "INV-610497",
+    "invoiceDate": "2026-05-11",
+    "dueDate": "2026-06-10",
+    "currency": "EUR",
+    "poNumber": "PO-10239",
+    "subtotal": "42405.88",
+    "tax": "3392.47",
+    "discount": null,
+    "total": "45798.35",
+    "lineItems": [
+      {
+        "description": "Forklift maintenance",
+        "sku": "SKU-836SEQ",
+        "quantity": "41",
+        "unitPrice": "830.66",
+        "amount": "34057.06"
+      },
+      {
+        "description": "Printer paper A4 (box)",
+        "sku": "SKU-JYFGZ4",
+        "quantity": "42",
+        "unitPrice": "117.16",
+        "amount": "4920.72"
+      },
+      {
+        "description": "Cloud hosting (monthly)",
+        "sku": "SKU-DPZMRZ",
+        "quantity": "15",
+        "unitPrice": "228.54",
+        "amount": "3428.10"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "lineCount": 3
+  }
+}

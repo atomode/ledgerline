@@ -1,0 +1,70 @@
+{
+  "id": "seed-012",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Feeney - Armstrong Inc.",
+      "taxId": null,
+      "address": null
+    },
+    "invoiceNumber": "INV-694641",
+    "invoiceDate": "2026-10-14",
+    "dueDate": "2026-11-13",
+    "currency": "USD",
+    "poNumber": "PO-10297",
+    "subtotal": "23143.66",
+    "tax": "1851.49",
+    "discount": null,
+    "total": "24995.15",
+    "lineItems": [
+      {
+        "description": "Hazmat disposal service",
+        "sku": "SKU-3DBCJ1",
+        "quantity": "31",
+        "unitPrice": "213.16",
+        "amount": "6607.96"
+      },
+      {
+        "description": "Office chair",
+        "sku": "SKU-4G2L64",
+        "quantity": "8",
+        "unitPrice": "387.20",
+        "amount": "3097.60"
+      },
+      {
+        "description": "Laptop stand",
+        "sku": "SKU-9M0BG7",
+        "quantity": "22",
+        "unitPrice": "15.08",
+        "amount": "331.76"
+      },
+      {
+        "description": "Cloud hosting (monthly)",
+        "sku": "SKU-5UTJ4R",
+        "quantity": "13",
+        "unitPrice": "590.35",
+        "amount": "7674.55"
+      },
+      {
+        "description": "Pallet wrap 500mm",
+        "sku": "SKU-TBODK1",
+        "quantity": "8",
+        "unitPrice": "163.63",
+        "amount": "1309.04"
+      },
+      {
+        "description": "USB-C dock",
+        "sku": "SKU-PRLMBY",
+        "quantity": "25",
+        "unitPrice": "164.91",
+        "amount": "4122.75"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "lineCount": 6
+  }
+}

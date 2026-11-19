@@ -22,5 +22,9 @@ export default tseslint.config(
       "no-console": "error",
     },
   },
-  { files: ["**/*.config.{js,ts}", "**/scripts/**"], rules: { "no-console": "off" } },
+  {
+    // Dev scripts (seeds, backfills, renderers) print progress and index into data they just built.
+    files: ["**/*.config.{js,ts}", "**/scripts/**"],
+    rules: { "no-console": "off", "@typescript-eslint/no-non-null-assertion": "off" },
+  },
 );

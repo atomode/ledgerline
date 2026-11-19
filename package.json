@@ -22,7 +22,8 @@
     "infra:up": "docker compose -f infra/docker-compose.yml up -d --wait",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "contracts:generate": "turbo run build --filter=@ledgerline/api... && tsx apps/api/scripts/generate-openapi.ts && openapi-typescript packages/contracts/openapi.yaml -o packages/contracts/src/client/schema.gen.ts && prettier --write packages/contracts/src/client/schema.gen.ts >/dev/null",
-    "contracts:check": "turbo run build --filter=@ledgerline/api... && tsx apps/api/scripts/generate-openapi.ts --check && openapi-typescript packages/contracts/openapi.yaml -o /tmp/ledgerline-schema.gen.ts && prettier --stdin-filepath x.ts < /tmp/ledgerline-schema.gen.ts | diff -q - packages/contracts/src/client/schema.gen.ts && redocly lint packages/contracts/openapi.yaml"
+    "contracts:check": "turbo run build --filter=@ledgerline/api... && tsx apps/api/scripts/generate-openapi.ts --check && openapi-typescript packages/contracts/openapi.yaml -o /tmp/ledgerline-schema.gen.ts && prettier --stdin-filepath x.ts < /tmp/ledgerline-schema.gen.ts | diff -q - packages/contracts/src/client/schema.gen.ts && redocly lint packages/contracts/openapi.yaml",
+    "db:backfill:money": "pnpm --filter @ledgerline/db db:backfill:money"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

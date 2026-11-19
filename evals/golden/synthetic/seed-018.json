@@ -1,0 +1,63 @@
+{
+  "id": "seed-018",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Davis, Dicki and Lindgren LLC",
+      "taxId": "Y63JH1A8K4",
+      "address": null
+    },
+    "invoiceNumber": "INV-152550",
+    "invoiceDate": "2026-09-30",
+    "dueDate": "2026-10-30",
+    "currency": "USD",
+    "poNumber": "PO-10112",
+    "subtotal": "105693.94",
+    "tax": "0.00",
+    "discount": null,
+    "total": "105693.94",
+    "lineItems": [
+      {
+        "description": "USB-C dock",
+        "sku": "SKU-E038XV",
+        "quantity": "47",
+        "unitPrice": "681.53",
+        "amount": "32031.91"
+      },
+      {
+        "description": "Label printer ribbon",
+        "sku": "SKU-CUIO9Q",
+        "quantity": "29",
+        "unitPrice": "678.99",
+        "amount": "19690.71"
+      },
+      {
+        "description": "Office chair",
+        "sku": "SKU-JOCMIV",
+        "quantity": "45",
+        "unitPrice": "846.92",
+        "amount": "38111.40"
+      },
+      {
+        "description": "Pallet wrap 500mm",
+        "sku": "SKU-D498IH",
+        "quantity": "29",
+        "unitPrice": "384.93",
+        "amount": "11162.97"
+      },
+      {
+        "description": "Coffee beans 1kg",
+        "sku": "SKU-J0PCRG",
+        "quantity": "15",
+        "unitPrice": "313.13",
+        "amount": "4696.95"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "lineCount": 5
+  }
+}

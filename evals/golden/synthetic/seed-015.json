@@ -1,0 +1,35 @@
+{
+  "id": "seed-015",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Morar Inc Co.",
+      "taxId": "LRVKXPQ2SM",
+      "address": null
+    },
+    "invoiceNumber": "INV-904669",
+    "invoiceDate": "2026-05-05",
+    "dueDate": "2026-06-04",
+    "currency": "USD",
+    "poNumber": null,
+    "subtotal": "883.50",
+    "tax": "44.18",
+    "discount": null,
+    "total": "927.68",
+    "lineItems": [
+      {
+        "description": "Office chair",
+        "sku": null,
+        "quantity": "3",
+        "unitPrice": "294.50",
+        "amount": "883.50"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "lineCount": 1
+  }
+}

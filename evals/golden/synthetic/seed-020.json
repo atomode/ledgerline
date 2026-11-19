@@ -1,0 +1,42 @@
+{
+  "id": "seed-020",
+  "labels": {
+    "documentType": "credit_note",
+    "vendor": {
+      "name": "Nitzsche, Koelpin and Heidenreich Ltd",
+      "taxId": null,
+      "address": null
+    },
+    "invoiceNumber": "CN-333876",
+    "invoiceDate": "2026-05-25",
+    "dueDate": null,
+    "currency": "JPY",
+    "poNumber": "PO-10076",
+    "subtotal": "-850564",
+    "tax": "0",
+    "discount": null,
+    "total": "-850564",
+    "lineItems": [
+      {
+        "description": "Forklift maintenance",
+        "sku": "SKU-1NOMNU",
+        "quantity": "6",
+        "unitPrice": "68396",
+        "amount": "-410376"
+      },
+      {
+        "description": "Coffee beans 1kg",
+        "sku": "SKU-DRGMSS",
+        "quantity": "7",
+        "unitPrice": "62884",
+        "amount": "-440188"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "lineCount": 2
+  }
+}

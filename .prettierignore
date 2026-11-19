@@ -3,3 +3,4 @@ coverage
 pnpm-lock.yaml
 **/drizzle/meta
 packages/contracts/openapi.yaml
+evals/golden/**/*.json

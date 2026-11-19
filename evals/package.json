@@ -4,6 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "eval": "node -e \"console.log('eval harness arrives in step 6')\""
+    "eval": "node -e \"console.log('eval harness arrives in step 6')\"",
+    "golden:render-seed": "tsx --env-file-if-exists=../.env scripts/render-seed-invoices.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@ledgerline/config": "workspace:*",
+    "@ledgerline/contracts": "workspace:*",
+    "@ledgerline/db": "workspace:*",
+    "drizzle-orm": "^0.45.4"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
   }
 }

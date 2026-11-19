@@ -1,0 +1,35 @@
+{
+  "id": "seed-005",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Bode and Sons Co.",
+      "taxId": "2EQ8F8X5B8",
+      "address": null
+    },
+    "invoiceNumber": "INV-133284",
+    "invoiceDate": "2026-06-14",
+    "dueDate": "2026-07-14",
+    "currency": "USD",
+    "poNumber": null,
+    "subtotal": "594.70",
+    "tax": "0.00",
+    "discount": null,
+    "total": "594.70",
+    "lineItems": [
+      {
+        "description": "Printer paper A4 (box)",
+        "sku": null,
+        "quantity": "10",
+        "unitPrice": "59.47",
+        "amount": "594.70"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "lineCount": 1
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "seed-001",
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Lubowitz - Purdy GmbH",
+      "taxId": null,
+      "address": null
+    },
+    "invoiceNumber": "INV-860507",
+    "invoiceDate": "2026-05-04",
+    "dueDate": "2026-06-03",
+    "currency": "USD",
+    "poNumber": "PO-10100",
+    "subtotal": "85070.77",
+    "tax": "4253.54",
+    "discount": null,
+    "total": "89324.31",
+    "lineItems": [
+      {
+        "description": "Forklift maintenance",
+        "sku": "SKU-2RJ856",
+        "quantity": "33",
+        "unitPrice": "773.40",
+        "amount": "25522.20"
+      },
+      {
+        "description": "Safety glasses",
+        "sku": "SKU-GGKFUF",
+        "quantity": "7",
+        "unitPrice": "474.85",
+        "amount": "3323.95"
+      },
+      {
+        "description": "Coffee beans 1kg",
+        "sku": "SKU-ATMICV",
+        "quantity": "46",
+        "unitPrice": "734.76",
+        "amount": "33798.96"
+      },
+      {
+        "description": "Label printer ribbon",
+        "sku": "SKU-OJF5LD",
+        "quantity": "34",
+        "unitPrice": "155.61",
+        "amount": "5290.74"
+      },
+      {
+        "description": "Laptop stand",
+        "sku": "SKU-5ZAMWI",
+        "quantity": "21",
+        "unitPrice": "228.32",
+        "amount": "4794.72"
+      },
+      {
+        "description": "Label printer ribbon",
+        "sku": "SKU-1DZE7Z",
+        "quantity": "15",
+        "unitPrice": "822.68",
+        "amount": "12340.20"
+      }
+    ]
+  },
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": false,
+    "lineCount": 6
+  }
+}

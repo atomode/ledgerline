@@ -1,0 +1,22 @@
+{
+  "name": "@ledgerline/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@ledgerline/config": "workspace:*",
+    "@ledgerline/db": "workspace:*",
+    "@ledgerline/extraction": "workspace:*",
+    "@ledgerline/matching": "workspace:*",
+    "bullmq": "^5.63.0",
+    "ioredis": "^5.8.0",
+    "pino": "^10.1.0"
+  },
+  "devDependencies": {}
+}

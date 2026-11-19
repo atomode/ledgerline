@@ -1,0 +1,21 @@
+{
+  "name": "@ledgerline/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@ledgerline/config": "workspace:*",
+    "@ledgerline/contracts": "workspace:*",
+    "@ledgerline/db": "workspace:*",
+    "fastify": "^5.6.0",
+    "ioredis": "^5.8.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {}
+}

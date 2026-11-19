@@ -1,0 +1,24 @@
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    projects: [
+      {
+        test: {
+          name: "unit",
+          include: ["{apps,packages}/*/src/**/*.test.ts"],
+          environment: "node",
+        },
+      },
+      {
+        test: {
+          name: "integration",
+          include: ["{apps,packages}/*/test/integration/**/*.test.ts"],
+          environment: "node",
+          testTimeout: 60_000,
+          hookTimeout: 120_000,
+        },
+      },
+    ],
+  },
+});

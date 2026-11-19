@@ -1,0 +1,9 @@
+{
+  "name": "@ledgerline/evals",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "eval": "node -e \"console.log('eval harness arrives in step 6')\""
+  }
+}

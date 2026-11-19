@@ -38,7 +38,12 @@ rest to human review.
 
 - TypeScript strict, ESM, NodeNext resolution: relative imports end in `.js`.
 - Unit tests: `src/**/*.test.ts`, no network or Docker. Integration tests: `test/integration/**`,
-  Testcontainers.
+  Testcontainers. `test/global-setup.ts` starts Postgres + Redis once and migrates a template DB;
+  each file calls `freshDatabase()` (a clone of the template) and `freshRedis()` from
+  `test/support.ts`. HTTP to Anthropic is mocked with msw (`onUnhandledFrame: "error"`), never a
+  hand-rolled client stub, so the real SDK error types reach `classifyError`.
+- A test that never failed proves nothing: when fixing a bug, write the test first and watch it
+  fail. Coverage gates: 70% lines overall, 85% for `packages/matching` and `packages/contracts`.
 - Models: `claude-sonnet-5-5` for extraction, `claude-haiku-5-5` for classification. Use only exact
   model IDs.
 

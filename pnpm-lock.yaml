@@ -11,6 +11,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.0
         version: 9.39.5
+      '@ledgerline/db':
+        specifier: workspace:*
+        version: link:packages/db
       '@redocly/cli':
         specifier: ^2.80.0
         version: 2.80.0
@@ -23,9 +26,15 @@ importers:
       '@types/node':
         specifier: ^22.20.5
         version: 22.20.5
+      '@types/pg':
+        specifier: ^8.23.1
+        version: 8.23.1
       '@vitest/coverage-v8':
         specifier: ^4.1.12
         version: 4.1.12(vitest@4.1.12)
+      drizzle-orm:
+        specifier: ^0.45.4
+        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
       eslint:
         specifier: ^9.39.0
         version: 9.39.5
@@ -35,12 +44,18 @@ importers:
       fast-check:
         specifier: ^4.10.3
         version: 4.10.3
+      ioredis:
+        specifier: ^5.11.1
+        version: 5.11.1
       msw:
         specifier: ^3.0.7
         version: 3.0.7(@types/node@22.20.5)(typescript@5.9.3)(vite@8.3.8(@types/node@22.20.5)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
       openapi-typescript:
         specifier: ^7.13.0
         version: 7.13.0(typescript@5.9.3)
+      pg:
+        specifier: ^8.23.1
+        version: 8.23.1
       prettier:
         specifier: ^3.6.0
         version: 3.10.1

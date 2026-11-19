@@ -15,3 +15,17 @@ pnpm build
 pnpm dev             # API on :3000, worker
 curl localhost:3000/readyz
 ```
+
+## Tests
+
+```bash
+pnpm test               # unit: pure logic, no Docker (~1s)
+pnpm test:integration   # Testcontainers Postgres 16 + Redis 7; needs Docker (~10s)
+pnpm test:coverage      # both, with coverage gates
+```
+
+The integration suites cover the failure modes that matter in production: duplicate uploads,
+Idempotency-Key replay and mismatch, a backpressure 429 that must not be cached, keyset
+pagination while rows are being inserted, stale-ETag 412s, cross-tenant 404s, 429-then-success
+and persistent-529-to-DLQ on the extract stage, the one-repair-then-human-review path, and
+exactly-once outbox delivery under four concurrent publishers.

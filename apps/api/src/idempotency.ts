@@ -15,7 +15,8 @@ declare module "fastify" {
 const requestHash = (req: FastifyRequest) =>
   createHash("sha256")
     .update(
-      `${req.method} ${req.routeOptions.url}\n${JSON.stringify(req.params)}\n${JSON.stringify(req.body ?? null)}`,
+      // If-Match is part of the request: a retry after reloading the ETag is a different request.
+      `${req.method} ${req.routeOptions.url}\n${JSON.stringify(req.params)}\n${req.headers["if-match"] ?? ""}\n${JSON.stringify(req.body ?? null)}`,
     )
     .digest("hex");
 
@@ -24,7 +25,8 @@ const requestHash = (req: FastifyRequest) =>
  * - first request claims the key (INSERT ... ON CONFLICT DO NOTHING) before the handler runs
  * - a retry with the same key and body gets the stored status + body, with `idempotent-replayed: true`
  * - the same key with a different body is a 422; a retry while the first is still running is a 409
- * - 5xx responses release the key so the client can retry for real
+ * - 5xx and 429 release the key so the client can retry for real (a backpressure 429 must not
+ *   be cached as the permanent answer for that key)
  */
 export function registerIdempotency(app: FastifyInstance, db: () => Db): void {
   app.addHook("preHandler", async (req: FastifyRequest, reply: FastifyReply) => {
@@ -78,7 +80,7 @@ export function registerIdempotency(app: FastifyInstance, db: () => Db): void {
       eq(schema.idempotencyKeys.tenantId, req.principal.tenantId),
       eq(schema.idempotencyKeys.key, req.idempotencyKey),
     );
-    if (reply.statusCode >= 500) {
+    if (reply.statusCode >= 500 || reply.statusCode === 429) {
       await db().delete(schema.idempotencyKeys).where(where);
       return payload;
     }

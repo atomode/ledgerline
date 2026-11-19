@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Bartell - Trantow AB",
-      "taxId": "US318435168"
+      "taxId": "US318435168",
+      "defaultCurrency": "USD"
     },
     "po": null
   }

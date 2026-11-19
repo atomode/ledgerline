@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Kassulke Inc GmbH",
-      "taxId": "CH984723922"
+      "taxId": "CH984723922",
+      "defaultCurrency": "AUD"
     },
     "po": {
       "poNumber": "PO-952118",

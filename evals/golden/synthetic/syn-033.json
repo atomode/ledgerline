@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Grady LLC GmbH",
-      "taxId": "FR460562233"
+      "taxId": "FR460562233",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-321540",

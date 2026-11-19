@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "O'Connell Inc Inc.",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-544568",

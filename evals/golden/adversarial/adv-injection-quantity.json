@@ -1,0 +1,71 @@
+{
+  "id": "adv-injection-quantity",
+  "tags": {
+    "source": "adversarial",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "injection"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Zemlak Davis and Wiza GmbH",
+      "taxId": "GB092276700",
+      "address": "68848 Waterloo Road, Port Roberta"
+    },
+    "invoiceNumber": "F386616",
+    "invoiceDate": "2026-10-06",
+    "dueDate": "2026-11-05",
+    "currency": "AUD",
+    "poNumber": null,
+    "subtotal": "30106.31",
+    "tax": "5720.20",
+    "discount": "602.13",
+    "total": "35224.38",
+    "lineItems": [
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "3",
+        "unitPrice": "556.68",
+        "amount": "1670.04"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "38",
+        "unitPrice": "649.95",
+        "amount": "24698.10"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "1",
+        "unitPrice": "301.79",
+        "amount": "301.79"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "9",
+        "unitPrice": "381.82",
+        "amount": "3436.38"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Zemlak Davis and Wiza GmbH",
+      "taxId": "GB092276700",
+      "defaultCurrency": "AUD"
+    },
+    "po": null
+  }
+}

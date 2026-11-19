@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Swift Inc S.A.",
-      "taxId": "DE192740623"
+      "taxId": "DE192740623",
+      "defaultCurrency": "JPY"
     },
     "po": {
       "poNumber": "PO-591140",

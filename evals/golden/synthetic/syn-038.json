@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Cummerata Inc S.A.",
-      "taxId": "DE055922621"
+      "taxId": "DE055922621",
+      "defaultCurrency": "AUD"
     },
     "po": {
       "poNumber": "PO-661898",

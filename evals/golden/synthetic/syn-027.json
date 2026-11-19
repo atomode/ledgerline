@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "Heller - Hilpert GmbH",
-      "taxId": "DE534975254"
+      "taxId": "DE534975254",
+      "defaultCurrency": "EUR"
     },
     "po": null
   }

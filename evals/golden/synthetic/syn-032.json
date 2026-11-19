@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Kub Hintz and Monahan Inc.",
-      "taxId": "CH884161774"
+      "taxId": "CH884161774",
+      "defaultCurrency": "JPY"
     },
     "po": null
   }

@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Hettinger and Sons S.A.",
-      "taxId": "DE302056894"
+      "taxId": "DE302056894",
+      "defaultCurrency": "EUR"
     },
     "po": null
   }

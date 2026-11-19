@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Runte-Cole Inc Pty Ltd",
-      "taxId": "DE701229845"
+      "taxId": "DE701229845",
+      "defaultCurrency": "CHF"
     },
     "po": {
       "poNumber": "PO-239836",

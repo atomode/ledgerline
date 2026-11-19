@@ -92,6 +92,7 @@ export const createExtractProcessor =
             promptVersion: result.promptVersion,
             model: result.model,
             reviewFlags: result.warnings,
+            currencyAsPrinted: result.currencyAsPrinted,
             // Cumulative across stages: classify already recorded its (small) share.
             ...addCost(
               result.usage.inputTokens +

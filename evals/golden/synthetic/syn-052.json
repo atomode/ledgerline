@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Daniel and Sons Inc.",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "CAD"
     },
     "po": {
       "poNumber": "PO-621827",

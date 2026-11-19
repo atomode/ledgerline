@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Oberbrunner and Sons LLC",
-      "taxId": "US416216915"
+      "taxId": "US416216915",
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-056902",

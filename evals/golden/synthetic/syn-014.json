@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Hane - Daniel Ltd",
-      "taxId": "DE989134946"
+      "taxId": "DE989134946",
+      "defaultCurrency": "AUD"
     },
     "po": null
   }

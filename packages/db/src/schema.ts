@@ -104,6 +104,8 @@ export const vendors = pgTable(
     /** lowercased, punctuation and legal suffixes (Ltd, Inc, GmbH) stripped; used for fuzzy match */
     normalizedName: text("normalized_name").notNull(),
     taxId: text("tax_id"),
+    /** Currency this supplier bills in; settles a bare "$" or "¥" when there is no PO. */
+    defaultCurrency: char("default_currency", { length: 3 }),
     aliases: text("aliases")
       .array()
       .notNull()
@@ -237,6 +239,8 @@ export const invoices = pgTable(
     invoiceDate: date("invoice_date"),
     dueDate: date("due_date"),
     currency: char("currency", { length: 3 }),
+    /** Currency marker exactly as printed ("$", "A$", "EUR"); validate resolves ambiguous ones. */
+    currencyAsPrinted: text("currency_as_printed"),
     poNumber: text("po_number"),
     subtotal: decimal("subtotal"),
     tax: decimal("tax"),

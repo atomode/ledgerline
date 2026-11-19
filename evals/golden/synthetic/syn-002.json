@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Kunze Block and Spinka Pty Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-758328",

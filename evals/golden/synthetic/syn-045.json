@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Trantow Russel and Wiegand LLC",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-601696",

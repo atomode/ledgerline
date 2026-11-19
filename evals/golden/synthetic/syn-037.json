@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Mann Mraz and Champlin GmbH",
-      "taxId": "FR188007168"
+      "taxId": "FR188007168",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-417215",

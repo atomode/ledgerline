@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Weber Inc Pty Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-136694",

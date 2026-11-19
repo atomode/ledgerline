@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Considine and Sons AB",
-      "taxId": "DE593513686"
+      "taxId": "DE593513686",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-551006",

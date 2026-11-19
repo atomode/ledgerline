@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Bailey Hilpert and Streich Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": null
   }

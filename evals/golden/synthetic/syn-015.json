@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Gorczany Goodwin and Boyle-Doyle Inc.",
-      "taxId": "DE915157061"
+      "taxId": "DE915157061",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-722145",

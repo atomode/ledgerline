@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Wunsch-Senger Jast and Romaguera S.A.",
-      "taxId": "FR381545194"
+      "taxId": "FR381545194",
+      "defaultCurrency": "JPY"
     },
     "po": {
       "poNumber": "PO-902577",

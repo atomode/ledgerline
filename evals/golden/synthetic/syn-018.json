@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Bashirian - Walker Pty Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-218780",

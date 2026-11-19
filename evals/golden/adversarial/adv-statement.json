@@ -17,7 +17,8 @@
   "context": {
     "vendor": {
       "name": "Roberts Swaniawski and Swift Pty Ltd",
-      "taxId": "CH772229173"
+      "taxId": "CH772229173",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-375994",

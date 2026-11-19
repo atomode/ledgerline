@@ -32,6 +32,8 @@ export interface ExtractResult {
   repaired: boolean;
   /** Conditions code must route to a human even if every check passes. */
   warnings: ExtractionWarning[];
+  /** The currency marker as printed ("$", "A$", "EUR"); code resolves ambiguous ones. */
+  currencyAsPrinted: string | null;
 }
 
 export type ExtractionWarning = "multiple_documents_in_file";
@@ -65,10 +67,13 @@ function textOf(msg: Anthropic.Beta.BetaMessage): string {
 }
 
 /** Parse + strict-validate. Returns the issues instead of throwing so the caller can repair. */
-export function validateModelOutput(
-  text: string,
-):
-  | { ok: true; data: InvoiceExtraction; warnings: ExtractionWarning[] }
+export function validateModelOutput(text: string):
+  | {
+      ok: true;
+      data: InvoiceExtraction;
+      warnings: ExtractionWarning[];
+      currencyAsPrinted: string | null;
+    }
   | { ok: false; issues: string[] } {
   let json: unknown;
   try {
@@ -78,11 +83,13 @@ export function validateModelOutput(
   }
   const parsed = InvoiceExtraction.safeParse(json);
   if (parsed.success) {
-    const multi = (json as { otherDocumentsInFile?: unknown }).otherDocumentsInFile === true;
+    const raw = json as { otherDocumentsInFile?: unknown; currencyAsPrinted?: unknown };
+    const printed = typeof raw.currencyAsPrinted === "string" ? raw.currencyAsPrinted.trim() : "";
     return {
       ok: true,
       data: parsed.data,
-      warnings: multi ? ["multiple_documents_in_file"] : [],
+      warnings: raw.otherDocumentsInFile === true ? ["multiple_documents_in_file"] : [],
+      currencyAsPrinted: printed || null,
     };
   }
   return {
@@ -176,6 +183,7 @@ export async function extractInvoice(
         costMicros: costMicros(servedModel, usage),
         repaired: attempt > 0,
         warnings: result.warnings,
+        currencyAsPrinted: result.currencyAsPrinted,
       };
     }
     if (attempt === 1) {

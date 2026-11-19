@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Braun-VonRueden - Towne AB",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-574110",

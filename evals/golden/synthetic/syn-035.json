@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Ullrich - Shields Ltd",
-      "taxId": "CH009646522"
+      "taxId": "CH009646522",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-258848",

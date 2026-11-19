@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Will Hegmann and Becker Pty Ltd",
-      "taxId": "DE684299469"
+      "taxId": "DE684299469",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-399901",

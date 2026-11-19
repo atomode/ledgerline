@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "King Tremblay and Pfannerstill S.A.",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-526609",

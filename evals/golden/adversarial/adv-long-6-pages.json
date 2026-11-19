@@ -1330,7 +1330,8 @@
   "context": {
     "vendor": {
       "name": "Nienow Oberbrunner and Denesik Inc.",
-      "taxId": "CH877502372"
+      "taxId": "CH877502372",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-196915",

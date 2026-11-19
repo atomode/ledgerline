@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Koelpin-Haley LLC Ltd",
-      "taxId": "FR874818641"
+      "taxId": "FR874818641",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-253730",

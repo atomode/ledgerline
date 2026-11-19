@@ -3,3 +3,4 @@ export { normalizeVendorName } from "./vendor.js";
 export * from "./decimal.js";
 export * from "./arithmetic.js";
 export * from "./three-way.js";
+export * from "./currency.js";

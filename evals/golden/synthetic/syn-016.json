@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Stroman Inc Pty Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "JPY"
     },
     "po": null
   }

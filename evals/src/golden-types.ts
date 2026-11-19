@@ -18,7 +18,8 @@ export type DocumentKind = "invoice" | "credit_note" | "statement" | "not_invoic
 
 /** Master data the deterministic stages need, so the eval can score approval without a database. */
 export interface GoldenContext {
-  vendor: { name: string; taxId: string | null };
+  /** defaultCurrency: what the vendor master says it bills in (settles a bare "$"). */
+  vendor: { name: string; taxId: string | null; defaultCurrency: string | null };
   po: {
     poNumber: string;
     currency: string;

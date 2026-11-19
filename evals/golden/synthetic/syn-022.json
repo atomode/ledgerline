@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "Considine - Toy S.A.",
-      "taxId": "DE577788218"
+      "taxId": "DE577788218",
+      "defaultCurrency": "AUD"
     },
     "po": {
       "poNumber": "PO-539639",

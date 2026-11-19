@@ -84,7 +84,8 @@
   "context": {
     "vendor": {
       "name": "Padberg - Goyette S.A.",
-      "taxId": "CH479831511"
+      "taxId": "CH479831511",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-069544",

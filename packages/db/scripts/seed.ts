@@ -122,6 +122,8 @@ for (let i = 0; i < 300; i++) {
     updatedAt: issued,
   };
   poRows.push(po);
+  // A vendor bills in the currency of its first PO. Set here, not drawn, so the seed sequence is unchanged.
+  vendor.defaultCurrency ??= currency;
 
   const nLines = faker.number.int({ min: 1, max: 6 });
   const lines: PoLine[] = [];

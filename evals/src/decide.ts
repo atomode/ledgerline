@@ -9,8 +9,11 @@ import {
   checkArithmetic,
   decideApproval,
   normalizeVendorName,
+  resolveCurrency,
   threeWayMatch,
+  type CurrencyDecision,
   type MatchOutcome,
+  type RuleResult,
 } from "@ledgerline/matching";
 import type { GoldenContext } from "./golden-types.js";
 
@@ -22,13 +25,40 @@ export function vendorResolves(extracted: InvoiceExtraction["vendor"], ctx: Gold
   return normalizeVendorName(extracted.name) === normalizeVendorName(ctx.vendor.name);
 }
 
+const sameRef = (a: string | null, b: string | null) =>
+  !!a && !!b && a.replace(/\s/g, "").toUpperCase() === b.replace(/\s/g, "").toUpperCase();
+
+/**
+ * Mirrors the validate stage's currency step: the printed marker, then the matched PO, then the
+ * resolved vendor's default. Returns the extraction as the system would store it.
+ */
+export function withResolvedCurrency(
+  x: InvoiceExtraction,
+  printed: string | null,
+  ctx: GoldenContext,
+): { x: InvoiceExtraction; currency: CurrencyDecision } {
+  const po = ctx.po && sameRef(x.poNumber, ctx.po.poNumber) ? ctx.po : null;
+  const currency = resolveCurrency({
+    extracted: x.currency,
+    printed,
+    poCurrency: po?.currency ?? null,
+    vendorDefault: vendorResolves(x.vendor, ctx) ? ctx.vendor.defaultCurrency : null,
+  });
+  return { x: { ...x, currency: currency.currency }, currency };
+}
+
 export interface Decision {
   decision: "approved" | "needs_review";
   failedRules: string[];
   match: MatchOutcome;
 }
 
-export function decide(x: InvoiceExtraction, ctx: GoldenContext, flags: string[]): Decision {
+export function decide(
+  x: InvoiceExtraction,
+  ctx: GoldenContext,
+  flags: string[],
+  extraRules: RuleResult[] = [],
+): Decision {
   const cur = x.currency;
   const m = (v: string) => toMinorUnits(v, cur);
   const rules = [
@@ -44,9 +74,8 @@ export function decide(x: InvoiceExtraction, ctx: GoldenContext, flags: string[]
       totalMinor: m(x.total),
     }),
     { rule: "no_review_flags", passed: flags.length === 0, detail: null },
+    ...extraRules,
   ];
-  const sameRef = (a: string | null, b: string | null) =>
-    !!a && !!b && a.replace(/\s/g, "").toUpperCase() === b.replace(/\s/g, "").toUpperCase();
   const po = ctx.po && sameRef(x.poNumber, ctx.po.poNumber) ? ctx.po : null;
   const match = threeWayMatch({
     invoice: {

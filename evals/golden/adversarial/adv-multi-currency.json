@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "Bradtke Lindgren-Denesik and Kihn AB",
-      "taxId": "CH194643829"
+      "taxId": "CH194643829",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-689272",

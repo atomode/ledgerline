@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "Stark LLC Pty Ltd",
-      "taxId": "DE910263609"
+      "taxId": "DE910263609",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-370357",

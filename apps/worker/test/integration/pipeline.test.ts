@@ -359,8 +359,81 @@ describe("full pipeline", () => {
     );
     const r = await settle(await submit("unknown-vendor"));
     expect(r.row.status).toBe("needs_review");
-    expect(r.failed).toEqual(["vendor_resolved"]);
+    // No marker printed, no PO, no vendor: nothing but the model's guess says it is GBP.
+    expect(r.failed).toEqual(["currency_determined", "vendor_resolved"]);
     expect(r.match?.outcome).toBe("no_po");
+  });
+
+  describe("currency: the model reads the marker, code decides", () => {
+    async function vendorWith(name: string, defaultCurrency: string | null) {
+      await dbh.db.insert(schema.vendors).values({
+        tenantId: TENANT_A,
+        name,
+        normalizedName: normalizeVendorName(name),
+        defaultCurrency,
+      });
+      return { name, taxId: null, address: null };
+    }
+    const detail = async (id: string, rule: string) =>
+      (
+        await dbh.db
+          .select()
+          .from(schema.validationResults)
+          .where(eq(schema.validationResults.invoiceId, id))
+      ).find((r) => r.rule === rule);
+
+    it("a bare $ is settled by the vendor's billing currency, not the model's guess", async () => {
+      const vendor = await vendorWith("Kookaburra Supplies Pty Ltd", "AUD");
+      scriptModels(
+        "invoice",
+        extraction({ vendor, currency: "USD", currencyAsPrinted: "$", poNumber: null }),
+      );
+      const id = await submit("aud-bare-dollar");
+      const r = await settle(id);
+      expect(r.row.currency).toBe("AUD");
+      expect(r.failed).toEqual([]);
+      expect((await detail(id, "currency_determined"))?.detail).toBe(
+        'AUD from vendor_default (printed "$")',
+      );
+      // No PO, so still a human, but for the right reason.
+      expect(r.match?.outcome).toBe("no_po");
+    });
+
+    it("a bare $ with nothing to settle it keeps the invoice out of auto-approval", async () => {
+      scriptModels(
+        "invoice",
+        extraction({
+          vendor: { name: "Unlisted Trading Co", taxId: null, address: null },
+          currency: "USD",
+          currencyAsPrinted: "$",
+          poNumber: null,
+        }),
+      );
+      const r = await settle(await submit("bare-dollar-unknown"));
+      expect(r.row.status).toBe("needs_review");
+      expect(r.failed).toEqual(["currency_determined", "vendor_resolved"]);
+    });
+
+    it("a printed ISO code beats the model's normalization and the invoice still approves", async () => {
+      scriptModels("invoice", extraction({ currency: "USD", currencyAsPrinted: "GBP" }));
+      const r = await settle(await submit("printed-code"));
+      expect(r.row.currency).toBe("GBP");
+      expect(r.row.status).toBe("approved");
+    });
+
+    it("re-derives minor units when the resolved currency has a different exponent", async () => {
+      // ¥ read as JPY (exponent 0) by the model; the vendor bills in CNY (exponent 2).
+      const vendor = await vendorWith("Shenzhen Precision Parts Co", "CNY");
+      scriptModels(
+        "invoice",
+        extraction({ vendor, currency: "JPY", currencyAsPrinted: "¥", poNumber: null }),
+      );
+      const r = await settle(await submit("yen-or-yuan"));
+      expect(r.row.currency).toBe("CNY");
+      expect(r.row.totalMinor).toBe(30_000);
+      expect(r.row.subtotalMinor).toBe(25_000);
+      expect(r.failed).toEqual([]);
+    });
   });
 
   it("credit notes always get a human", async () => {

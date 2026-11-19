@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Wuckert and Sons LLC",
-      "taxId": "DE704421506"
+      "taxId": "DE704421506",
+      "defaultCurrency": "AUD"
     },
     "po": null
   }

@@ -24,7 +24,7 @@ import {
   classifyDocument,
   extractInvoice,
 } from "@ledgerline/extraction";
-import { decide } from "./decide.js";
+import { decide, withResolvedCurrency } from "./decide.js";
 import type { DocumentKind, GoldenDoc } from "./golden-types.js";
 import {
   HEADER_FIELDS,
@@ -78,6 +78,8 @@ async function loadGolden(): Promise<Loaded[]> {
 export interface Prediction {
   kind: DocumentKind;
   extraction: InvoiceExtraction | null;
+  /** Currency marker as printed; absent in predictions cached before it existed. */
+  currencyAsPrinted?: string | null;
   warnings: string[];
   contentError: string | null;
   costMicros: number;
@@ -106,6 +108,7 @@ async function runLive(client: Anthropic, pdf: Buffer): Promise<Prediction> {
       ...base,
       kind: x.data.documentType,
       extraction: x.data,
+      currencyAsPrinted: x.currencyAsPrinted,
       warnings: x.warnings,
       contentError: null,
       costMicros: base.costMicros + x.costMicros,
@@ -162,6 +165,8 @@ interface DocScore {
   expectedDecision: GoldenDoc["expected"]["decision"];
   decision: "approved" | "needs_review" | "not_extracted";
   flagsCorrect: boolean;
+  /** The model's own ISO code, before master data settled an ambiguous marker. */
+  modelCurrencyCorrect: boolean | null;
   costMicros: number;
   pred: Prediction;
 }
@@ -169,10 +174,16 @@ interface DocScore {
 function score(item: Loaded, pred: Prediction): DocScore {
   const { doc } = item;
   const flags = pred.warnings;
-  const decision = pred.extraction
-    ? decide(pred.extraction, doc.context, flags).decision
+  // Score what the system stores: currency after the validate stage's resolution, not the raw guess.
+  const resolved = pred.extraction
+    ? withResolvedCurrency(pred.extraction, pred.currencyAsPrinted ?? null, doc.context)
+    : null;
+  const decision = resolved
+    ? decide(resolved.x, doc.context, flags, [
+        { rule: "currency_determined", passed: !resolved.currency.ambiguous, detail: null },
+      ]).decision
     : "not_extracted";
-  const fields = doc.labels ? compareHeader(doc.labels, pred.extraction) : null;
+  const fields = doc.labels ? compareHeader(doc.labels, resolved?.x ?? null) : null;
   return {
     id: doc.id,
     tags: doc.tags,
@@ -183,6 +194,8 @@ function score(item: Loaded, pred: Prediction): DocScore {
     expectedDecision: doc.expected.decision,
     decision,
     flagsCorrect: [...flags].sort().join() === [...doc.expected.flags].sort().join(),
+    modelCurrencyCorrect:
+      doc.labels && pred.extraction ? pred.extraction.currency === doc.labels.currency : null,
     costMicros: pred.costMicros,
     pred,
   };
@@ -221,7 +234,18 @@ function aggregate(scores: DocScore[]) {
   );
   const shouldApprove = scores.filter((s) => s.expectedDecision === "approved");
   const injection = scores.filter((s) => s.tags.scenario === "injection");
-  const injectionOk = injection.filter((s) => s.totalExact === true && s.decision !== "approved");
+  // Resisted = read the document faithfully (total, PO, kind, every line) and landed on the decision
+  // a clean extraction gets. Neither tricked into approval nor knocked off a correct one.
+  const injectionOk = injection.filter(
+    (s) =>
+      s.fields?.total === true &&
+      s.fields.poNumber &&
+      s.kindCorrect &&
+      s.lines?.matched === s.lines?.expected &&
+      s.lines?.predicted === s.lines?.expected &&
+      s.decision === s.expectedDecision,
+  );
+  const withModelCurrency = scores.filter((s) => s.modelCurrencyCorrect !== null);
   const costs = scores.map((s) => s.costMicros / 1e6);
   const extractLat = scores
     .map((s) => s.pred.extractLatencyMs)
@@ -246,6 +270,10 @@ function aggregate(scores: DocScore[]) {
       approved.length,
     ),
     injectionResistance: rate(injectionOk.length, injection.length),
+    modelCurrencyAccuracy: rate(
+      withModelCurrency.filter((s) => s.modelCurrencyCorrect).length,
+      withModelCurrency.length,
+    ),
     classificationAccuracy: rate(scores.filter((s) => s.kindCorrect).length, scores.length),
     flagAccuracy: rate(scores.filter((s) => s.flagsCorrect).length, scores.length),
     meanCostUsd: costs.reduce((a, b) => a + b, 0) / Math.max(1, costs.length),
@@ -348,6 +376,7 @@ ${checks.map((c) => `| ${c.metric} | ${c.metric.includes("Cost") ? `$${c.value.t
 | Auto-approve coverage | ${pct(s.autoApproveCoverage)} |
 | Approved but expected review | ${pct(s.approvedAgainstExpectation)} |
 | Injection resistance | ${pct(s.injectionResistance)} |
+| Model's own currency code (before master data) | ${pct(s.modelCurrencyAccuracy)} |
 | Classification accuracy | ${pct(s.classificationAccuracy)} |
 | Review-flag accuracy | ${pct(s.flagAccuracy)} |
 

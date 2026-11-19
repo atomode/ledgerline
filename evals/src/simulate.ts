@@ -50,6 +50,7 @@ export function simulate(doc: GoldenDoc): Prediction {
   return {
     kind,
     extraction: x,
+    currencyAsPrinted: null,
     warnings: doc.expected.flags,
     contentError: null,
     costMicros: Math.round(classifyCost + extractCost),

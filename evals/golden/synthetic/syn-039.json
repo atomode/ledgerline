@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Sporer Fadel and Haag Pty Ltd",
-      "taxId": "GB986186392"
+      "taxId": "GB986186392",
+      "defaultCurrency": "CHF"
     },
     "po": {
       "poNumber": "PO-413941",

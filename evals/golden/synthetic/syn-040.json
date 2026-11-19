@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Steuber Inc Ltd",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "JPY"
     },
     "po": {
       "poNumber": "PO-695298",

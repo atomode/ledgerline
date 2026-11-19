@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Treutel Dibbert and Flatley Ltd",
-      "taxId": "FR683752817"
+      "taxId": "FR683752817",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-334382",

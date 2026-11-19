@@ -63,7 +63,8 @@
   "context": {
     "vendor": {
       "name": "Stoltenberg - Swift AB",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-951700",

@@ -2,7 +2,13 @@ import { UnrecoverableError, type Job } from "bullmq";
 import { and, asc, eq, ne, notInArray, sql } from "drizzle-orm";
 import { schema } from "@ledgerline/db";
 import { toMinorUnits } from "@ledgerline/contracts";
-import { checkArithmetic, normalizeVendorName, type RuleResult } from "@ledgerline/matching";
+import {
+  checkArithmetic,
+  normalizeVendorName,
+  resolveCurrency,
+  type CurrencyDecision,
+  type RuleResult,
+} from "@ledgerline/matching";
 import { stageJobId, type StageJobData } from "@ledgerline/queues";
 import type { WorkerDeps } from "../deps.js";
 
@@ -72,6 +78,46 @@ export async function resolveVendor(
   return { vendorId: null, method: best ? "ambiguous_or_weak" : "not_found" };
 }
 
+/** Master data that settles an ambiguous currency marker: the PO's currency, then the vendor's. */
+async function currencyFor(
+  deps: Pick<WorkerDeps, "db">,
+  tenantId: string,
+  inv: { currency: string | null; currencyAsPrinted: string | null; poNumber: string | null },
+  vendorId: string | null,
+): Promise<CurrencyDecision | null> {
+  if (!inv.currency) return null;
+  let poCurrency: string | null = null;
+  if (inv.poNumber) {
+    const p = schema.purchaseOrders;
+    const [po] = await deps.db
+      .select({ currency: p.currency })
+      .from(p)
+      .where(
+        and(
+          eq(p.tenantId, tenantId),
+          sql`upper(regexp_replace(${p.poNumber}, '\\s', '', 'g')) = ${inv.poNumber.replace(/\s/g, "").toUpperCase()}`,
+          ...(vendorId ? [eq(p.vendorId, vendorId)] : []),
+        ),
+      )
+      .limit(1);
+    poCurrency = po?.currency ?? null;
+  }
+  let vendorDefault: string | null = null;
+  if (vendorId) {
+    const [v] = await deps.db
+      .select({ c: schema.vendors.defaultCurrency })
+      .from(schema.vendors)
+      .where(eq(schema.vendors.id, vendorId));
+    vendorDefault = v?.c ?? null;
+  }
+  return resolveCurrency({
+    extracted: inv.currency,
+    printed: inv.currencyAsPrinted,
+    poCurrency,
+    vendorDefault,
+  });
+}
+
 /**
  * Stage 3: deterministic checks on the extraction. Writes one validation_results row per rule
  * (replacing any previous run, so the stage is idempotent) and resolves the vendor.
@@ -109,8 +155,33 @@ export const createValidateProcessor = (deps: WorkerDeps) => async (job: Job<Sta
     detail: missing.length ? `missing: ${missing.join(", ")}` : null,
   });
 
-  const cur = inv.currency;
-  if (cur && inv.subtotalMinor !== null && inv.taxMinor !== null && inv.totalMinor !== null) {
+  const vendor = await resolveVendor(deps, tenantId, inv.vendorNameRaw, inv.vendorTaxIdRaw);
+  rules.push({
+    rule: "vendor_resolved",
+    passed: vendor.vendorId !== null,
+    detail: vendor.method,
+  });
+
+  // The model reads the marker; code decides what a bare "$" or "¥" means.
+  const currency = await currencyFor(deps, tenantId, inv, vendor.vendorId);
+  if (currency) {
+    rules.push({
+      rule: "currency_determined",
+      passed: !currency.ambiguous,
+      detail: `${currency.currency} from ${currency.source}${inv.currencyAsPrinted ? ` (printed "${inv.currencyAsPrinted}")` : ""}`,
+    });
+  }
+  const cur = currency?.currency ?? null;
+  // Minor units depend on the currency's exponent (JPY 0, CNY 2), so recompute from the decimals.
+  const m = (v: string | null) => (v === null || !cur ? null : toMinorUnits(v, cur));
+  const money = {
+    currency: cur,
+    subtotalMinor: m(inv.subtotal),
+    taxMinor: m(inv.tax),
+    discountMinor: m(inv.discount),
+    totalMinor: m(inv.amount),
+  };
+  if (cur && money.subtotalMinor !== null && money.taxMinor !== null && money.totalMinor !== null) {
     rules.push(
       ...checkArithmetic({
         lines: lines.map((l) => ({
@@ -118,10 +189,10 @@ export const createValidateProcessor = (deps: WorkerDeps) => async (job: Job<Sta
           unitPriceMinor: toMinorUnits(l.unitPrice, cur),
           amountMinor: toMinorUnits(l.amount, cur),
         })),
-        subtotalMinor: inv.subtotalMinor,
-        taxMinor: inv.taxMinor,
-        discountMinor: inv.discountMinor,
-        totalMinor: inv.totalMinor,
+        subtotalMinor: money.subtotalMinor,
+        taxMinor: money.taxMinor,
+        discountMinor: money.discountMinor,
+        totalMinor: money.totalMinor,
       }),
     );
   }
@@ -139,13 +210,6 @@ export const createValidateProcessor = (deps: WorkerDeps) => async (job: Job<Sta
     rule: "no_review_flags",
     passed: inv.reviewFlags.length === 0,
     detail: inv.reviewFlags.length ? inv.reviewFlags.join(", ") : null,
-  });
-
-  const vendor = await resolveVendor(deps, tenantId, inv.vendorNameRaw, inv.vendorTaxIdRaw);
-  rules.push({
-    rule: "vendor_resolved",
-    passed: vendor.vendorId !== null,
-    detail: vendor.method,
   });
 
   // Duplicate-payment guard: same vendor + invoice number already in the system as another PDF.
@@ -173,7 +237,11 @@ export const createValidateProcessor = (deps: WorkerDeps) => async (job: Job<Sta
   const committed = await deps.db.transaction(async (tx) => {
     const updated = await tx
       .update(i)
-      .set({ vendorId: vendor.vendorId, version: sql`${i.version} + 1` })
+      .set({
+        vendorId: vendor.vendorId,
+        ...(cur && cur !== inv.currency ? money : {}),
+        version: sql`${i.version} + 1`,
+      })
       .where(and(eq(i.id, invoiceId), eq(i.status, "extracted")))
       .returning({ id: i.id });
     if (updated.length === 0) return false;

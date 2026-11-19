@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "McDermott - Wehner AB",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-856614",

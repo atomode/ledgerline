@@ -51,7 +51,8 @@
   "context": {
     "vendor": {
       "name": "Wehner Stamm and Hilpert Pty Ltd",
-      "taxId": "CH344796201"
+      "taxId": "CH344796201",
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-971634",

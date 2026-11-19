@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Schumm - Heidenreich AB",
-      "taxId": "CH825684897"
+      "taxId": "CH825684897",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-847084",

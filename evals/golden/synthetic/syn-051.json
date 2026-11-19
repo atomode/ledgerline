@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Schamberger Thiel and Raynor GmbH",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "EUR"
     },
     "po": null
   }

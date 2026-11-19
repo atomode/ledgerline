@@ -77,7 +77,8 @@
   "context": {
     "vendor": {
       "name": "Leannon - Sanford S.A.",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-857108",

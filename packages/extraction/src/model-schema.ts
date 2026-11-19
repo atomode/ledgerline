@@ -28,7 +28,13 @@ export const ModelInvoice = z.object({
   invoiceNumber: z.string().describe("Invoice or credit note number exactly as printed"),
   invoiceDate: z.string().describe("Issue date as YYYY-MM-DD"),
   dueDate: z.string().nullable().describe("Payment due date as YYYY-MM-DD, or null if absent"),
-  currency: z.string().describe("ISO 4217 code, e.g. USD, EUR, GBP, JPY"),
+  currencyAsPrinted: z
+    .string()
+    .nullable()
+    .describe(
+      'The currency marker exactly as printed next to the amounts, e.g. "$", "US$", "A$", "€", "AUD", "¥". null if none is printed',
+    ),
+  currency: z.string().describe("ISO 4217 code, e.g. USD, EUR, GBP, JPY: your best reading"),
   poNumber: z
     .string()
     .nullable()

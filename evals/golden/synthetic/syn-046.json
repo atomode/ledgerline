@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Paucek Goyette and Douglas Inc.",
-      "taxId": "CH871601183"
+      "taxId": "CH871601183",
+      "defaultCurrency": "AUD"
     },
     "po": null
   }

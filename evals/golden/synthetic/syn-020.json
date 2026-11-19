@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Ebert Toy and Gleichner LLC",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "CAD"
     },
     "po": {
       "poNumber": "PO-555331",

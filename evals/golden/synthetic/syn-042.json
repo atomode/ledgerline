@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Reinger - Gleichner Ltd",
-      "taxId": "US904963747"
+      "taxId": "US904963747",
+      "defaultCurrency": "EUR"
     },
     "po": {
       "poNumber": "PO-608616",

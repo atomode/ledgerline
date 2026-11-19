@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Rogahn Inc GmbH",
-      "taxId": null
+      "taxId": null,
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-997511",

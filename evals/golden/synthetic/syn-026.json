@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Wuckert Gerlach and Auer S.A.",
-      "taxId": "CH245952606"
+      "taxId": "CH245952606",
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-178692",

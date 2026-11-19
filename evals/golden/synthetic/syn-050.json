@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "Padberg Inc Ltd",
-      "taxId": "CH246601384"
+      "taxId": "CH246601384",
+      "defaultCurrency": "GBP"
     },
     "po": {
       "poNumber": "PO-253330",

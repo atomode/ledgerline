@@ -49,7 +49,8 @@
   "context": {
     "vendor": {
       "name": "Grady - Heidenreich AB",
-      "taxId": "CH719613809"
+      "taxId": "CH719613809",
+      "defaultCurrency": "CHF"
     },
     "po": {
       "poNumber": "PO-798888",

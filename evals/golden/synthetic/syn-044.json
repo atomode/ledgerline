@@ -70,7 +70,8 @@
   "context": {
     "vendor": {
       "name": "King Nienow and Rempel S.A.",
-      "taxId": "GB303549506"
+      "taxId": "GB303549506",
+      "defaultCurrency": "CAD"
     },
     "po": {
       "poNumber": "PO-574677",

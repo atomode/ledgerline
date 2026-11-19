@@ -42,7 +42,8 @@
   "context": {
     "vendor": {
       "name": "Buckridge-Graham LLC GmbH",
-      "taxId": "CH665018180"
+      "taxId": "CH665018180",
+      "defaultCurrency": "USD"
     },
     "po": {
       "poNumber": "PO-537798",

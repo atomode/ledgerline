@@ -56,7 +56,8 @@
   "context": {
     "vendor": {
       "name": "Fay Larson and Powlowski GmbH",
-      "taxId": "DE846363195"
+      "taxId": "DE846363195",
+      "defaultCurrency": "CAD"
     },
     "po": {
       "poNumber": "PO-373541",

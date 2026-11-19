@@ -129,4 +129,12 @@ describe("validateModelOutput", () => {
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.issues[0]).toMatch(/not valid JSON/);
   });
+
+  it("passes the printed currency marker through, outside the contract data", () => {
+    const r = validateModelOutput(JSON.stringify({ ...good, currencyAsPrinted: " $ " }));
+    expect(r.ok && r.currencyAsPrinted).toBe("$");
+    expect(r.ok && "currencyAsPrinted" in r.data).toBe(false);
+    const none = validateModelOutput(JSON.stringify({ ...good, currencyAsPrinted: null }));
+    expect(none.ok && none.currencyAsPrinted).toBeNull();
+  });
 });

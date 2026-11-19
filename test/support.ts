@@ -35,17 +35,59 @@ export async function freshDatabase(): Promise<DbHandle & { url: string; drop():
   };
 }
 
+/**
+ * Claims a logical DB only if nobody holds it, then wipes it. Atomic, so two test files starting
+ * at once can never get the same DB (a shared DB means one file flushes or consumes the other's
+ * jobs). VITEST_POOL_ID is not unique across concurrently running files, so it can't be used.
+ */
+const CLAIM_KEY = "ledgerline:it:claim";
+const CLAIM = `
+if redis.call('EXISTS', KEYS[1]) == 1 then return 0 end
+redis.call('FLUSHDB')
+redis.call('SET', KEYS[1], ARGV[1], 'PX', ARGV[2])
+return 1`;
+const CLAIM_TTL_MS = 30_000;
+
 /** A Redis connection on its own logical DB, flushed at start. BullMQ needs maxRetriesPerRequest null. */
-let nextDb = 1;
 export async function freshRedis(): Promise<Redis> {
-  const url = new URL(inject("redisUrl"));
-  // vitest runs files in separate workers; mix in the worker id so DB numbers don't collide.
-  const worker = Number(process.env.VITEST_POOL_ID ?? "1");
+  const base = new URL(inject("redisUrl"));
+  const owner = `${process.pid}:${randomBytes(4).toString("hex")}`;
   // Never DB 0: that is where a developer's local stack keeps its queues.
-  url.pathname = `/${1 + (((worker - 1) * 3 + nextDb++) % 15)}`;
-  const r = new Redis(url.toString(), { maxRetriesPerRequest: null });
-  await r.flushdb();
-  return r;
+  for (let db = 1; db <= 15; db++) {
+    base.pathname = `/${db}`;
+    const r = new Redis(base.toString(), { maxRetriesPerRequest: null });
+    if ((await r.eval(CLAIM, 1, CLAIM_KEY, owner, CLAIM_TTL_MS)) === 1) {
+      // Keep the claim alive while this file runs; if the process dies it lapses in 30 s.
+      const beat = setInterval(() => {
+        r.pexpire(CLAIM_KEY, CLAIM_TTL_MS).catch(() => {});
+      }, CLAIM_TTL_MS / 3);
+      beat.unref();
+      // Release on close, so the next file can reuse the DB right away.
+      const release = async () => {
+        clearInterval(beat);
+        await r
+          .eval(
+            "if redis.call('GET', KEYS[1]) == ARGV[1] then return redis.call('DEL', KEYS[1]) end return 0",
+            1,
+            CLAIM_KEY,
+            owner,
+          )
+          .catch(() => {});
+      };
+      const disconnect = r.disconnect.bind(r);
+      const quit = r.quit.bind(r);
+      r.disconnect = (reconnect?: boolean) => {
+        void release().finally(() => disconnect(reconnect));
+      };
+      r.quit = async () => {
+        await release();
+        return quit();
+      };
+      return r;
+    }
+    r.disconnect();
+  }
+  throw new Error("freshRedis: all 15 test Redis DBs are claimed; is another run still going?");
 }
 
 export const TENANT_A = "0190a000-0000-7000-8000-00000000000a";

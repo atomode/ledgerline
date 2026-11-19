@@ -1,0 +1,105 @@
+{
+  "id": "adv-multi-currency",
+  "tags": {
+    "source": "adversarial",
+    "layout": "eu",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "multi_currency"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Bradtke Lindgren-Denesik and Kihn AB",
+      "taxId": "CH194643829",
+      "address": "505 Jamal Route, Jasmineshire"
+    },
+    "invoiceNumber": "TI9756",
+    "invoiceDate": "2026-08-18",
+    "dueDate": "2026-10-17",
+    "currency": "EUR",
+    "poNumber": "PO-689272",
+    "subtotal": "19714.42",
+    "tax": "1971.44",
+    "discount": null,
+    "total": "21685.86",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "8",
+        "unitPrice": "753.84",
+        "amount": "6030.72"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "26",
+        "unitPrice": "359.87",
+        "amount": "9356.62"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "17",
+        "unitPrice": "48.24",
+        "amount": "820.08"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "15",
+        "unitPrice": "233.80",
+        "amount": "3507.00"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Bradtke Lindgren-Denesik and Kihn AB",
+      "taxId": "CH194643829"
+    },
+    "po": {
+      "poNumber": "PO-689272",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "8",
+          "unitPrice": "753.84"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "26",
+          "unitPrice": "359.87"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "17",
+          "unitPrice": "48.24"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "15",
+          "unitPrice": "233.80"
+        }
+      ],
+      "received": [
+        "8",
+        "26",
+        "17",
+        "15"
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "id": "syn-017",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "small_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Schumm - Heidenreich AB",
+      "taxId": "CH825684897",
+      "address": "153 Sycamore Avenue, Lake Havasu City"
+    },
+    "invoiceNumber": "-544303",
+    "invoiceDate": "2026-10-16",
+    "dueDate": "2026-12-15",
+    "currency": "USD",
+    "poNumber": "PO-847084",
+    "subtotal": "21040.97",
+    "tax": "3997.78",
+    "discount": null,
+    "total": "25038.75",
+    "lineItems": [
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "5",
+        "unitPrice": "9.85",
+        "amount": "49.25"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "20",
+        "unitPrice": "918.51",
+        "amount": "18370.20"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "12",
+        "unitPrice": "218.46",
+        "amount": "2621.52"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Schumm - Heidenreich AB",
+      "taxId": "CH825684897"
+    },
+    "po": {
+      "poNumber": "PO-847084",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "5",
+          "unitPrice": "9.75"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "20",
+          "unitPrice": "909.42"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "12",
+          "unitPrice": "216.30"
+        }
+      ],
+      "received": [
+        "5",
+        "20",
+        "12"
+      ]
+    }
+  }
+}

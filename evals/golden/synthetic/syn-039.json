@@ -1,0 +1,119 @@
+{
+  "id": "syn-039",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "over_billed"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Sporer Fadel and Haag Pty Ltd",
+      "taxId": "GB986186392",
+      "address": "3810 Candice Parkway, Erynboro"
+    },
+    "invoiceNumber": "TI/73740426",
+    "invoiceDate": "2026-08-30",
+    "dueDate": "2026-09-13",
+    "currency": "CHF",
+    "poNumber": "PO-413941",
+    "subtotal": "57558.42",
+    "tax": "10936.10",
+    "discount": null,
+    "total": "68494.52",
+    "lineItems": [
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "33",
+        "unitPrice": "890.65",
+        "amount": "29391.45"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "20",
+        "unitPrice": "854.43",
+        "amount": "17088.60"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "37",
+        "unitPrice": "57.06",
+        "amount": "2111.22"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "8",
+        "unitPrice": "576.18",
+        "amount": "4609.44"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "7",
+        "unitPrice": "622.53",
+        "amount": "4357.71"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Sporer Fadel and Haag Pty Ltd",
+      "taxId": "GB986186392"
+    },
+    "po": {
+      "poNumber": "PO-413941",
+      "currency": "CHF",
+      "lines": [
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "33",
+          "unitPrice": "890.65"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "20",
+          "unitPrice": "854.43"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "37",
+          "unitPrice": "57.06"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "8",
+          "unitPrice": "576.18"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "7",
+          "unitPrice": "622.53"
+        }
+      ],
+      "received": [
+        "32",
+        "20",
+        "37",
+        "8",
+        "7"
+      ]
+    }
+  }
+}

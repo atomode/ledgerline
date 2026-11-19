@@ -1,0 +1,147 @@
+{
+  "id": "syn-006",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Kassulke Inc GmbH",
+      "taxId": "CH984723922",
+      "address": "541 Central Avenue, North Emersonton"
+    },
+    "invoiceNumber": "INV/84582113",
+    "invoiceDate": "2026-08-02",
+    "dueDate": "2026-09-01",
+    "currency": "AUD",
+    "poNumber": "PO-952118",
+    "subtotal": "89380.37",
+    "tax": "16982.27",
+    "discount": null,
+    "total": "106362.64",
+    "lineItems": [
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "31",
+        "unitPrice": "404.37",
+        "amount": "12535.47"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "40",
+        "unitPrice": "417.71",
+        "amount": "16708.40"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "10",
+        "unitPrice": "845.72",
+        "amount": "8457.20"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "17",
+        "unitPrice": "653.51",
+        "amount": "11109.67"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "37",
+        "unitPrice": "525.19",
+        "amount": "19432.03"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "10",
+        "unitPrice": "829.70",
+        "amount": "8297.00"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "20",
+        "unitPrice": "642.03",
+        "amount": "12840.60"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Kassulke Inc GmbH",
+      "taxId": "CH984723922"
+    },
+    "po": {
+      "poNumber": "PO-952118",
+      "currency": "AUD",
+      "lines": [
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "31",
+          "unitPrice": "404.37"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "40",
+          "unitPrice": "417.71"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "10",
+          "unitPrice": "845.72"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "17",
+          "unitPrice": "653.51"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "37",
+          "unitPrice": "525.19"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "10",
+          "unitPrice": "829.70"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "20",
+          "unitPrice": "642.03"
+        }
+      ],
+      "received": [
+        "31",
+        "40",
+        "10",
+        "17",
+        "37",
+        "10",
+        "20"
+      ]
+    }
+  }
+}

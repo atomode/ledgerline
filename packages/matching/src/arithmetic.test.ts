@@ -23,11 +23,24 @@ describe("checkArithmetic", () => {
     expect(failed(ok)).toEqual([]);
   });
 
-  it("tolerates 1 minor unit of rounding on the total", () => {
-    expect(failed({ ...ok, totalMinor: 2902 })).toEqual([]);
-    expect(failed({ ...ok, totalMinor: 2903 })).toEqual([
+  it("header identities are exact: a 1-minor-unit misread of the total or tax fails", () => {
+    // The supplier computed these from printed values, so there is no rounding to forgive. A
+    // tolerance here let one-cent misreads of the total sail through to auto-approval (found by
+    // the eval harness).
+    expect(failed({ ...ok, totalMinor: 2902 })).toEqual([
       "subtotal_plus_tax_minus_discount_equals_total",
     ]);
+    expect(failed({ ...ok, taxMinor: 501 })).toEqual([
+      "subtotal_plus_tax_minus_discount_equals_total",
+    ]);
+    expect(failed({ ...ok, subtotalMinor: 2502, totalMinor: 2902 })).toEqual([
+      "lines_sum_to_subtotal",
+    ]);
+  });
+
+  it("still forgives 1 minor unit on a line, where qty x rounded unit price drifts", () => {
+    const lines = [ok.lines[0]!, { ...ok.lines[1]!, amountMinor: 1503 }];
+    expect(failed({ ...ok, lines, subtotalMinor: 2502, totalMinor: 2902 })).toEqual([]);
   });
 
   it("catches a misread digit in one line", () => {

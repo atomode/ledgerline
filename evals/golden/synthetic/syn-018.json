@@ -1,0 +1,147 @@
+{
+  "id": "syn-018",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Bashirian - Walker Pty Ltd",
+      "taxId": null,
+      "address": "30770 New Lane, New Dorothyton"
+    },
+    "invoiceNumber": "INV-85546",
+    "invoiceDate": "2026-10-19",
+    "dueDate": "2026-11-02",
+    "currency": "GBP",
+    "poNumber": "PO-218780",
+    "subtotal": "56513.10",
+    "tax": "3955.92",
+    "discount": null,
+    "total": "60469.02",
+    "lineItems": [
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "38",
+        "unitPrice": "408.24",
+        "amount": "15513.12"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "12",
+        "unitPrice": "122.10",
+        "amount": "1465.20"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "34",
+        "unitPrice": "11.41",
+        "amount": "387.94"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "26",
+        "unitPrice": "637.41",
+        "amount": "16572.66"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "38",
+        "unitPrice": "312.46",
+        "amount": "11873.48"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "20",
+        "unitPrice": "462.89",
+        "amount": "9257.80"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "5",
+        "unitPrice": "288.58",
+        "amount": "1442.90"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Bashirian - Walker Pty Ltd",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-218780",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "38",
+          "unitPrice": "408.24"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "12",
+          "unitPrice": "122.10"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "34",
+          "unitPrice": "11.41"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "26",
+          "unitPrice": "637.41"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "38",
+          "unitPrice": "312.46"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "20",
+          "unitPrice": "462.89"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "5",
+          "unitPrice": "288.58"
+        }
+      ],
+      "received": [
+        "38",
+        "12",
+        "34",
+        "26",
+        "38",
+        "20",
+        "5"
+      ]
+    }
+  }
+}

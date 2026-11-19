@@ -1,0 +1,119 @@
+{
+  "id": "syn-035",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Ullrich - Shields Ltd",
+      "taxId": "CH009646522",
+      "address": "552 Stiedemann Hollow, Laurianeborough"
+    },
+    "invoiceNumber": "TI-4175",
+    "invoiceDate": "2026-10-26",
+    "dueDate": "2026-11-25",
+    "currency": "EUR",
+    "poNumber": "PO-258848",
+    "subtotal": "36037.30",
+    "tax": "2522.61",
+    "discount": null,
+    "total": "38559.91",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "31",
+        "unitPrice": "536.95",
+        "amount": "16645.45"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "22",
+        "unitPrice": "37.07",
+        "amount": "815.54"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "38",
+        "unitPrice": "283.77",
+        "amount": "10783.26"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "8",
+        "unitPrice": "949.26",
+        "amount": "7594.08"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "1",
+        "unitPrice": "198.97",
+        "amount": "198.97"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Ullrich - Shields Ltd",
+      "taxId": "CH009646522"
+    },
+    "po": {
+      "poNumber": "PO-258848",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "31",
+          "unitPrice": "536.95"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "22",
+          "unitPrice": "37.07"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "38",
+          "unitPrice": "283.77"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "8",
+          "unitPrice": "949.26"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "1",
+          "unitPrice": "198.97"
+        }
+      ],
+      "received": [
+        "31",
+        "22",
+        "38",
+        "8",
+        "1"
+      ]
+    }
+  }
+}

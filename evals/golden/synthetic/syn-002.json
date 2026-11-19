@@ -1,0 +1,77 @@
+{
+  "id": "syn-002",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Kunze Block and Spinka Pty Ltd",
+      "taxId": null,
+      "address": "8646 W 7th Street, North Jamesoncester"
+    },
+    "invoiceNumber": "INV/81066",
+    "invoiceDate": "2026-07-08",
+    "dueDate": null,
+    "currency": "GBP",
+    "poNumber": "PO-758328",
+    "subtotal": "4425.02",
+    "tax": "885.00",
+    "discount": null,
+    "total": "5310.02",
+    "lineItems": [
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "11",
+        "unitPrice": "171.86",
+        "amount": "1890.46"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "8",
+        "unitPrice": "316.82",
+        "amount": "2534.56"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Kunze Block and Spinka Pty Ltd",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-758328",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "11",
+          "unitPrice": "171.86"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "8",
+          "unitPrice": "316.82"
+        }
+      ],
+      "received": [
+        "11",
+        "8"
+      ]
+    }
+  }
+}

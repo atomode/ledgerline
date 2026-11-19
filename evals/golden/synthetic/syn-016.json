@@ -1,0 +1,91 @@
+{
+  "id": "syn-016",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Stroman Inc Pty Ltd",
+      "taxId": null,
+      "address": "554 Steuber Pines, Vicentaboro"
+    },
+    "invoiceNumber": "TI9819",
+    "invoiceDate": "2026-09-21",
+    "dueDate": "2026-11-20",
+    "currency": "JPY",
+    "poNumber": null,
+    "subtotal": "4152675",
+    "tax": "207634",
+    "discount": null,
+    "total": "4360309",
+    "lineItems": [
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "16",
+        "unitPrice": "11252",
+        "amount": "180032"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "1",
+        "unitPrice": "6980",
+        "amount": "6980"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "10",
+        "unitPrice": "35159",
+        "amount": "351590"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "9",
+        "unitPrice": "46110",
+        "amount": "414990"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "1",
+        "unitPrice": "4880",
+        "amount": "4880"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "11",
+        "unitPrice": "28685",
+        "amount": "315535"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "39",
+        "unitPrice": "73812",
+        "amount": "2878668"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Stroman Inc Pty Ltd",
+      "taxId": null
+    },
+    "po": null
+  }
+}

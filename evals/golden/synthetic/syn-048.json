@@ -1,0 +1,77 @@
+{
+  "id": "syn-048",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Ward and Sons Pty Ltd",
+      "taxId": null,
+      "address": "96077 Herzog Square, Novi"
+    },
+    "invoiceNumber": "-38923660",
+    "invoiceDate": "2026-08-26",
+    "dueDate": "2026-09-25",
+    "currency": "JPY",
+    "poNumber": "PO-965651",
+    "subtotal": "667470",
+    "tax": "46723",
+    "discount": null,
+    "total": "714193",
+    "lineItems": [
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "24",
+        "unitPrice": "19060",
+        "amount": "457440"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "6",
+        "unitPrice": "35005",
+        "amount": "210030"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Ward and Sons Pty Ltd",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-965651",
+      "currency": "JPY",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "24",
+          "unitPrice": "19060"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "6",
+          "unitPrice": "35005"
+        }
+      ],
+      "received": [
+        "24",
+        "6"
+      ]
+    }
+  }
+}

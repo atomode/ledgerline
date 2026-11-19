@@ -1,0 +1,56 @@
+{
+  "id": "syn-025",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Blanda - Brekke Pty Ltd",
+      "taxId": null,
+      "address": "219 Shelia Lodge, Trentontown"
+    },
+    "invoiceNumber": "F2661755",
+    "invoiceDate": "2026-07-14",
+    "dueDate": "2026-08-28",
+    "currency": "USD",
+    "poNumber": null,
+    "subtotal": "1582.75",
+    "tax": "316.55",
+    "discount": null,
+    "total": "1899.30",
+    "lineItems": [
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "18",
+        "unitPrice": "59.79",
+        "amount": "1076.22"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "1",
+        "unitPrice": "506.53",
+        "amount": "506.53"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Blanda - Brekke Pty Ltd",
+      "taxId": null
+    },
+    "po": null
+  }
+}

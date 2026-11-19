@@ -4,17 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "eval": "node -e \"console.log('eval harness arrives in step 6')\"",
-    "golden:render-seed": "tsx --env-file-if-exists=../.env scripts/render-seed-invoices.ts",
-    "typecheck": "tsc -p tsconfig.json"
+    "eval": "tsx --env-file-if-exists=../.env src/run.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "golden:generate": "tsx scripts/generate-golden.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
+    "@faker-js/faker": "^10.6.0",
     "@ledgerline/config": "workspace:*",
     "@ledgerline/contracts": "workspace:*",
     "@ledgerline/db": "workspace:*",
-    "drizzle-orm": "^0.45.4"
+    "@ledgerline/extraction": "workspace:*",
+    "@ledgerline/matching": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
-    "playwright": "1.63.0"
+    "playwright": "1.63.0",
+    "tsx": "^4.23.15"
   }
 }

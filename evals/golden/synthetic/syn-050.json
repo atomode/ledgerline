@@ -1,0 +1,119 @@
+{
+  "id": "syn-050",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Padberg Inc Ltd",
+      "taxId": "CH246601384",
+      "address": "732 Shanahan Lock, San Mateo"
+    },
+    "invoiceNumber": "RE94410214",
+    "invoiceDate": "2026-09-14",
+    "dueDate": "2026-10-14",
+    "currency": "GBP",
+    "poNumber": "PO-253330",
+    "subtotal": "37360.93",
+    "tax": "1868.05",
+    "discount": null,
+    "total": "39228.98",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "15",
+        "unitPrice": "92.18",
+        "amount": "1382.70"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "37",
+        "unitPrice": "571.64",
+        "amount": "21150.68"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "1",
+        "unitPrice": "160.99",
+        "amount": "160.99"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "14",
+        "unitPrice": "930.76",
+        "amount": "13030.64"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "13",
+        "unitPrice": "125.84",
+        "amount": "1635.92"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Padberg Inc Ltd",
+      "taxId": "CH246601384"
+    },
+    "po": {
+      "poNumber": "PO-253330",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "15",
+          "unitPrice": "92.18"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "37",
+          "unitPrice": "571.64"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "1",
+          "unitPrice": "160.99"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "14",
+          "unitPrice": "930.76"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "13",
+          "unitPrice": "125.84"
+        }
+      ],
+      "received": [
+        "15",
+        "37",
+        "1",
+        "14",
+        "13"
+      ]
+    }
+  }
+}

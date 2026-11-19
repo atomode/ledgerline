@@ -20,7 +20,12 @@ export interface RuleResult {
   detail: string | null;
 }
 
-/** Rounding on printed invoices can drift by a cent; anything more is a real discrepancy. */
+/**
+ * Quantity x a printed (rounded) unit price can drift from the printed line amount by one minor
+ * unit, so line checks allow that. The header identities (lines sum to subtotal; subtotal + tax -
+ * discount = total) are computed by the supplier from printed values and must hold exactly:
+ * forgiving a cent there let one-cent misreads of the total reach auto-approval.
+ */
 export const ROUNDING_TOLERANCE_MINOR = 1;
 
 const within = (a: number, b: number, tol = ROUNDING_TOLERANCE_MINOR) => Math.abs(a - b) <= tol;
@@ -49,24 +54,19 @@ export function checkArithmetic(t: Totals): RuleResult[] {
 
   if (t.lines.length > 0) {
     const sum = t.lines.reduce((s, l) => s + l.amountMinor, 0);
-    // Allow 1 minor unit of rounding per line, at least 1.
-    const tol = Math.max(ROUNDING_TOLERANCE_MINOR, t.lines.length);
     results.push({
       rule: "lines_sum_to_subtotal",
-      passed: within(sum, t.subtotalMinor, tol),
-      detail: within(sum, t.subtotalMinor, tol)
-        ? null
-        : `lines sum ${sum}, subtotal ${t.subtotalMinor}`,
+      passed: sum === t.subtotalMinor,
+      detail: sum === t.subtotalMinor ? null : `lines sum ${sum}, subtotal ${t.subtotalMinor}`,
     });
   }
 
   const expectedTotal = t.subtotalMinor + t.taxMinor - (t.discountMinor ?? 0);
   results.push({
     rule: "subtotal_plus_tax_minus_discount_equals_total",
-    passed: within(expectedTotal, t.totalMinor),
-    detail: within(expectedTotal, t.totalMinor)
-      ? null
-      : `expected ${expectedTotal}, got ${t.totalMinor}`,
+    passed: expectedTotal === t.totalMinor,
+    detail:
+      expectedTotal === t.totalMinor ? null : `expected ${expectedTotal}, got ${t.totalMinor}`,
   });
   return results;
 }

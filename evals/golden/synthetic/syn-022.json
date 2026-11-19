@@ -1,0 +1,105 @@
+{
+  "id": "syn-022",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Considine - Toy S.A.",
+      "taxId": "DE577788218",
+      "address": "717 Eliezer Lakes, South Alejandrastad"
+    },
+    "invoiceNumber": "F-9917",
+    "invoiceDate": "2026-10-26",
+    "dueDate": null,
+    "currency": "AUD",
+    "poNumber": "PO-539639",
+    "subtotal": "36909.42",
+    "tax": "2583.66",
+    "discount": null,
+    "total": "39493.08",
+    "lineItems": [
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "21",
+        "unitPrice": "649.42",
+        "amount": "13637.82"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "1",
+        "unitPrice": "322.56",
+        "amount": "322.56"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "6",
+        "unitPrice": "425.94",
+        "amount": "2555.64"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "30",
+        "unitPrice": "679.78",
+        "amount": "20393.40"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Considine - Toy S.A.",
+      "taxId": "DE577788218"
+    },
+    "po": {
+      "poNumber": "PO-539639",
+      "currency": "AUD",
+      "lines": [
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "21",
+          "unitPrice": "649.42"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "1",
+          "unitPrice": "322.56"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "6",
+          "unitPrice": "425.94"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "30",
+          "unitPrice": "679.78"
+        }
+      ],
+      "received": [
+        "21",
+        "1",
+        "6",
+        "30"
+      ]
+    }
+  }
+}

@@ -5,3 +5,7 @@ coverage
 .env
 *.log
 evals/.cache
+
+# eval outputs
+evals/reports/
+evals/.cache/

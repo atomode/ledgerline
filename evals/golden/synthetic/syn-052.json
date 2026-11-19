@@ -1,0 +1,119 @@
+{
+  "id": "syn-052",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Daniel and Sons Inc.",
+      "taxId": null,
+      "address": "5015 Collins-Koch Neck, Meggiebury"
+    },
+    "invoiceNumber": "RE/22611",
+    "invoiceDate": "2026-07-16",
+    "dueDate": "2026-09-14",
+    "currency": "CAD",
+    "poNumber": "PO-621827",
+    "subtotal": "30290.97",
+    "tax": "5755.28",
+    "discount": null,
+    "total": "36046.25",
+    "lineItems": [
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "19",
+        "unitPrice": "331.54",
+        "amount": "6299.26"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "9",
+        "unitPrice": "218.44",
+        "amount": "1965.96"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "30",
+        "unitPrice": "496.34",
+        "amount": "14890.20"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "13",
+        "unitPrice": "226.50",
+        "amount": "2944.50"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "5",
+        "unitPrice": "838.21",
+        "amount": "4191.05"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Daniel and Sons Inc.",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-621827",
+      "currency": "CAD",
+      "lines": [
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "19",
+          "unitPrice": "331.54"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "9",
+          "unitPrice": "218.44"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "30",
+          "unitPrice": "496.34"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "13",
+          "unitPrice": "226.50"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "5",
+          "unitPrice": "838.21"
+        }
+      ],
+      "received": [
+        "19",
+        "9",
+        "30",
+        "13",
+        "5"
+      ]
+    }
+  }
+}

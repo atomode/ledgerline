@@ -1,0 +1,63 @@
+{
+  "id": "syn-012",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Buckridge-Graham LLC GmbH",
+      "taxId": "CH665018180",
+      "address": "593 Victor Forest, Lambertstad"
+    },
+    "invoiceNumber": "TI/45864557",
+    "invoiceDate": "2026-08-31",
+    "dueDate": "2026-09-30",
+    "currency": "USD",
+    "poNumber": "PO-537798",
+    "subtotal": "1432.21",
+    "tax": "100.25",
+    "discount": null,
+    "total": "1532.46",
+    "lineItems": [
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "23",
+        "unitPrice": "62.27",
+        "amount": "1432.21"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Buckridge-Graham LLC GmbH",
+      "taxId": "CH665018180"
+    },
+    "po": {
+      "poNumber": "PO-537798",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "23",
+          "unitPrice": "62.27"
+        }
+      ],
+      "received": [
+        "23"
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "id": "syn-015",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "price_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Gorczany Goodwin and Boyle-Doyle Inc.",
+      "taxId": "DE915157061",
+      "address": "15372 Meadow Drive, Little Rock"
+    },
+    "invoiceNumber": "RE-25939",
+    "invoiceDate": "2026-09-27",
+    "dueDate": "2026-11-26",
+    "currency": "EUR",
+    "poNumber": "PO-722145",
+    "subtotal": "23255.13",
+    "tax": "0.00",
+    "discount": null,
+    "total": "23255.13",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "22",
+        "unitPrice": "96.71",
+        "amount": "2127.62"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "27",
+        "unitPrice": "255.13",
+        "amount": "6888.51"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "29",
+        "unitPrice": "491.00",
+        "amount": "14239.00"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Gorczany Goodwin and Boyle-Doyle Inc.",
+      "taxId": "DE915157061"
+    },
+    "po": {
+      "poNumber": "PO-722145",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "22",
+          "unitPrice": "91.24"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "27",
+          "unitPrice": "240.69"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "29",
+          "unitPrice": "463.21"
+        }
+      ],
+      "received": [
+        "22",
+        "27",
+        "29"
+      ]
+    }
+  }
+}

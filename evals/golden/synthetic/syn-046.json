@@ -1,0 +1,49 @@
+{
+  "id": "syn-046",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Paucek Goyette and Douglas Inc.",
+      "taxId": "CH871601183",
+      "address": "82940 Yoshiko Bypass, Elmhurst"
+    },
+    "invoiceNumber": "F2643371",
+    "invoiceDate": "2026-10-12",
+    "dueDate": "2026-12-11",
+    "currency": "AUD",
+    "poNumber": null,
+    "subtotal": "1856.68",
+    "tax": "129.97",
+    "discount": null,
+    "total": "1986.65",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "7",
+        "unitPrice": "265.24",
+        "amount": "1856.68"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Paucek Goyette and Douglas Inc.",
+      "taxId": "CH871601183"
+    },
+    "po": null
+  }
+}

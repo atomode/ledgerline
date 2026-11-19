@@ -1,0 +1,91 @@
+{
+  "id": "syn-047",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Bailey Hilpert and Streich Ltd",
+      "taxId": null,
+      "address": "978 Koss Cliff, Lindgrenborough"
+    },
+    "invoiceNumber": "INV/20588",
+    "invoiceDate": "2026-08-07",
+    "dueDate": "2026-09-21",
+    "currency": "EUR",
+    "poNumber": null,
+    "subtotal": "66151.16",
+    "tax": "3307.56",
+    "discount": null,
+    "total": "69458.72",
+    "lineItems": [
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "17",
+        "unitPrice": "524.58",
+        "amount": "8917.86"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "24",
+        "unitPrice": "224.31",
+        "amount": "5383.44"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "9",
+        "unitPrice": "869.46",
+        "amount": "7825.14"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "1",
+        "unitPrice": "513.43",
+        "amount": "513.43"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "37",
+        "unitPrice": "682.53",
+        "amount": "25253.61"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "18",
+        "unitPrice": "244.14",
+        "amount": "4394.52"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "19",
+        "unitPrice": "729.64",
+        "amount": "13863.16"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Bailey Hilpert and Streich Ltd",
+      "taxId": null
+    },
+    "po": null
+  }
+}

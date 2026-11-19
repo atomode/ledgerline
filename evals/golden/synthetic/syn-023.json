@@ -1,0 +1,77 @@
+{
+  "id": "syn-023",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Moen - Zieme GmbH",
+      "taxId": "GB127531426",
+      "address": "951 Zelda Skyway, New Cary"
+    },
+    "invoiceNumber": "F/351987",
+    "invoiceDate": "2026-09-05",
+    "dueDate": "2026-10-20",
+    "currency": "EUR",
+    "poNumber": "PO-306340",
+    "subtotal": "14406.10",
+    "tax": "2881.22",
+    "discount": "288.12",
+    "total": "16999.20",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "26",
+        "unitPrice": "455.57",
+        "amount": "11844.82"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "32",
+        "unitPrice": "80.04",
+        "amount": "2561.28"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Moen - Zieme GmbH",
+      "taxId": "GB127531426"
+    },
+    "po": {
+      "poNumber": "PO-306340",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "26",
+          "unitPrice": "455.57"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "32",
+          "unitPrice": "80.04"
+        }
+      ],
+      "received": [
+        "26",
+        "32"
+      ]
+    }
+  }
+}

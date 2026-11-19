@@ -1,0 +1,77 @@
+{
+  "id": "syn-011",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Hettinger and Sons S.A.",
+      "taxId": "DE302056894",
+      "address": "92087 Schultz Loop, Schillerhaven"
+    },
+    "invoiceNumber": "INV-28109021",
+    "invoiceDate": "2026-07-03",
+    "dueDate": "2026-07-17",
+    "currency": "EUR",
+    "poNumber": null,
+    "subtotal": "72030.66",
+    "tax": "0.00",
+    "discount": null,
+    "total": "72030.66",
+    "lineItems": [
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "17",
+        "unitPrice": "543.12",
+        "amount": "9233.04"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "38",
+        "unitPrice": "647.55",
+        "amount": "24606.90"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "39",
+        "unitPrice": "560.83",
+        "amount": "21872.37"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "22",
+        "unitPrice": "354.99",
+        "amount": "7809.78"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "21",
+        "unitPrice": "405.17",
+        "amount": "8508.57"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Hettinger and Sons S.A.",
+      "taxId": "DE302056894"
+    },
+    "po": null
+  }
+}

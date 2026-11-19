@@ -1,0 +1,77 @@
+{
+  "id": "syn-031",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Runte-Cole Inc Pty Ltd",
+      "taxId": "DE701229845",
+      "address": "890 New Street, Dawsonboro"
+    },
+    "invoiceNumber": "TI/2552150",
+    "invoiceDate": "2026-09-29",
+    "dueDate": "2026-10-29",
+    "currency": "CHF",
+    "poNumber": "PO-239836",
+    "subtotal": "9602.78",
+    "tax": "1920.56",
+    "discount": null,
+    "total": "11523.34",
+    "lineItems": [
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "14",
+        "unitPrice": "427.75",
+        "amount": "5988.50"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "4",
+        "unitPrice": "903.57",
+        "amount": "3614.28"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Runte-Cole Inc Pty Ltd",
+      "taxId": "DE701229845"
+    },
+    "po": {
+      "poNumber": "PO-239836",
+      "currency": "CHF",
+      "lines": [
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "14",
+          "unitPrice": "427.75"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "4",
+          "unitPrice": "903.57"
+        }
+      ],
+      "received": [
+        "14",
+        "4"
+      ]
+    }
+  }
+}

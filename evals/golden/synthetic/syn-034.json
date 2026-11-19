@@ -1,0 +1,119 @@
+{
+  "id": "syn-034",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Braun-VonRueden - Towne AB",
+      "taxId": null,
+      "address": "5611 Market Square, South Darwinside"
+    },
+    "invoiceNumber": "TI37280",
+    "invoiceDate": "2026-09-11",
+    "dueDate": null,
+    "currency": "EUR",
+    "poNumber": "PO-574110",
+    "subtotal": "49593.02",
+    "tax": "2479.65",
+    "discount": null,
+    "total": "52072.67",
+    "lineItems": [
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "21",
+        "unitPrice": "309.85",
+        "amount": "6506.85"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "4",
+        "unitPrice": "308.02",
+        "amount": "1232.08"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "21",
+        "unitPrice": "780.22",
+        "amount": "16384.62"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "32",
+        "unitPrice": "424.31",
+        "amount": "13577.92"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "15",
+        "unitPrice": "792.77",
+        "amount": "11891.55"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Braun-VonRueden - Towne AB",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-574110",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "21",
+          "unitPrice": "309.85"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "4",
+          "unitPrice": "308.02"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "21",
+          "unitPrice": "780.22"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "32",
+          "unitPrice": "424.31"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "15",
+          "unitPrice": "792.77"
+        }
+      ],
+      "received": [
+        "21",
+        "4",
+        "21",
+        "32",
+        "15"
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "id": "syn-043",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Will Hegmann and Becker Pty Ltd",
+      "taxId": "DE684299469",
+      "address": "4300 D'Amore Squares, Lennieborough"
+    },
+    "invoiceNumber": "TI9595848",
+    "invoiceDate": "2026-08-14",
+    "dueDate": "2026-09-13",
+    "currency": "EUR",
+    "poNumber": "PO-399901",
+    "subtotal": "26912.06",
+    "tax": "1883.84",
+    "discount": null,
+    "total": "28795.90",
+    "lineItems": [
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "32",
+        "unitPrice": "16.43",
+        "amount": "525.76"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "36",
+        "unitPrice": "574.08",
+        "amount": "20666.88"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "14",
+        "unitPrice": "408.53",
+        "amount": "5719.42"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Will Hegmann and Becker Pty Ltd",
+      "taxId": "DE684299469"
+    },
+    "po": {
+      "poNumber": "PO-399901",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "32",
+          "unitPrice": "16.43"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "36",
+          "unitPrice": "574.08"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "14",
+          "unitPrice": "408.53"
+        }
+      ],
+      "received": [
+        "32",
+        "36",
+        "14"
+      ]
+    }
+  }
+}

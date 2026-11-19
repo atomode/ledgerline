@@ -1,0 +1,84 @@
+{
+  "id": "syn-049",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Bartell - Trantow AB",
+      "taxId": "US318435168",
+      "address": "825 Antwan Forest, Maryanntown"
+    },
+    "invoiceNumber": "-41323",
+    "invoiceDate": "2026-07-22",
+    "dueDate": "2026-08-05",
+    "currency": "USD",
+    "poNumber": null,
+    "subtotal": "61286.42",
+    "tax": "3064.32",
+    "discount": null,
+    "total": "64350.74",
+    "lineItems": [
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "40",
+        "unitPrice": "716.39",
+        "amount": "28655.60"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "8",
+        "unitPrice": "446.21",
+        "amount": "3569.68"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "11",
+        "unitPrice": "749.04",
+        "amount": "8239.44"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "19",
+        "unitPrice": "29.48",
+        "amount": "560.12"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "34",
+        "unitPrice": "402.91",
+        "amount": "13698.94"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "8",
+        "unitPrice": "820.33",
+        "amount": "6562.64"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Bartell - Trantow AB",
+      "taxId": "US318435168"
+    },
+    "po": null
+  }
+}

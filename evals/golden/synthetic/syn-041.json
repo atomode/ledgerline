@@ -1,0 +1,147 @@
+{
+  "id": "syn-041",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Padberg - Goyette S.A.",
+      "taxId": "CH479831511",
+      "address": "475 Reichel Bypass, Faheyfield"
+    },
+    "invoiceNumber": "F-1281",
+    "invoiceDate": "2026-08-18",
+    "dueDate": "2026-09-01",
+    "currency": "USD",
+    "poNumber": "PO-069544",
+    "subtotal": "82092.55",
+    "tax": "8209.26",
+    "discount": null,
+    "total": "90301.81",
+    "lineItems": [
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "21",
+        "unitPrice": "52.33",
+        "amount": "1098.93"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "39",
+        "unitPrice": "384.59",
+        "amount": "14999.01"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "17",
+        "unitPrice": "380.58",
+        "amount": "6469.86"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "27",
+        "unitPrice": "793.78",
+        "amount": "21432.06"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "30",
+        "unitPrice": "222.51",
+        "amount": "6675.30"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "36",
+        "unitPrice": "807.02",
+        "amount": "29052.72"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "11",
+        "unitPrice": "214.97",
+        "amount": "2364.67"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Padberg - Goyette S.A.",
+      "taxId": "CH479831511"
+    },
+    "po": {
+      "poNumber": "PO-069544",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "21",
+          "unitPrice": "52.33"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "39",
+          "unitPrice": "384.59"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "17",
+          "unitPrice": "380.58"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "27",
+          "unitPrice": "793.78"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "30",
+          "unitPrice": "222.51"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "36",
+          "unitPrice": "807.02"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "11",
+          "unitPrice": "214.97"
+        }
+      ],
+      "received": [
+        "21",
+        "39",
+        "17",
+        "27",
+        "30",
+        "36",
+        "11"
+      ]
+    }
+  }
+}

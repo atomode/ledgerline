@@ -1,0 +1,79 @@
+{
+  "id": "adv-two-in-one",
+  "tags": {
+    "source": "adversarial",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 2,
+    "lineCount": 2,
+    "scenario": "two_in_one"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Wehner Stamm and Hilpert Pty Ltd",
+      "taxId": "CH344796201",
+      "address": "710 Mossie Mills, Sunrise"
+    },
+    "invoiceNumber": "TI-236304",
+    "invoiceDate": "2026-07-11",
+    "dueDate": "2026-08-10",
+    "currency": "GBP",
+    "poNumber": "PO-971634",
+    "subtotal": "2465.06",
+    "tax": "493.01",
+    "discount": "49.30",
+    "total": "2908.77",
+    "lineItems": [
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "3",
+        "unitPrice": "528.34",
+        "amount": "1585.02"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "4",
+        "unitPrice": "220.01",
+        "amount": "880.04"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [
+      "multiple_documents_in_file"
+    ],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Wehner Stamm and Hilpert Pty Ltd",
+      "taxId": "CH344796201"
+    },
+    "po": {
+      "poNumber": "PO-971634",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "3",
+          "unitPrice": "528.34"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "4",
+          "unitPrice": "220.01"
+        }
+      ],
+      "received": [
+        "2",
+        "4"
+      ]
+    }
+  }
+}

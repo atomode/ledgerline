@@ -1,0 +1,63 @@
+{
+  "id": "syn-038",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Cummerata Inc S.A.",
+      "taxId": "DE055922621",
+      "address": "55715 Nelle Streets, Dallas"
+    },
+    "invoiceNumber": "/573682",
+    "invoiceDate": "2026-10-17",
+    "dueDate": "2026-12-16",
+    "currency": "AUD",
+    "poNumber": "PO-661898",
+    "subtotal": "5379.76",
+    "tax": "537.98",
+    "discount": null,
+    "total": "5917.74",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "8",
+        "unitPrice": "672.47",
+        "amount": "5379.76"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Cummerata Inc S.A.",
+      "taxId": "DE055922621"
+    },
+    "po": {
+      "poNumber": "PO-661898",
+      "currency": "AUD",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "8",
+          "unitPrice": "672.47"
+        }
+      ],
+      "received": [
+        "8"
+      ]
+    }
+  }
+}

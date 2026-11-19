@@ -1,0 +1,77 @@
+{
+  "id": "syn-014",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Hane - Daniel Ltd",
+      "taxId": "DE989134946",
+      "address": "41357 Lily Via, Lake Jessikaport"
+    },
+    "invoiceNumber": "/66285116",
+    "invoiceDate": "2026-09-04",
+    "dueDate": "2026-11-03",
+    "currency": "AUD",
+    "poNumber": null,
+    "subtotal": "35769.57",
+    "tax": "2503.87",
+    "discount": null,
+    "total": "38273.44",
+    "lineItems": [
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "9",
+        "unitPrice": "279.01",
+        "amount": "2511.09"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "37",
+        "unitPrice": "590.68",
+        "amount": "21855.16"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "1",
+        "unitPrice": "429.18",
+        "amount": "429.18"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "26",
+        "unitPrice": "332.71",
+        "amount": "8650.46"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "16",
+        "unitPrice": "145.23",
+        "amount": "2323.68"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Hane - Daniel Ltd",
+      "taxId": "DE989134946"
+    },
+    "po": null
+  }
+}

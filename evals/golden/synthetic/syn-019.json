@@ -1,0 +1,91 @@
+{
+  "id": "syn-019",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Weber Inc Pty Ltd",
+      "taxId": null,
+      "address": "7043 Trevion Freeway, Berttown"
+    },
+    "invoiceNumber": "F-03694472",
+    "invoiceDate": "2026-10-28",
+    "dueDate": "2026-12-12",
+    "currency": "EUR",
+    "poNumber": "PO-136694",
+    "subtotal": "16768.71",
+    "tax": "1676.87",
+    "discount": null,
+    "total": "18445.58",
+    "lineItems": [
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "5",
+        "unitPrice": "225.59",
+        "amount": "1127.95"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "12",
+        "unitPrice": "581.18",
+        "amount": "6974.16"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "20",
+        "unitPrice": "433.33",
+        "amount": "8666.60"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Weber Inc Pty Ltd",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-136694",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "5",
+          "unitPrice": "225.59"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "12",
+          "unitPrice": "581.18"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "20",
+          "unitPrice": "433.33"
+        }
+      ],
+      "received": [
+        "5",
+        "12",
+        "20"
+      ]
+    }
+  }
+}

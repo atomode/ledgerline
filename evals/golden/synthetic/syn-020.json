@@ -1,0 +1,63 @@
+{
+  "id": "syn-020",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Ebert Toy and Gleichner LLC",
+      "taxId": null,
+      "address": "558 Yadira Rapid, Fort Lucindatown"
+    },
+    "invoiceNumber": "F-11428635",
+    "invoiceDate": "2026-08-01",
+    "dueDate": "2026-09-30",
+    "currency": "CAD",
+    "poNumber": "PO-555331",
+    "subtotal": "5857.20",
+    "tax": "410.00",
+    "discount": null,
+    "total": "6267.20",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "40",
+        "unitPrice": "146.43",
+        "amount": "5857.20"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Ebert Toy and Gleichner LLC",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-555331",
+      "currency": "CAD",
+      "lines": [
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "40",
+          "unitPrice": "146.43"
+        }
+      ],
+      "received": [
+        "40"
+      ]
+    }
+  }
+}

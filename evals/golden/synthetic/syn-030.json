@@ -1,0 +1,49 @@
+{
+  "id": "syn-030",
+  "tags": {
+    "source": "synthetic",
+    "layout": "ledger",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Wuckert and Sons LLC",
+      "taxId": "DE704421506",
+      "address": "323 Smith Underpass, Fort Laron"
+    },
+    "invoiceNumber": "RE-9863663",
+    "invoiceDate": "2026-10-18",
+    "dueDate": "2026-12-17",
+    "currency": "AUD",
+    "poNumber": null,
+    "subtotal": "10757.88",
+    "tax": "753.05",
+    "discount": null,
+    "total": "11510.93",
+    "lineItems": [
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "28",
+        "unitPrice": "384.21",
+        "amount": "10757.88"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Wuckert and Sons LLC",
+      "taxId": "DE704421506"
+    },
+    "po": null
+  }
+}

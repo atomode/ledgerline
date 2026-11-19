@@ -1,0 +1,133 @@
+{
+  "id": "syn-021",
+  "tags": {
+    "source": "synthetic",
+    "layout": "banner",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Considine and Sons AB",
+      "taxId": "DE593513686",
+      "address": "243 Jackson Street, Castle Rock"
+    },
+    "invoiceNumber": "TI/32865815",
+    "invoiceDate": "2026-10-27",
+    "dueDate": "2026-12-26",
+    "currency": "EUR",
+    "poNumber": "PO-551006",
+    "subtotal": "43140.72",
+    "tax": "8628.14",
+    "discount": null,
+    "total": "51768.86",
+    "lineItems": [
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "20",
+        "unitPrice": "704.80",
+        "amount": "14096.00"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "29",
+        "unitPrice": "180.83",
+        "amount": "5244.07"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "35",
+        "unitPrice": "230.91",
+        "amount": "8081.85"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "30",
+        "unitPrice": "284.75",
+        "amount": "8542.50"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "19",
+        "unitPrice": "97.62",
+        "amount": "1854.78"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "12",
+        "unitPrice": "443.46",
+        "amount": "5321.52"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Considine and Sons AB",
+      "taxId": "DE593513686"
+    },
+    "po": {
+      "poNumber": "PO-551006",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "20",
+          "unitPrice": "704.80"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "29",
+          "unitPrice": "180.83"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "35",
+          "unitPrice": "230.91"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "30",
+          "unitPrice": "284.75"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "19",
+          "unitPrice": "97.62"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "12",
+          "unitPrice": "443.46"
+        }
+      ],
+      "received": [
+        "20",
+        "29",
+        "35",
+        "30",
+        "19",
+        "12"
+      ]
+    }
+  }
+}

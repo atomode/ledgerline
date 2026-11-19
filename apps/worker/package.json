@@ -1,0 +1,36 @@
+{
+  "name": "@ledgerline/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "OTEL_SERVICE_NAME=ledgerline-worker tsx watch --env-file-if-exists=../../.env --import @ledgerline/observability/register src/main.ts",
+    "start": "OTEL_SERVICE_NAME=ledgerline-worker node --import @ledgerline/observability/register dist/main.js",
+    "chaos": "tsx --env-file-if-exists=../../.env scripts/chaos-extract.ts",
+    "fake-anthropic": "tsx scripts/fake-anthropic-server.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
+    "@ledgerline/config": "workspace:*",
+    "@ledgerline/contracts": "workspace:*",
+    "@ledgerline/db": "workspace:*",
+    "@ledgerline/extraction": "workspace:*",
+    "@ledgerline/matching": "workspace:*",
+    "@ledgerline/observability": "workspace:*",
+    "@ledgerline/queues": "workspace:*",
+    "@ledgerline/storage": "workspace:*",
+    "bullmq": "^5.63.0",
+    "drizzle-orm": "^0.45.0",
+    "ioredis": "^5.8.0",
+    "pg": "^8.23.1",
+    "pino": "^10.1.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@opentelemetry/sdk-trace": "3.1.1",
+    "@types/pg": "^8.23.1",
+    "fastify": "^5.12.8"
+  }
+}

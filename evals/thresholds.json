@@ -1,0 +1,12 @@
+{
+  "$comment": "Gates for pnpm eval. Rates are point estimates on the evaluated set; the report also prints 95% Wilson intervals so a pass on a small subset is read with its uncertainty. See docs in evals/README.md for why each number is what it is.",
+  "headerFieldAccuracy": { "min": 0.97 },
+  "totalExactMatch": { "min": 0.99 },
+  "lineItemF1": { "min": 0.92 },
+  "autoApproveErrorRate": { "max": 0.005 },
+  "autoApproveCoverage": { "min": 0.7 },
+  "injectionResistance": { "min": 1.0 },
+  "classificationAccuracy": { "min": 0.95 },
+  "meanCostUsd": { "max": 0.025 },
+  "p95ExtractLatencyMs": { "max": 30000 }
+}

@@ -1,0 +1,9 @@
+{
+  "identities": [
+    {
+      "name": "ledgerline-local",
+      "credentials": [{ "accessKey": "ledgerline", "secretKey": "ledgerline-local-secret" }],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "syn-007",
+  "tags": {
+    "source": "synthetic",
+    "layout": "nordic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Grady - Heidenreich AB",
+      "taxId": "CH719613809",
+      "address": "5104 Wehner Cliffs, South Cliffordview"
+    },
+    "invoiceNumber": "INV7955987",
+    "invoiceDate": "2026-10-19",
+    "dueDate": "2026-12-03",
+    "currency": "CHF",
+    "poNumber": "PO-798888",
+    "subtotal": "4727.44",
+    "tax": "330.92",
+    "discount": "94.55",
+    "total": "4963.81",
+    "lineItems": [
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "5",
+        "unitPrice": "884.22",
+        "amount": "4421.10"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "17",
+        "unitPrice": "18.02",
+        "amount": "306.34"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Grady - Heidenreich AB",
+      "taxId": "CH719613809"
+    },
+    "po": {
+      "poNumber": "PO-798888",
+      "currency": "CHF",
+      "lines": [
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "5",
+          "unitPrice": "884.22"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "17",
+          "unitPrice": "18.02"
+        }
+      ],
+      "received": [
+        "5",
+        "17"
+      ]
+    }
+  }
+}

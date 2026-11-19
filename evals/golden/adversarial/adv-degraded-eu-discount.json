@@ -1,0 +1,133 @@
+{
+  "id": "adv-degraded-eu-discount",
+  "tags": {
+    "source": "adversarial",
+    "layout": "eu",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "degraded_hard"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Effertz LLC Inc.",
+      "taxId": null,
+      "address": "51044 Wiza Well, Littelhaven"
+    },
+    "invoiceNumber": "INV45725621",
+    "invoiceDate": "2026-07-22",
+    "dueDate": "2026-09-05",
+    "currency": "EUR",
+    "poNumber": "PO-724945",
+    "subtotal": "69622.51",
+    "tax": "0.00",
+    "discount": "1392.45",
+    "total": "68230.06",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "31",
+        "unitPrice": "714.76",
+        "amount": "22157.56"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "19",
+        "unitPrice": "479.62",
+        "amount": "9112.78"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "19",
+        "unitPrice": "206.45",
+        "amount": "3922.55"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "6",
+        "unitPrice": "609.81",
+        "amount": "3658.86"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "38",
+        "unitPrice": "651.50",
+        "amount": "24757.00"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "16",
+        "unitPrice": "375.86",
+        "amount": "6013.76"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Effertz LLC Inc.",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-724945",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "31",
+          "unitPrice": "714.76"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "19",
+          "unitPrice": "479.62"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "19",
+          "unitPrice": "206.45"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "6",
+          "unitPrice": "609.81"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "38",
+          "unitPrice": "651.50"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "16",
+          "unitPrice": "375.86"
+        }
+      ],
+      "received": [
+        "31",
+        "19",
+        "19",
+        "6",
+        "38",
+        "16"
+      ]
+    }
+  }
+}

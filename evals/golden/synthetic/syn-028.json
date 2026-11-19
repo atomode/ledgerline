@@ -1,0 +1,77 @@
+{
+  "id": "syn-028",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Treutel Dibbert and Flatley Ltd",
+      "taxId": "FR683752817",
+      "address": "62148 Broad Lane, Mishawaka"
+    },
+    "invoiceNumber": "INV/425251",
+    "invoiceDate": "2026-10-01",
+    "dueDate": "2026-10-15",
+    "currency": "USD",
+    "poNumber": "PO-334382",
+    "subtotal": "4211.51",
+    "tax": "800.19",
+    "discount": "84.23",
+    "total": "4927.47",
+    "lineItems": [
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "21",
+        "unitPrice": "43.63",
+        "amount": "916.23"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "4",
+        "unitPrice": "823.82",
+        "amount": "3295.28"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Treutel Dibbert and Flatley Ltd",
+      "taxId": "FR683752817"
+    },
+    "po": {
+      "poNumber": "PO-334382",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "21",
+          "unitPrice": "43.63"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "4",
+          "unitPrice": "823.82"
+        }
+      ],
+      "received": [
+        "21",
+        "4"
+      ]
+    }
+  }
+}

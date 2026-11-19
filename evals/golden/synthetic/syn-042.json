@@ -1,0 +1,119 @@
+{
+  "id": "syn-042",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Reinger - Gleichner Ltd",
+      "taxId": "US904963747",
+      "address": "16271 Eldora Knoll, Winnifredcester"
+    },
+    "invoiceNumber": "INV1170",
+    "invoiceDate": "2026-10-14",
+    "dueDate": "2026-10-28",
+    "currency": "EUR",
+    "poNumber": "PO-608616",
+    "subtotal": "36731.88",
+    "tax": "7346.38",
+    "discount": null,
+    "total": "44078.26",
+    "lineItems": [
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "22",
+        "unitPrice": "177.05",
+        "amount": "3895.10"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "40",
+        "unitPrice": "357.79",
+        "amount": "14311.60"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "12",
+        "unitPrice": "393.79",
+        "amount": "4725.48"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "30",
+        "unitPrice": "373.92",
+        "amount": "11217.60"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "19",
+        "unitPrice": "135.90",
+        "amount": "2582.10"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Reinger - Gleichner Ltd",
+      "taxId": "US904963747"
+    },
+    "po": {
+      "poNumber": "PO-608616",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "22",
+          "unitPrice": "177.05"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "40",
+          "unitPrice": "357.79"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "12",
+          "unitPrice": "393.79"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "30",
+          "unitPrice": "373.92"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "19",
+          "unitPrice": "135.90"
+        }
+      ],
+      "received": [
+        "22",
+        "40",
+        "12",
+        "30",
+        "19"
+      ]
+    }
+  }
+}

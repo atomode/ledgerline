@@ -1,0 +1,8 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "evals"
+
+onlyBuiltDependencies:
+  - esbuild
+  - msgpackr-extract

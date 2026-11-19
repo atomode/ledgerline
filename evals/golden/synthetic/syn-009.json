@@ -1,0 +1,133 @@
+{
+  "id": "syn-009",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "over_billed"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Leannon - Sanford S.A.",
+      "taxId": null,
+      "address": "43106 E Bridge Street, East Chelseafurt"
+    },
+    "invoiceNumber": "INV-93672",
+    "invoiceDate": "2026-10-07",
+    "dueDate": "2026-11-06",
+    "currency": "USD",
+    "poNumber": "PO-857108",
+    "subtotal": "73059.08",
+    "tax": "0.00",
+    "discount": "1461.18",
+    "total": "71597.90",
+    "lineItems": [
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "21",
+        "unitPrice": "504.31",
+        "amount": "10590.51"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "22",
+        "unitPrice": "802.67",
+        "amount": "17658.74"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "24",
+        "unitPrice": "803.65",
+        "amount": "19287.60"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "35",
+        "unitPrice": "13.61",
+        "amount": "476.35"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "28",
+        "unitPrice": "696.31",
+        "amount": "19496.68"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "20",
+        "unitPrice": "277.46",
+        "amount": "5549.20"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Leannon - Sanford S.A.",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-857108",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "21",
+          "unitPrice": "504.31"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "22",
+          "unitPrice": "802.67"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "24",
+          "unitPrice": "803.65"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "35",
+          "unitPrice": "13.61"
+        },
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "28",
+          "unitPrice": "696.31"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "20",
+          "unitPrice": "277.46"
+        }
+      ],
+      "received": [
+        "20",
+        "22",
+        "24",
+        "35",
+        "28",
+        "20"
+      ]
+    }
+  }
+}

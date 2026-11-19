@@ -1,0 +1,100 @@
+name: ledgerline
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ledgerline
+      POSTGRES_PASSWORD: ledgerline
+      POSTGRES_DB: ledgerline
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledgerline -d ledgerline"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    # noeviction: BullMQ must never have job keys evicted under memory pressure.
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # S3-compatible object store. MinIO stopped publishing community images to Docker Hub,
+  # so we use SeaweedFS's S3 gateway; the app only speaks the S3 API, so either works.
+  s3:
+    image: chrislusf/seaweedfs:4.00
+    command:
+      [
+        "server",
+        "-dir=/data",
+        "-s3",
+        "-s3.port=9000",
+        "-s3.config=/etc/seaweedfs/s3.json",
+        "-master.volumeSizeLimitMB=256",
+      ]
+    ports: ["9000:9000"]
+    volumes:
+      - s3data:/data
+      - ./seaweedfs-s3.json:/etc/seaweedfs/s3.json:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://127.0.0.1:9333/cluster/status && wget -q -S -O /dev/null http://127.0.0.1:9000/ 2>&1 | grep -q 'HTTP/'",
+        ]
+      interval: 3s
+      timeout: 5s
+      retries: 40
+
+  # One-shot bucket creation, run by `pnpm infra:up` after the services are healthy. Kept out of
+  # the default profile because `up --wait` treats an exited container as a failure.
+  s3-init:
+    image: chrislusf/seaweedfs:4.00
+    profiles: [init]
+    depends_on:
+      s3: { condition: service_healthy }
+    entrypoint:
+      ["/bin/sh", "-c", "echo 's3.bucket.create -name invoices' | weed shell -master=s3:9333"]
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.135.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes: ["./otel-collector.yaml:/etc/otelcol/config.yaml:ro"]
+    ports: ["4317:4317", "4318:4318", "8889:8889"]
+    depends_on: [jaeger]
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.73.0
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports: ["16686:16686"]
+
+  prometheus:
+    image: prom/prometheus:v3.7.3
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports: ["9090:9090"]
+    depends_on: [otel-collector]
+
+  grafana:
+    image: grafana/grafana:12.2.1
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3001:3000"]
+    depends_on: [prometheus]
+
+volumes:
+  pgdata:
+  s3data:

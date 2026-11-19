@@ -1,0 +1,56 @@
+{
+  "id": "syn-032",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Kub Hintz and Monahan Inc.",
+      "taxId": "CH884161774",
+      "address": "923 Richmond Close, Davisside"
+    },
+    "invoiceNumber": "INV2460300",
+    "invoiceDate": "2026-10-09",
+    "dueDate": "2026-12-08",
+    "currency": "JPY",
+    "poNumber": null,
+    "subtotal": "370426",
+    "tax": "74085",
+    "discount": null,
+    "total": "444511",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "17",
+        "unitPrice": "7383",
+        "amount": "125511"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "11",
+        "unitPrice": "22265",
+        "amount": "244915"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Kub Hintz and Monahan Inc.",
+      "taxId": "CH884161774"
+    },
+    "po": null
+  }
+}

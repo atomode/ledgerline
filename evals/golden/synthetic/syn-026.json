@@ -1,0 +1,119 @@
+{
+  "id": "syn-026",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Wuckert Gerlach and Auer S.A.",
+      "taxId": "CH245952606",
+      "address": "15890 Jacquelyn Locks, Heaventown"
+    },
+    "invoiceNumber": "TI50039028",
+    "invoiceDate": "2026-10-21",
+    "dueDate": "2026-12-05",
+    "currency": "GBP",
+    "poNumber": "PO-178692",
+    "subtotal": "27118.23",
+    "tax": "5152.46",
+    "discount": null,
+    "total": "32270.69",
+    "lineItems": [
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "12",
+        "unitPrice": "362.82",
+        "amount": "4353.84"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "5",
+        "unitPrice": "12.04",
+        "amount": "60.20"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "13",
+        "unitPrice": "816.43",
+        "amount": "10613.59"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "30",
+        "unitPrice": "258.50",
+        "amount": "7755.00"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "10",
+        "unitPrice": "433.56",
+        "amount": "4335.60"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Wuckert Gerlach and Auer S.A.",
+      "taxId": "CH245952606"
+    },
+    "po": {
+      "poNumber": "PO-178692",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "12",
+          "unitPrice": "362.82"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "5",
+          "unitPrice": "12.04"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "13",
+          "unitPrice": "816.43"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "30",
+          "unitPrice": "258.50"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "10",
+          "unitPrice": "433.56"
+        }
+      ],
+      "received": [
+        "12",
+        "5",
+        "13",
+        "30",
+        "10"
+      ]
+    }
+  }
+}

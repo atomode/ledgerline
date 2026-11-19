@@ -1,0 +1,119 @@
+{
+  "id": "syn-008",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Wunsch-Senger Jast and Romaguera S.A.",
+      "taxId": "FR381545194",
+      "address": "736 Erdman-Nikolaus Ways, Lake Bonita"
+    },
+    "invoiceNumber": "TI/41354784",
+    "invoiceDate": "2026-10-27",
+    "dueDate": "2026-11-26",
+    "currency": "JPY",
+    "poNumber": "PO-902577",
+    "subtotal": "5457663",
+    "tax": "1036956",
+    "discount": null,
+    "total": "6494619",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "27",
+        "unitPrice": "21034",
+        "amount": "567918"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "15",
+        "unitPrice": "69849",
+        "amount": "1047735"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "14",
+        "unitPrice": "85348",
+        "amount": "1194872"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "12",
+        "unitPrice": "56485",
+        "amount": "677820"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "26",
+        "unitPrice": "75743",
+        "amount": "1969318"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Wunsch-Senger Jast and Romaguera S.A.",
+      "taxId": "FR381545194"
+    },
+    "po": {
+      "poNumber": "PO-902577",
+      "currency": "JPY",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "27",
+          "unitPrice": "21034"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "15",
+          "unitPrice": "69849"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "14",
+          "unitPrice": "85348"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "12",
+          "unitPrice": "56485"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "26",
+          "unitPrice": "75743"
+        }
+      ],
+      "received": [
+        "27",
+        "15",
+        "14",
+        "12",
+        "26"
+      ]
+    }
+  }
+}

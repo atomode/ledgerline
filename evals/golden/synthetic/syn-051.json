@@ -1,0 +1,56 @@
+{
+  "id": "syn-051",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Schamberger Thiel and Raynor GmbH",
+      "taxId": null,
+      "address": "249 Cole Mount, New Lilliehaven"
+    },
+    "invoiceNumber": "INV206969",
+    "invoiceDate": "2026-10-07",
+    "dueDate": "2026-12-06",
+    "currency": "EUR",
+    "poNumber": null,
+    "subtotal": "29955.88",
+    "tax": "0.00",
+    "discount": "599.12",
+    "total": "29356.76",
+    "lineItems": [
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "37",
+        "unitPrice": "217.84",
+        "amount": "8060.08"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "30",
+        "unitPrice": "729.86",
+        "amount": "21895.80"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Schamberger Thiel and Raynor GmbH",
+      "taxId": null
+    },
+    "po": null
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "syn-027",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "no_po"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Heller - Hilpert GmbH",
+      "taxId": "DE534975254",
+      "address": "400 Victoria Place, Emardcester"
+    },
+    "invoiceNumber": "RE56785537",
+    "invoiceDate": "2026-09-13",
+    "dueDate": "2026-09-27",
+    "currency": "EUR",
+    "poNumber": null,
+    "subtotal": "18811.01",
+    "tax": "1881.10",
+    "discount": null,
+    "total": "20692.11",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "20",
+        "unitPrice": "132.49",
+        "amount": "2649.80"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "27",
+        "unitPrice": "380.79",
+        "amount": "10281.33"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "18",
+        "unitPrice": "173.55",
+        "amount": "3123.90"
+      },
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "18",
+        "unitPrice": "153.11",
+        "amount": "2755.98"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Heller - Hilpert GmbH",
+      "taxId": "DE534975254"
+    },
+    "po": null
+  }
+}

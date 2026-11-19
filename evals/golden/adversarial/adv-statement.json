@@ -1,0 +1,38 @@
+{
+  "id": "adv-statement",
+  "tags": {
+    "source": "adversarial",
+    "layout": "classic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 0,
+    "scenario": "statement"
+  },
+  "labels": null,
+  "expected": {
+    "kind": "statement",
+    "flags": [],
+    "decision": null
+  },
+  "context": {
+    "vendor": {
+      "name": "Roberts Swaniawski and Swift Pty Ltd",
+      "taxId": "CH772229173"
+    },
+    "po": {
+      "poNumber": "PO-375994",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "12",
+          "unitPrice": "659.67"
+        }
+      ],
+      "received": [
+        "12"
+      ]
+    }
+  }
+}

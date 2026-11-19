@@ -1,0 +1,26 @@
+{
+  "name": "@ledgerline/evals",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "eval": "tsx --env-file-if-exists=../.env src/run.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "golden:generate": "tsx scripts/generate-golden.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
+    "@faker-js/faker": "^10.6.0",
+    "@ledgerline/config": "workspace:*",
+    "@ledgerline/contracts": "workspace:*",
+    "@ledgerline/db": "workspace:*",
+    "@ledgerline/extraction": "workspace:*",
+    "@ledgerline/matching": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "tsx": "^4.23.15"
+  }
+}

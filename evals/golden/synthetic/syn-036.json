@@ -1,0 +1,91 @@
+{
+  "id": "syn-036",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "small_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Fay Larson and Powlowski GmbH",
+      "taxId": "DE846363195",
+      "address": "363 Mae Spring, Lehnerfort"
+    },
+    "invoiceNumber": "TI5084606",
+    "invoiceDate": "2026-10-29",
+    "dueDate": "2026-11-12",
+    "currency": "CAD",
+    "poNumber": "PO-373541",
+    "subtotal": "26671.01",
+    "tax": "0.00",
+    "discount": null,
+    "total": "26671.01",
+    "lineItems": [
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "7",
+        "unitPrice": "928.04",
+        "amount": "6496.28"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "28",
+        "unitPrice": "341.76",
+        "amount": "9569.28"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "15",
+        "unitPrice": "707.03",
+        "amount": "10605.45"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Fay Larson and Powlowski GmbH",
+      "taxId": "DE846363195"
+    },
+    "po": {
+      "poNumber": "PO-373541",
+      "currency": "CAD",
+      "lines": [
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "7",
+          "unitPrice": "918.85"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "28",
+          "unitPrice": "338.38"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "15",
+          "unitPrice": "700.03"
+        }
+      ],
+      "received": [
+        "7",
+        "28",
+        "15"
+      ]
+    }
+  }
+}

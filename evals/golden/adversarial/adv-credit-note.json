@@ -1,0 +1,56 @@
+{
+  "id": "adv-credit-note",
+  "tags": {
+    "source": "adversarial",
+    "layout": "classic",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 2,
+    "scenario": "credit_note"
+  },
+  "labels": {
+    "documentType": "credit_note",
+    "vendor": {
+      "name": "Okuneva Inc S.A.",
+      "taxId": "DE286332398",
+      "address": "6397 Leffler Forges, Hartmannboro"
+    },
+    "invoiceNumber": "TI-4073400",
+    "invoiceDate": "2026-08-14",
+    "dueDate": "2026-08-28",
+    "currency": "USD",
+    "poNumber": null,
+    "subtotal": "-31660.84",
+    "tax": "-6332.17",
+    "discount": null,
+    "total": "-37993.01",
+    "lineItems": [
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "31",
+        "unitPrice": "-927.70",
+        "amount": "-28758.70"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "6",
+        "unitPrice": "-483.69",
+        "amount": "-2902.14"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "credit_note",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Okuneva Inc S.A.",
+      "taxId": "DE286332398"
+    },
+    "po": null
+  }
+}

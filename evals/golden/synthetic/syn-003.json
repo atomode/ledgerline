@@ -1,0 +1,63 @@
+{
+  "id": "syn-003",
+  "tags": {
+    "source": "synthetic",
+    "layout": "eu",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "McDermott - Wehner AB",
+      "taxId": null,
+      "address": "909 Park Crescent, Fort Thaddeusside"
+    },
+    "invoiceNumber": "F/0510",
+    "invoiceDate": "2026-07-02",
+    "dueDate": null,
+    "currency": "EUR",
+    "poNumber": "PO-856614",
+    "subtotal": "29575.24",
+    "tax": "5619.30",
+    "discount": "591.50",
+    "total": "34603.04",
+    "lineItems": [
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "34",
+        "unitPrice": "869.86",
+        "amount": "29575.24"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "McDermott - Wehner AB",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-856614",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "34",
+          "unitPrice": "869.86"
+        }
+      ],
+      "received": [
+        "34"
+      ]
+    }
+  }
+}

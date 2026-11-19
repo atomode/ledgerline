@@ -1,0 +1,147 @@
+{
+  "id": "syn-033",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 7,
+    "scenario": "price_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Grady LLC GmbH",
+      "taxId": "FR460562233",
+      "address": "12861 North Avenue, Cormierfield"
+    },
+    "invoiceNumber": "INV-76852",
+    "invoiceDate": "2026-09-11",
+    "dueDate": "2026-10-26",
+    "currency": "USD",
+    "poNumber": "PO-321540",
+    "subtotal": "42708.00",
+    "tax": "8541.60",
+    "discount": null,
+    "total": "51249.60",
+    "lineItems": [
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "34",
+        "unitPrice": "383.52",
+        "amount": "13039.68"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "31",
+        "unitPrice": "195.58",
+        "amount": "6062.98"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "33",
+        "unitPrice": "195.95",
+        "amount": "6466.35"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "3",
+        "unitPrice": "518.44",
+        "amount": "1555.32"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "22",
+        "unitPrice": "481.40",
+        "amount": "10590.80"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "19",
+        "unitPrice": "171.00",
+        "amount": "3249.00"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "3",
+        "unitPrice": "581.29",
+        "amount": "1743.87"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Grady LLC GmbH",
+      "taxId": "FR460562233"
+    },
+    "po": {
+      "poNumber": "PO-321540",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "34",
+          "unitPrice": "361.81"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "31",
+          "unitPrice": "184.51"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "33",
+          "unitPrice": "184.86"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "3",
+          "unitPrice": "489.09"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "22",
+          "unitPrice": "454.15"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "19",
+          "unitPrice": "161.32"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "3",
+          "unitPrice": "548.39"
+        }
+      ],
+      "received": [
+        "34",
+        "31",
+        "33",
+        "3",
+        "22",
+        "19",
+        "3"
+      ]
+    }
+  }
+}

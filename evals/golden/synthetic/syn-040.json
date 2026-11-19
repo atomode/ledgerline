@@ -1,0 +1,133 @@
+{
+  "id": "syn-040",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "small_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Steuber Inc Ltd",
+      "taxId": null,
+      "address": "7494 Marion Course, Ellenshire"
+    },
+    "invoiceNumber": "RE/22677",
+    "invoiceDate": "2026-07-12",
+    "dueDate": "2026-07-26",
+    "currency": "JPY",
+    "poNumber": "PO-695298",
+    "subtotal": "5347126",
+    "tax": "374299",
+    "discount": null,
+    "total": "5721425",
+    "lineItems": [
+      {
+        "description": "Nitrile gloves, size L (case)",
+        "sku": "NG-L-CS",
+        "quantity": "32",
+        "unitPrice": "25924",
+        "amount": "829568"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "37",
+        "unitPrice": "56038",
+        "amount": "2073406"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "4",
+        "unitPrice": "78871",
+        "amount": "315484"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "7",
+        "unitPrice": "83348",
+        "amount": "583436"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "23",
+        "unitPrice": "5753",
+        "amount": "132319"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "23",
+        "unitPrice": "61431",
+        "amount": "1412913"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Steuber Inc Ltd",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-695298",
+      "currency": "JPY",
+      "lines": [
+        {
+          "sku": "NG-L-CS",
+          "description": "Nitrile gloves, size L (case)",
+          "quantity": "32",
+          "unitPrice": "25667"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "37",
+          "unitPrice": "55483"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "4",
+          "unitPrice": "78090"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "7",
+          "unitPrice": "82523"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "23",
+          "unitPrice": "5696"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "23",
+          "unitPrice": "60823"
+        }
+      ],
+      "received": [
+        "32",
+        "37",
+        "4",
+        "7",
+        "23",
+        "23"
+      ]
+    }
+  }
+}

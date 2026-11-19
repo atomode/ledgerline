@@ -1,0 +1,119 @@
+{
+  "id": "syn-044",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "King Nienow and Rempel S.A.",
+      "taxId": "GB303549506",
+      "address": "8231 Green Mill, Lake Nick"
+    },
+    "invoiceNumber": "F/3051453",
+    "invoiceDate": "2026-10-20",
+    "dueDate": "2026-12-19",
+    "currency": "CAD",
+    "poNumber": "PO-574677",
+    "subtotal": "8844.70",
+    "tax": "442.24",
+    "discount": null,
+    "total": "9286.94",
+    "lineItems": [
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "14",
+        "unitPrice": "93.69",
+        "amount": "1311.66"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "34",
+        "unitPrice": "63.07",
+        "amount": "2144.38"
+      },
+      {
+        "description": "Bearing 6204-2RS",
+        "sku": "BR-6204",
+        "quantity": "1",
+        "unitPrice": "641.51",
+        "amount": "641.51"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "5",
+        "unitPrice": "572.57",
+        "amount": "2862.85"
+      },
+      {
+        "description": "Calibration service",
+        "sku": null,
+        "quantity": "10",
+        "unitPrice": "188.43",
+        "amount": "1884.30"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "King Nienow and Rempel S.A.",
+      "taxId": "GB303549506"
+    },
+    "po": {
+      "poNumber": "PO-574677",
+      "currency": "CAD",
+      "lines": [
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "14",
+          "unitPrice": "93.69"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "34",
+          "unitPrice": "63.07"
+        },
+        {
+          "sku": "BR-6204",
+          "description": "Bearing 6204-2RS",
+          "quantity": "1",
+          "unitPrice": "641.51"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "5",
+          "unitPrice": "572.57"
+        },
+        {
+          "sku": null,
+          "description": "Calibration service",
+          "quantity": "10",
+          "unitPrice": "188.43"
+        }
+      ],
+      "received": [
+        "14",
+        "34",
+        "1",
+        "5",
+        "10"
+      ]
+    }
+  }
+}

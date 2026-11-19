@@ -1,0 +1,91 @@
+{
+  "id": "syn-037",
+  "tags": {
+    "source": "synthetic",
+    "layout": "banner",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 3,
+    "scenario": "price_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Mann Mraz and Champlin GmbH",
+      "taxId": "FR188007168",
+      "address": "6501 Rempel Walk, Lake Izabellafort"
+    },
+    "invoiceNumber": "-2553",
+    "invoiceDate": "2026-08-18",
+    "dueDate": null,
+    "currency": "EUR",
+    "poNumber": "PO-417215",
+    "subtotal": "27933.55",
+    "tax": "5307.37",
+    "discount": null,
+    "total": "33240.92",
+    "lineItems": [
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "13",
+        "unitPrice": "345.98",
+        "amount": "4497.74"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "39",
+        "unitPrice": "306.57",
+        "amount": "11956.23"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "14",
+        "unitPrice": "819.97",
+        "amount": "11479.58"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Mann Mraz and Champlin GmbH",
+      "taxId": "FR188007168"
+    },
+    "po": {
+      "poNumber": "PO-417215",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "13",
+          "unitPrice": "326.40"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "39",
+          "unitPrice": "289.22"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "14",
+          "unitPrice": "773.56"
+        }
+      ],
+      "received": [
+        "13",
+        "39",
+        "14"
+      ]
+    }
+  }
+}

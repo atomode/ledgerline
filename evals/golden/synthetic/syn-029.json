@@ -1,0 +1,133 @@
+{
+  "id": "syn-029",
+  "tags": {
+    "source": "synthetic",
+    "layout": "banner",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "small_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "King Tremblay and Pfannerstill S.A.",
+      "taxId": null,
+      "address": "60215 Kub Burg, Braedenberg"
+    },
+    "invoiceNumber": "TI/24786",
+    "invoiceDate": "2026-08-16",
+    "dueDate": null,
+    "currency": "EUR",
+    "poNumber": "PO-526609",
+    "subtotal": "74177.65",
+    "tax": "14093.75",
+    "discount": "1483.55",
+    "total": "86787.85",
+    "lineItems": [
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "29",
+        "unitPrice": "504.14",
+        "amount": "14620.06"
+      },
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "24",
+        "unitPrice": "822.28",
+        "amount": "19734.72"
+      },
+      {
+        "description": "Freight and handling",
+        "sku": null,
+        "quantity": "25",
+        "unitPrice": "162.31",
+        "amount": "4057.75"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "5",
+        "unitPrice": "502.38",
+        "amount": "2511.90"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "33",
+        "unitPrice": "847.00",
+        "amount": "27951.00"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "22",
+        "unitPrice": "241.01",
+        "amount": "5302.22"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "King Tremblay and Pfannerstill S.A.",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-526609",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "29",
+          "unitPrice": "499.15"
+        },
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "24",
+          "unitPrice": "814.14"
+        },
+        {
+          "sku": null,
+          "description": "Freight and handling",
+          "quantity": "25",
+          "unitPrice": "160.70"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "5",
+          "unitPrice": "497.41"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "33",
+          "unitPrice": "838.61"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "22",
+          "unitPrice": "238.62"
+        }
+      ],
+      "received": [
+        "29",
+        "24",
+        "25",
+        "5",
+        "33",
+        "22"
+      ]
+    }
+  }
+}

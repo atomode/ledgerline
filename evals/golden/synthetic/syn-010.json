@@ -1,0 +1,63 @@
+{
+  "id": "syn-010",
+  "tags": {
+    "source": "synthetic",
+    "layout": "minimal",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 1,
+    "scenario": "price_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Oberbrunner and Sons LLC",
+      "taxId": "US416216915",
+      "address": "857 Lockman Locks, New Michealbury"
+    },
+    "invoiceNumber": "INV-53771",
+    "invoiceDate": "2026-08-20",
+    "dueDate": "2026-10-04",
+    "currency": "GBP",
+    "poNumber": "PO-056902",
+    "subtotal": "10772.58",
+    "tax": "2046.79",
+    "discount": null,
+    "total": "12819.37",
+    "lineItems": [
+      {
+        "description": "Hydraulic hose 1/2in per metre",
+        "sku": "HH-12",
+        "quantity": "39",
+        "unitPrice": "276.22",
+        "amount": "10772.58"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Oberbrunner and Sons LLC",
+      "taxId": "US416216915"
+    },
+    "po": {
+      "poNumber": "PO-056902",
+      "currency": "GBP",
+      "lines": [
+        {
+          "sku": "HH-12",
+          "description": "Hydraulic hose 1/2in per metre",
+          "quantity": "39",
+          "unitPrice": "260.58"
+        }
+      ],
+      "received": [
+        "39"
+      ]
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "id": "syn-001",
+  "tags": {
+    "source": "synthetic",
+    "layout": "classic",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 5,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Rogahn Inc GmbH",
+      "taxId": null,
+      "address": "6956 Mills Bypass, Crona-Rosenbaummouth"
+    },
+    "invoiceNumber": "RE/20465597",
+    "invoiceDate": "2026-08-18",
+    "dueDate": "2026-09-17",
+    "currency": "USD",
+    "poNumber": "PO-997511",
+    "subtotal": "31495.18",
+    "tax": "5984.08",
+    "discount": null,
+    "total": "37479.26",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "10",
+        "unitPrice": "484.50",
+        "amount": "4845.00"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "38",
+        "unitPrice": "382.88",
+        "amount": "14549.44"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "19",
+        "unitPrice": "231.03",
+        "amount": "4389.57"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "9",
+        "unitPrice": "661.73",
+        "amount": "5955.57"
+      },
+      {
+        "description": "LED panel 600x600 40W",
+        "sku": "LED-6060",
+        "quantity": "5",
+        "unitPrice": "351.12",
+        "amount": "1755.60"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Rogahn Inc GmbH",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-997511",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "10",
+          "unitPrice": "484.50"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "38",
+          "unitPrice": "382.88"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "19",
+          "unitPrice": "231.03"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "9",
+          "unitPrice": "661.73"
+        },
+        {
+          "sku": "LED-6060",
+          "description": "LED panel 600x600 40W",
+          "quantity": "5",
+          "unitPrice": "351.12"
+        }
+      ],
+      "received": [
+        "10",
+        "38",
+        "19",
+        "9",
+        "5"
+      ]
+    }
+  }
+}

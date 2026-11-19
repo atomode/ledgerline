@@ -1,0 +1,52 @@
+{
+  "id": "adv-quote",
+  "tags": {
+    "source": "adversarial",
+    "layout": "banner",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 0,
+    "scenario": "not_invoice"
+  },
+  "labels": null,
+  "expected": {
+    "kind": "not_invoice",
+    "flags": [],
+    "decision": null
+  },
+  "context": {
+    "vendor": {
+      "name": "Goldner Group Inc.",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-079809",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "10",
+          "unitPrice": "545.44"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "37",
+          "unitPrice": "539.25"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "14",
+          "unitPrice": "402.59"
+        }
+      ],
+      "received": [
+        "10",
+        "37",
+        "14"
+      ]
+    }
+  }
+}

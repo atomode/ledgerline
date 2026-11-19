@@ -1,0 +1,133 @@
+{
+  "id": "syn-024",
+  "tags": {
+    "source": "synthetic",
+    "layout": "japanese",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 6,
+    "scenario": "clean"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Swift Inc S.A.",
+      "taxId": "DE192740623",
+      "address": "63077 Union Street, Sawaynboro"
+    },
+    "invoiceNumber": "F85054",
+    "invoiceDate": "2026-08-07",
+    "dueDate": "2026-09-21",
+    "currency": "JPY",
+    "poNumber": "PO-591140",
+    "subtotal": "6380167",
+    "tax": "1212232",
+    "discount": "127603",
+    "total": "7464796",
+    "lineItems": [
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "34",
+        "unitPrice": "79954",
+        "amount": "2718436"
+      },
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "18",
+        "unitPrice": "25795",
+        "amount": "464310"
+      },
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "2",
+        "unitPrice": "24928",
+        "amount": "49856"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "18",
+        "unitPrice": "54134",
+        "amount": "974412"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "3",
+        "unitPrice": "39776",
+        "amount": "119328"
+      },
+      {
+        "description": "Cable ties 300mm black (pack)",
+        "sku": "CT-300B",
+        "quantity": "25",
+        "unitPrice": "82153",
+        "amount": "2053825"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "approved"
+  },
+  "context": {
+    "vendor": {
+      "name": "Swift Inc S.A.",
+      "taxId": "DE192740623"
+    },
+    "po": {
+      "poNumber": "PO-591140",
+      "currency": "JPY",
+      "lines": [
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "34",
+          "unitPrice": "79954"
+        },
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "18",
+          "unitPrice": "25795"
+        },
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "2",
+          "unitPrice": "24928"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "18",
+          "unitPrice": "54134"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "3",
+          "unitPrice": "39776"
+        },
+        {
+          "sku": "CT-300B",
+          "description": "Cable ties 300mm black (pack)",
+          "quantity": "25",
+          "unitPrice": "82153"
+        }
+      ],
+      "received": [
+        "34",
+        "18",
+        "2",
+        "18",
+        "3",
+        "25"
+      ]
+    }
+  }
+}

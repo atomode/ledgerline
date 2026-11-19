@@ -1,0 +1,105 @@
+{
+  "id": "syn-004",
+  "tags": {
+    "source": "synthetic",
+    "layout": "compact",
+    "degraded": false,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "price_drift"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Stoltenberg - Swift AB",
+      "taxId": null,
+      "address": "376 Hilll Common, North Noe"
+    },
+    "invoiceNumber": "TI94688490",
+    "invoiceDate": "2026-10-29",
+    "dueDate": null,
+    "currency": "USD",
+    "poNumber": "PO-951700",
+    "subtotal": "42568.67",
+    "tax": "0.00",
+    "discount": null,
+    "total": "42568.67",
+    "lineItems": [
+      {
+        "description": "Shipping labels 4x6 (roll)",
+        "sku": "SL-46",
+        "quantity": "36",
+        "unitPrice": "303.67",
+        "amount": "10932.12"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "29",
+        "unitPrice": "539.11",
+        "amount": "15634.19"
+      },
+      {
+        "description": "Copy paper A4 80gsm (5 reams)",
+        "sku": "PAP-A4-5",
+        "quantity": "36",
+        "unitPrice": "356.96",
+        "amount": "12850.56"
+      },
+      {
+        "description": "Pallet wrap 500mm x 300m",
+        "sku": "PW-500",
+        "quantity": "10",
+        "unitPrice": "315.18",
+        "amount": "3151.80"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Stoltenberg - Swift AB",
+      "taxId": null
+    },
+    "po": {
+      "poNumber": "PO-951700",
+      "currency": "USD",
+      "lines": [
+        {
+          "sku": "SL-46",
+          "description": "Shipping labels 4x6 (roll)",
+          "quantity": "36",
+          "unitPrice": "286.48"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "29",
+          "unitPrice": "508.59"
+        },
+        {
+          "sku": "PAP-A4-5",
+          "description": "Copy paper A4 80gsm (5 reams)",
+          "quantity": "36",
+          "unitPrice": "336.75"
+        },
+        {
+          "sku": "PW-500",
+          "description": "Pallet wrap 500mm x 300m",
+          "quantity": "10",
+          "unitPrice": "297.34"
+        }
+      ],
+      "received": [
+        "36",
+        "29",
+        "36",
+        "10"
+      ]
+    }
+  }
+}

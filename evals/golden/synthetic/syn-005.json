@@ -1,0 +1,105 @@
+{
+  "id": "syn-005",
+  "tags": {
+    "source": "synthetic",
+    "layout": "banner",
+    "degraded": true,
+    "pages": 1,
+    "lineCount": 4,
+    "scenario": "over_billed"
+  },
+  "labels": {
+    "documentType": "invoice",
+    "vendor": {
+      "name": "Stark LLC Pty Ltd",
+      "taxId": "DE910263609",
+      "address": "904 S Grand Avenue, Mobile"
+    },
+    "invoiceNumber": "RE0996",
+    "invoiceDate": "2026-08-12",
+    "dueDate": "2026-09-26",
+    "currency": "EUR",
+    "poNumber": "PO-370357",
+    "subtotal": "50330.79",
+    "tax": "5033.08",
+    "discount": null,
+    "total": "55363.87",
+    "lineItems": [
+      {
+        "description": "Hex bolt M8 x 40, zinc (box of 100)",
+        "sku": "HB-M8-40",
+        "quantity": "25",
+        "unitPrice": "410.89",
+        "amount": "10272.25"
+      },
+      {
+        "description": "Industrial degreaser 5L",
+        "sku": "DG-5L",
+        "quantity": "40",
+        "unitPrice": "789.72",
+        "amount": "31588.80"
+      },
+      {
+        "description": "Safety glasses, clear",
+        "sku": "SG-CLR",
+        "quantity": "11",
+        "unitPrice": "106.51",
+        "amount": "1171.61"
+      },
+      {
+        "description": "Consulting services (hours)",
+        "sku": null,
+        "quantity": "21",
+        "unitPrice": "347.53",
+        "amount": "7298.13"
+      }
+    ]
+  },
+  "expected": {
+    "kind": "invoice",
+    "flags": [],
+    "decision": "needs_review"
+  },
+  "context": {
+    "vendor": {
+      "name": "Stark LLC Pty Ltd",
+      "taxId": "DE910263609"
+    },
+    "po": {
+      "poNumber": "PO-370357",
+      "currency": "EUR",
+      "lines": [
+        {
+          "sku": "HB-M8-40",
+          "description": "Hex bolt M8 x 40, zinc (box of 100)",
+          "quantity": "25",
+          "unitPrice": "410.89"
+        },
+        {
+          "sku": "DG-5L",
+          "description": "Industrial degreaser 5L",
+          "quantity": "40",
+          "unitPrice": "789.72"
+        },
+        {
+          "sku": "SG-CLR",
+          "description": "Safety glasses, clear",
+          "quantity": "11",
+          "unitPrice": "106.51"
+        },
+        {
+          "sku": null,
+          "description": "Consulting services (hours)",
+          "quantity": "21",
+          "unitPrice": "347.53"
+        }
+      ],
+      "received": [
+        "24",
+        "40",
+        "11",
+        "21"
+      ]
+    }
+  }
+}

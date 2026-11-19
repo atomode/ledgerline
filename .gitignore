@@ -1,0 +1,11 @@
+node_modules
+dist
+.turbo
+coverage
+.env
+*.log
+evals/.cache
+
+# eval outputs
+evals/reports/
+evals/.cache/

@@ -46,12 +46,6 @@ describe("API contract enforcement", () => {
     expect(res.statusCode).toBe(400);
   });
 
-  it("returns 501 problem for stubbed handlers that pass validation", async () => {
-    const res = await app.inject({ method: "GET", url: "/v1/invoices?limit=10", headers: auth });
-    expect(res.statusCode).toBe(501);
-    expect(res.json().title).toBe("Not Implemented");
-  });
-
   it("requires an API key everywhere except health probes", async () => {
     const res = await app.inject({ method: "GET", url: "/v1/invoices" });
     expect(res.statusCode).toBe(401);

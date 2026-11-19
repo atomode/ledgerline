@@ -8,11 +8,21 @@ import {
 } from "@ledgerline/queues";
 import { buildApp } from "./app.js";
 import { dbAuthenticator } from "./auth.js";
+import { createStorage } from "@ledgerline/storage";
+import { createUploadService } from "./services/uploads.js";
+import { createInvoiceService } from "./services/invoices.js";
 
 const env = loadEnv();
 const db = createDb(env.DATABASE_URL);
 const redis = createRedis(env.REDIS_URL);
 const queues = createStageQueues(redis);
+const storage = createStorage({
+  endpoint: env.S3_ENDPOINT,
+  region: env.S3_REGION,
+  bucket: env.S3_BUCKET,
+  accessKeyId: env.S3_ACCESS_KEY_ID,
+  secretAccessKey: env.S3_SECRET_ACCESS_KEY,
+});
 
 const app = await buildApp({
   logLevel: env.LOG_LEVEL,
@@ -22,6 +32,8 @@ const app = await buildApp({
   authenticate: dbAuthenticator(db.db),
   admission: createAdmissionController(queues.extract),
   cursorSecret: env.CURSOR_SIGNING_SECRET,
+  uploads: createUploadService({ db: db.db, storage, queues }),
+  invoices: createInvoiceService({ db: db.db, cursorSecret: env.CURSOR_SIGNING_SECRET }),
   readinessChecks: {
     postgres: async () => {
       await db.pool.query("select 1");

@@ -10,6 +10,7 @@ import {
 import { WebhookEvent } from "@ledgerline/contracts";
 import type { ApiDeps } from "./deps.js";
 import { registerAuth } from "./auth.js";
+import { registerIdempotency } from "./idempotency.js";
 import { registerProblemHandlers } from "./problem.js";
 import { healthRoutes } from "./routes/health.js";
 import { uploadRoutes } from "./routes/uploads.js";
@@ -28,6 +29,7 @@ export async function buildApp(deps: ApiDeps): Promise<FastifyInstance> {
   app.setSerializerCompiler(serializerCompiler);
   registerProblemHandlers(app);
   registerAuth(app, deps.authenticate);
+  registerIdempotency(app, () => deps.db);
 
   await app.register(fastifySwagger, {
     openapi: {
@@ -84,7 +86,7 @@ export async function buildApp(deps: ApiDeps): Promise<FastifyInstance> {
 
   await app.register(healthRoutes(deps.readinessChecks));
   await app.register(uploadRoutes(deps));
-  await app.register(invoiceRoutes);
+  await app.register(invoiceRoutes(deps.invoices));
   await app.register(adminRoutes(deps));
 
   return app;

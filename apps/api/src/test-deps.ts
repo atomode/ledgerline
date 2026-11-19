@@ -25,6 +25,8 @@ export function testDeps(overrides: Partial<ApiDeps> = {}): ApiDeps {
     queues: unavailable as ApiDeps["queues"],
     dlqs: unavailable as ApiDeps["dlqs"],
     cursorSecret: "test-cursor-secret-0123",
+    uploads: unavailable as ApiDeps["uploads"],
+    invoices: unavailable as ApiDeps["invoices"],
     ...overrides,
   };
 }

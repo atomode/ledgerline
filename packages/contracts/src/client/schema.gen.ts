@@ -904,6 +904,15 @@ export interface operations {
           "application/json": components["schemas"]["Problem"];
         };
       };
+      /** @description Session expired before completion */
+      410: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Problem"];
+        };
+      };
       /** @description Too many requests or pipeline backlog; honor Retry-After */
       429: {
         headers: {

@@ -1827,6 +1827,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "410":
+          description: Session expired before completion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
         "429":
           description: Too many requests or pipeline backlog; honor Retry-After
           content:

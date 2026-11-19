@@ -6,14 +6,6 @@ export function sendProblem(reply: FastifyReply, problem: Problem): FastifyReply
   return reply.code(problem.status).type("application/problem+json").send(problem);
 }
 
-export const notImplemented = (reply: FastifyReply, what: string) =>
-  sendProblem(reply, {
-    type: "about:blank",
-    title: "Not Implemented",
-    status: 501,
-    detail: `${what} is not implemented yet`,
-  });
-
 /** Every error leaves the API as RFC 9457 problem+json. */
 export function registerProblemHandlers(app: FastifyInstance): void {
   app.setErrorHandler((err: FastifyError, req, reply) => {

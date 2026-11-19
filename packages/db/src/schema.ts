@@ -203,6 +203,8 @@ export const files = pgTable(
     sha256: char("sha256", { length: 64 }).notNull(),
     storageKey: text("storage_key").notNull(),
     status: fileStatus("status").notNull().default("pending"),
+    /** not_uploaded | checksum_mismatch | too_large | not_pdf; set when status = rejected */
+    rejectionReason: text("rejection_reason"),
     ...timestamps,
   },
   (t) => [

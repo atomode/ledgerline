@@ -5,9 +5,11 @@ import {
   CreateUploadSessionRequest,
   IdempotencyHeaders,
   UploadSession,
+  Problem,
   Uuid,
 } from "@ledgerline/contracts";
-import { notImplemented, sendProblem } from "../problem.js";
+import { sendProblem } from "../problem.js";
+import { SessionExpiredError, SessionNotFoundError } from "../services/uploads.js";
 import type { ApiDeps } from "../deps.js";
 import { problemResponses } from "./responses.js";
 
@@ -39,7 +41,8 @@ export const uploadRoutes =
           response: { 201: UploadSession, ...problemResponses },
         },
       },
-      async (_req, reply) => notImplemented(reply, "POST /v1/upload-sessions"),
+      async (req, reply) =>
+        reply.code(201).send(await deps.uploads.createSession(req.principal.tenantId, req.body)),
     );
 
     app.post(
@@ -57,10 +60,28 @@ export const uploadRoutes =
           response: {
             202: CompleteUploadSessionResponse,
             200: CompleteUploadSessionResponse.describe("No file was accepted"),
+            410: Problem.describe("Session expired before completion"),
             ...problemResponses,
           },
         },
       },
-      async (_req, reply) => notImplemented(reply, "POST /v1/upload-sessions/:id/complete"),
+      async (req, reply) => {
+        try {
+          const result = await deps.uploads.completeSession(req.principal.tenantId, req.params.id);
+          return reply.code(result.counts.accepted > 0 ? 202 : 200).send(result);
+        } catch (err) {
+          if (err instanceof SessionNotFoundError) {
+            return sendProblem(reply, { type: "about:blank", title: "Not Found", status: 404 });
+          }
+          if (err instanceof SessionExpiredError) {
+            return sendProblem(reply, {
+              type: "about:blank",
+              title: "Upload session expired",
+              status: 410,
+            });
+          }
+          throw err;
+        }
+      },
     );
   };

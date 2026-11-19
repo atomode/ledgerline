@@ -27,4 +27,9 @@ export default tseslint.config(
     files: ["**/*.config.{js,ts}", "**/scripts/**"],
     rules: { "no-console": "off", "@typescript-eslint/no-non-null-assertion": "off" },
   },
+  {
+    // Tests index into fixtures they just built; a wrong index fails the test, which is the point.
+    files: ["**/*.test.ts", "**/test/**"],
+    rules: { "@typescript-eslint/no-non-null-assertion": "off" },
+  },
 );
